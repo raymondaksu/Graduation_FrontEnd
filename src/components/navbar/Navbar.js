@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -8,14 +8,20 @@ import Typography from "@material-ui/core/Typography";
 
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
+import MenuListComposition from "./NavbarMenuList"
+
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+    '& .MuiToolbar-gutters': {
+      paddingLeft: 5,
+      paddingRight: 20,
+    },
+    backgroundColor: theme.palette.secondary.main,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -24,21 +30,6 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block",
-    },
-  },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
     },
   },
 
@@ -127,18 +118,19 @@ export default function Navbar() {
   return (
     <div className={classes.grow}>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
+        <Toolbar style={{backgroundColor:"#5eaaa8"}}>
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
+          <MenuListComposition />
           <Typography
             className={classes.title}
-            variant="h6"
+            variant="h5"
             onClick={() => history.goBack()}
             noWrap
           >
