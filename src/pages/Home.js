@@ -1,7 +1,7 @@
 //import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar/Navbar";
 
 function Home() {
   const [postList, setPostList] = useState([]);
