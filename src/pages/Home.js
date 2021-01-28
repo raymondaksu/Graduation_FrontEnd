@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar/Navbar";
+import PostCard from "../components/card/Card"
 
 function Home() {
   const [postList, setPostList] = useState([]);
@@ -28,16 +29,13 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div style={{backgroundColor: '#d9dab0'}}>
       <Navbar />
-      <h1>HOME PAGE</h1>
       <div>
         {postList
           ? postList.map((item, id) => {
               return (
-                <>
-                  <p>{item.title}</p>
-                </>
+                  <PostCard item={item} id={id}/>
               );
             })
           : "No data available"}

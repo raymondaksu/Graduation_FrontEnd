@@ -5,14 +5,12 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
-import MenuListComposition from "./NavbarMenuList"
+import MenuListComposition from "./NavbarMenuList";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -31,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
+    cursor: 'pointer'
   },
 
   sectionDesktop: {
@@ -118,7 +117,7 @@ export default function Navbar() {
   return (
     <div className={classes.grow}>
       <AppBar position="static">
-        <Toolbar style={{backgroundColor:"#5eaaa8"}}>
+        <Toolbar style={{backgroundColor:"#719fb0"}}>
           {/* <IconButton
             edge="start"
             className={classes.menuButton}
@@ -131,7 +130,7 @@ export default function Navbar() {
           <Typography
             className={classes.title}
             variant="h5"
-            onClick={() => history.goBack()}
+            onClick={() => history.push("/home")}
             noWrap
           >
             Blog
