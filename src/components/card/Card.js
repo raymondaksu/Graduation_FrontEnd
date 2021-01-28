@@ -7,7 +7,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
@@ -16,9 +15,11 @@ import LinesEllipsis from "react-lines-ellipsis";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 355,
     marginBottom: 10,
     marginTop: 10,
+    marginLeft: 15,
+    marginRight: 15,
     backgroundColor: "#351f39",
     color: "#a0c1b8",
   },
@@ -42,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
   timeRoot: {
     paddingTop: 5,
   },
+  contentRoot: {
+    padding: 5,
+    paddingLeft: 15,
+  }
 }));
 
 export default function PostCard({ item }) {
@@ -69,7 +74,7 @@ export default function PostCard({ item }) {
           root: classes.timeRoot,
         }}
       />
-      <CardContent>
+      <CardContent classes={{root: classes.contentRoot}}>
         <LinesEllipsis
           text={item.content}
           maxLine="3"
@@ -80,13 +85,13 @@ export default function PostCard({ item }) {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon style={{ fill: "white" }}/>
+          <FavoriteIcon style={{ fill: "white", marginRight: 5 }}/><span style={{color: 'white', fontSize: '1rem'}}>{item.like_count}</span>
         </IconButton>
         <IconButton aria-label="page visited">
-          <VisibilityIcon style={{ fill: "white" }}/>
+          <VisibilityIcon style={{ fill: "white", marginRight: 5 }}/><span style={{color: 'white', fontSize: '1rem'}}>{item.view_count}</span>
         </IconButton>
         <IconButton aria-label="comment count">
-          <ChatBubbleIcon style={{ fill: "white" }}/>
+          <ChatBubbleIcon style={{ fill: "white", marginRight: 5 }}/><span style={{color: 'white', fontSize: '1rem'}}>{item.comment_count}</span>
         </IconButton>
       </CardActions>
     </Card>
