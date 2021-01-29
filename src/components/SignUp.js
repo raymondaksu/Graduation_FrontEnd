@@ -44,7 +44,6 @@ export default function SignUp() {
       fetchData(values);
     },
   });
-  console.log(formik);
 
   return (
     <div>
