@@ -1,17 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Button from "@material-ui/core/Button";
 
 import MenuListComposition from "./NavbarMenuList";
 import { Context } from "../../context/Context";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -34,32 +33,37 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const history = useHistory();
   const { token, setToken } = useContext(Context);
+  const [ profile, setProfile ] = useState([]);
 
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleProfileClick = () => {
+  const handleProfileOpen = () => {
     history.push("/profile");
-    setAnchorEl(null);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   const handleMainPage = () => {
     history.push("/home");
-    setAnchorEl(null);
   };
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
     history.push("/home");
-    setAnchorEl(null);
   };
+
+  // const fetchUserProfile = async (
+  //   profilePath = `http://fs-blog-app-backend-django.herokuapp.com/user/${user.id}/profile/`
+  // ) => {
+  //   try {
+  //     const result = await axios.get(profilePath);
+  //     setProfile(result?.data?.image);
+  //   } catch ({ response }) {
+  //     if (response) {
+  //       console.log("No data");
+  //     } else {
+  //       console.log("Something went wrong!");
+  //     }
+  //   }
+  // };
 
   return (
     <div className={classes.grow}>
@@ -83,30 +87,14 @@ export default function Navbar() {
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                onClick={handleProfileOpen}
                 color="inherit"
               >
                 <AccountCircle />
               </IconButton>
-              <Menu
-                style={{ marginTop: "3.2rem" }}
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={handleProfileMenuOpen}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </Menu>
+              <Button onClick={handleLogout} color="inherit">
+                Logout
+              </Button>
             </div>
           ) : (
             <>
