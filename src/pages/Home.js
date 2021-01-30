@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState, Suspense, Spinner } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/navbar/Navbar";
 import PostCard from "../components/card/Card";
 
@@ -63,7 +63,7 @@ function Home() {
         <LoopCircleLoading />
       </div>
       :
-      <div style={{ backgroundColor: "#d9dab0" }}>
+      <div style={{ backgroundColor: "#f6f5f5" }}>
         <Navbar />
           <Grid container className={classes.root} spacing={5} justify="center">
             <Grid item xs={12}>
@@ -81,9 +81,9 @@ function Home() {
             justifyContent="center"
             m={1}
             p={1}
-            bgcolor="#d9dab0"
+            bgcolor="#f6f5f5"
           >
-            <Box p={1} style={{ backgroundColor: "#d9dab0" }}>
+            <Box p={1} style={{ backgroundColor: "#f6f5f5" }}>
               {nextURL ? (
                 <Button
                   variant="contained"
