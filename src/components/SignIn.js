@@ -20,6 +20,7 @@ export default function SignIn() {
       const result = await postData("auth/login/", values);
       setToken(result?.data?.key);
       localStorage.setItem("token", result?.data?.key);
+      console.log(result)
       history.push("/home");
     } catch ({ response }) {
       if (response) {
