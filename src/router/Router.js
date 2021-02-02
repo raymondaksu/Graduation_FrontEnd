@@ -4,7 +4,7 @@ import Landing from "../pages/Landing";
 import Home from "../pages/Home";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
-import ProfilePage from "../pages/Profile";
+import ProfilePage from "../pages/profile/Profile";
 
 export default function Router() {
   return (

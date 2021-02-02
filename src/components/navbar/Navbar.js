@@ -47,6 +47,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
+    alert("You successfully logged out.")
     history.push("/home");
   };
 

@@ -33,7 +33,7 @@ function Home() {
   const classes = useStyles();
 
   const fetchData = async (
-    postListURL = "http://fs-blog-app-backend-django.herokuapp.com/api/post-list/"
+    postListURL = "http://fs-blog-backend.herokuapp.com/api/post-list/"
   ) => {
     try {
       const result = await axios.get(postListURL);
