@@ -10,7 +10,6 @@ import Button from "@material-ui/core/Button";
 
 import MenuListComposition from "./NavbarMenuList";
 import { Context } from "../../context/Context";
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
