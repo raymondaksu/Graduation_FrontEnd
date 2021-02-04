@@ -8,16 +8,17 @@ import {
 
 import SearchIcon from "@material-ui/icons/Search";
 
-export const SearchBox = () => {
-  const [inputValue, setInputValue] = useState("");
+export const SearchBox = ({ keyword, setKeyword }) => {
+  // const [inputValue, setInputValue] = useState("");
   const inputRef = useRef();
 
   //   const { setSearchKeyword } = useContext(MovieContext);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      alert(inputRef?.current?.value);
-      //   setSearchKeyword(inputRef?.current?.value);
+      // alert(inputRef?.current?.value);
+        setKeyword(inputRef?.current?.value);
+        inputRef.current.value = '';
     }
   };
 
@@ -27,13 +28,16 @@ export const SearchBox = () => {
         ref={inputRef}
         color="black"
         isColored
-        onChange={(evt) => setInputValue(evt.target.value)}
+        // onChange={(evt) => setInputValue(evt.target.value)}
         onKeyDown={handleKeyDown}
       />
       <StyledSearchButton
         onClick={
-          () => alert("clicked")
-          // setSearchKeyword(inputRef?.current?.value)
+          () => {
+            setKeyword(inputRef?.current?.value);
+            inputRef.current.value = '';
+          }
+          // alert("clicked")
         }
       >
         <SearchIcon />

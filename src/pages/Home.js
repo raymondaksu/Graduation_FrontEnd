@@ -8,7 +8,9 @@ import Navbar from "../components/navbar/Navbar";
 import PostCard from "../components/card/Card";
 import { SearchBox } from "../components/searchbox/SearchBox";
 
-// import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 // import Box from "@material-ui/core/Box";
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(5),
     },
+    minHeight: "70vh",
   },
   paper: {
     height: 140,
@@ -47,17 +50,35 @@ const paginationContainerStyle = {
   alignItems: "center",
   justifyContent: "center",
   marginBottom: "60px",
+  backgroundColor: "#f6f5f5",
 };
+const buttonStyle = {
+  padding: '10px',
+  // backgroundColor: "#dbdbf3",
+  outline: 'none',
+}
 // ---------MAIN FUNCTION----------
 function Home() {
-  const [postList, setPostList] = useState([]);
+  const [postDisplayList, setPostDisplayList] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [filteredDataWithPagination, setFilteredDataWithPagination] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
   // const [nextURL, setNextURL] = useState("");
   const classes = useStyles();
+  const history = useHistory();
 
   // -------for pagination---------
   const [offset, setOffset] = useState(0);
   const [perPage] = useState(6);
   const [pageCount, setPageCount] = useState(0);
+
+  //-----------filter data---------
+  const filterPosts = (keyword, data) => {
+    const filterPostList = data.filter((item) => {
+      return item.title.toUpperCase().indexOf(keyword.toUpperCase()) > -1;
+    });
+    setFilteredData(filterPostList);
+  };
 
   // --------fetch data------------
   const fetchData = async (
@@ -67,9 +88,7 @@ function Home() {
       const result = await axios.get(postListURL);
       // setPostList([...postList, ...result?.data?.results]);
       const data = result?.data;
-      setPageCount(Math.ceil(data.length / perPage));
-      const slice = data.slice(offset, offset + perPage);
-      setPostList(slice);
+      setPostDisplayList(data);
       // setPostList([...postList, ...result?.data]);
       // setNextURL(result?.data?.next);
     } catch ({ response }) {
@@ -81,21 +100,43 @@ function Home() {
     }
   };
 
-  const handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    setOffset(selectedPage + 1);
+  const filteredDataFunc = () => {
+    if (searchKeyword !== "") {
+      filterPosts(searchKeyword, postDisplayList);
+    } else {
+      setFilteredData(postDisplayList)
+    }
   };
 
+  const handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    setOffset(selectedPage*6);
+  };
+
+  function paginationFunc () {
+    const slice = filteredData.slice(offset, offset + perPage);
+    setPageCount(Math.ceil(filteredData.length / perPage));
+    setFilteredDataWithPagination(slice);
+  }
+  
   useEffect(() => {
     fetchData();
-  }, [offset]);
+  }, []);
+
+  useEffect(() => {
+    filteredDataFunc();
+  }, [searchKeyword, postDisplayList]);
+  
+  useEffect(() => {
+    paginationFunc();
+  }, [filteredData, offset, postDisplayList]);
 
   // const handleLoadMore = () => {
   //   fetchData(nextURL);
   // };
 
   // -----------------RETURN------------------
-  return !postList?.length ? (
+  return !postDisplayList?.length ? (
     <div>
       <Navbar />
       <div style={searchContainerStyle}>
@@ -104,19 +145,30 @@ function Home() {
       <LoopCircleLoading />
     </div>
   ) : (
-    <div style={{ backgroundColor: "#f6f5f5" }}>
+    <div
+      style={{
+        backgroundColor: "#f6f5f5",
+        minHeight: "100vh",
+        overflow: "hidden",
+      }}
+    >
       <Navbar />
       <div style={searchContainerStyle}>
-        <SearchBox />
+        <SearchBox keyword={searchKeyword} setKeyword={setSearchKeyword} />
       </div>
       <Grid container className={classes.root} spacing={5} justify="center">
         <Grid item xs={12}>
           <Grid container justify="center" spacing={5}>
-            {postList
-              ? postList.map((item, id) => {
-                  return <PostCard item={item} id={id} />;
-                })
-              : "No data available"}
+            {filteredData.length ? (
+              filteredDataWithPagination.map((item, id) => {
+                return <PostCard item={item} id={id} />;
+              })
+            ) : (
+              <div>
+                <p>"{searchKeyword}" is not available in bloglist titles.</p>
+                <Box p={9}><button type="" onClick={() => setSearchKeyword('')} style={buttonStyle}>Back to HomePage</button></Box>
+              </div>
+            )}
           </Grid>
         </Grid>
       </Grid>
