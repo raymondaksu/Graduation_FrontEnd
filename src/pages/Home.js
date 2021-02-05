@@ -7,13 +7,11 @@ import "./HomePagination.css";
 import Navbar from "../components/navbar/Navbar";
 import PostCard from "../components/card/Card";
 import { SearchBox } from "../components/searchbox/SearchBox";
+import { CategoryDropDown } from "../components/categorydropdown/CategoryDropDown";
 
-import IconButton from "@material-ui/core/IconButton";
 import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-// import Box from "@material-ui/core/Box";
 
 import { LoopCircleLoading } from "react-loadingg";
 
@@ -53,15 +51,16 @@ const paginationContainerStyle = {
   backgroundColor: "#f6f5f5",
 };
 const buttonStyle = {
-  padding: '10px',
-  // backgroundColor: "#dbdbf3",
-  outline: 'none',
-}
+  padding: "10px",
+  outline: "none",
+};
 // ---------MAIN FUNCTION----------
 function Home() {
   const [postDisplayList, setPostDisplayList] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [filteredDataWithPagination, setFilteredDataWithPagination] = useState([]);
+  const [filteredDataWithPagination, setFilteredDataWithPagination] = useState(
+    []
+  );
   const [searchKeyword, setSearchKeyword] = useState("");
   // const [nextURL, setNextURL] = useState("");
   const classes = useStyles();
@@ -86,11 +85,8 @@ function Home() {
   ) => {
     try {
       const result = await axios.get(postListURL);
-      // setPostList([...postList, ...result?.data?.results]);
       const data = result?.data;
       setPostDisplayList(data);
-      // setPostList([...postList, ...result?.data]);
-      // setNextURL(result?.data?.next);
     } catch ({ response }) {
       if (response) {
         console.log("No data");
@@ -104,21 +100,21 @@ function Home() {
     if (searchKeyword !== "") {
       filterPosts(searchKeyword, postDisplayList);
     } else {
-      setFilteredData(postDisplayList)
+      setFilteredData(postDisplayList);
     }
   };
 
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
-    setOffset(selectedPage*6);
+    setOffset(selectedPage * 6);
   };
 
-  function paginationFunc () {
+  function paginationFunc() {
     const slice = filteredData.slice(offset, offset + perPage);
     setPageCount(Math.ceil(filteredData.length / perPage));
     setFilteredDataWithPagination(slice);
   }
-  
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -126,19 +122,15 @@ function Home() {
   useEffect(() => {
     filteredDataFunc();
   }, [searchKeyword, postDisplayList]);
-  
+
   useEffect(() => {
     paginationFunc();
   }, [filteredData, offset, postDisplayList]);
 
-  // const handleLoadMore = () => {
-  //   fetchData(nextURL);
-  // };
-
   // -----------------RETURN------------------
   return !postDisplayList?.length ? (
     <div>
-      <Navbar />
+      <Navbar setKeyword={setSearchKeyword} />
       <div style={searchContainerStyle}>
         <SearchBox />
       </div>
@@ -152,9 +144,12 @@ function Home() {
         overflow: "hidden",
       }}
     >
-      <Navbar />
+      <Navbar setKeyword={setSearchKeyword} />
       <div style={searchContainerStyle}>
-        <SearchBox keyword={searchKeyword} setKeyword={setSearchKeyword} />
+        <SearchBox setKeyword={setSearchKeyword} />
+      </div>
+      <div style={searchContainerStyle}>
+        <CategoryDropDown />
       </div>
       <Grid container className={classes.root} spacing={5} justify="center">
         <Grid item xs={12}>
@@ -166,7 +161,15 @@ function Home() {
             ) : (
               <div>
                 <p>"{searchKeyword}" is not available in bloglist titles.</p>
-                <Box p={9}><button type="" onClick={() => setSearchKeyword('')} style={buttonStyle}>Back to HomePage</button></Box>
+                <Box p={9}>
+                  <button
+                    type=""
+                    onClick={() => setSearchKeyword("")}
+                    style={buttonStyle}
+                  >
+                    Back to HomePage
+                  </button>
+                </Box>
               </div>
             )}
           </Grid>
@@ -187,20 +190,6 @@ function Home() {
           activeClassName={"active"}
         />
       </div>
-
-      {/* <Box display="flex" justifyContent="center" m={1} p={1} bgcolor="#d9dab0">
-            <Box p={1} style={{ backgroundColor: "#f6f5f5" }}>
-              {nextURL ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleLoadMore()}
-                >
-                  View More
-                </Button>
-              ) : null}
-            </Box>
-          </Box> */}
     </div>
   );
 }
