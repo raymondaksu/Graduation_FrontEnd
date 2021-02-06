@@ -148,7 +148,7 @@ function Home() {
       <div style={searchContainerStyle}>
         <SearchBox setKeyword={setSearchKeyword} />
       </div>
-      <div style={searchContainerStyle}>
+      <div style={{...searchContainerStyle, marginTop: '0px'}}>
         <CategoryDropDown />
       </div>
       <Grid container className={classes.root} spacing={5} justify="center">
