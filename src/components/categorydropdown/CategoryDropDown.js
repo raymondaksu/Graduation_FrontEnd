@@ -20,8 +20,7 @@ export const CategoryDropDown = () => {
   ];
 
   return (
-    <div>
-      {/* <StyledButton />
+    <div style={{minWidth: '250px'}}>
       <Select
         defaultValue={[options[1], options[2]]}
         isMulti
@@ -29,7 +28,8 @@ export const CategoryDropDown = () => {
         options={options}
         className="basic-multi-select"
         classNamePrefix="select"
-      /> */}
+        placeholder="Select a Category..."
+      />
     </div>
     // <StyledSearchBox>
     //   <StyledSearchInput ref={inputRef} onKeyDown={handleKeyDown} />
