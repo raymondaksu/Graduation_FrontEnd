@@ -30,9 +30,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // -------------MAIN FUNCTION-------------
-export default function Navbar({ setKeyword }) {
+export default function Navbar() {
   const history = useHistory();
-  const { token, setToken } = useContext(Context);
+  const { token, setToken, setKeyword, setSelectedOption, categoryDisplay } = useContext(Context);
   const [image, setImage] = useState("");
 
   const classes = useStyles();
@@ -42,8 +42,11 @@ export default function Navbar({ setKeyword }) {
   };
 
   const handleMainPage = () => {
-    const resetKeyword = () => setKeyword("");
-    resetKeyword();
+    const resetSearchSettings = () => {
+      setKeyword("");
+      setSelectedOption(categoryDisplay.map((e) => e.value));
+    };
+    resetSearchSettings();
     history.push("/home");
   };
 
