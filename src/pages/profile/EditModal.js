@@ -128,6 +128,7 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
+        hideBackdrop={true}
       >
         {body}
       </Modal>
