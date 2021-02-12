@@ -6,11 +6,14 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import EqualizerIcon from "@material-ui/icons/Equalizer";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
 
 import { LoopCircleLoading } from "react-loadingg";
 
 import Navbar from "../../components/navbar/Navbar";
 import EditModal from "./EditModal";
+import Stats from '../../components/stats/Stats';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +50,9 @@ export default function ProfilePage() {
 
   //----------Modal------------------------
   const [open, setOpen] = useState(false);
+  const [statsOpen, setStatsOpen] = useState(false);
 
+  //----------Fetch Profile Data------------
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -74,6 +79,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchData();
+    // fetchPostData();
   }, []);
 
   //-------------Refresh-------------------
@@ -116,6 +122,9 @@ export default function ProfilePage() {
             </Grid>
             <Grid container justify="center">
               <EditModal open={open} setOpen={setOpen} profile={profile} refresh={refresh}/>
+            </Grid>
+            <Grid container justify="center">
+              <Stats open={statsOpen} setOpen={setStatsOpen} />
             </Grid>
             <Grid container xs={10} justify="center">
             <Box
@@ -163,18 +172,23 @@ export default function ProfilePage() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => null}
+                  onClick={() => setStatsOpen(true)}
                   style={{marginLeft: '1.5rem'}}
                 >
-                  Stats Icon
+                  <EqualizerIcon fontSize="small" />
+                  &nbsp;
+                  Stats
                 </Button>
+                <Stats />
                 <Button
                   variant="contained"
                   color="primary"
                   onClick={() => null}
                   style={{marginLeft: '1rem'}}
                 >
-                  Stories Icon
+                  <MenuBookIcon fontSize="small" />
+                  &nbsp;
+                  Stories
                 </Button>
               </Box>
             </Box>
