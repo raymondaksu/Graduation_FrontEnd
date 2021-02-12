@@ -44,6 +44,10 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState([]);
   const classes = useStyles();
 
+
+  //----------Modal------------------------
+  const [open, setOpen] = useState(false);
+
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -72,6 +76,13 @@ export default function ProfilePage() {
     fetchData();
   }, []);
 
+  //-------------Refresh-------------------
+  const refresh = () => {
+    window.location.reload(false);
+  }
+
+
+  //-------------Return--------------------
   return !profile.user?.length ? (
     <div>
       <Navbar />
@@ -103,6 +114,9 @@ export default function ProfilePage() {
             <Grid container xs={10} justify="center" className={classes.bioContainer}>
               <p style={{textIndent: '40px', textTransform: 'capitalize', alignSelf: 'stretch'}}>{profile.bio}</p>
             </Grid>
+            <Grid container justify="center">
+              <EditModal open={open} setOpen={setOpen} profile={profile} refresh={refresh}/>
+            </Grid>
             <Grid container xs={10} justify="center">
             <Box
               display="flex"
@@ -118,7 +132,7 @@ export default function ProfilePage() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => null}
+                  onClick={() => setOpen(true)}
                   style={{marginLeft: '1.5rem'}}
                 >
                   Edit
