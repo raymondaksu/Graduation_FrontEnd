@@ -173,10 +173,10 @@ function Home() {
       }}
     >
       <Navbar />
-      <div style={{ ...searchContainerStyle, position: "relative" }}>
+      <div style={{ ...searchContainerStyle, width: '50%', margin: '30px auto auto auto' }}>
         <SearchBox />
-        <div style={{ ...searchContainerStyle, position: "absolute", top: '10px' }}>
-        {keyword?.length ? <p style={{color: 'tomato', fontWeight: 'bolder'}}>Results shown with keyword: "{keyword}"</p> : null}
+        <div style={{ ...searchContainerStyle, width: '50%', position: "absolute", top: '107px' }}>
+        {keyword?.length ? <p style={{color: 'tomato', fontWeight: 'bolder', padding: '10px'}}>Results shown with keyword: "{keyword}"</p> : null}
         </div>
       </div>
       <div style={{ ...searchContainerStyle, marginTop: "10px" }}>
@@ -190,7 +190,7 @@ function Home() {
           <Grid container justify="center" spacing={5}>
             {sanitizedData.length ? (
               filteredDataWithPagination.map((item, id) => {
-                return <PostCard item={item} id={id} />;
+                return <PostCard item={item} itemStatus={false} id={id} />;
               })
             ) : (
               <div>

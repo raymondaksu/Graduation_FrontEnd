@@ -32,12 +32,13 @@ const useStyles = makeStyles((theme) => ({
 // -------------MAIN FUNCTION-------------
 export default function Navbar() {
   const history = useHistory();
-  const { token, setToken, setKeyword, setSelectedOption, categoryDisplay } = useContext(Context);
+  const { token, setToken, setKeyword, setSelectedOption, categoryDisplay, setStoriesOpen } = useContext(Context);
   const [image, setImage] = useState("");
 
   const classes = useStyles();
 
   const handleProfileOpen = () => {
+    setStoriesOpen(false);
     history.push("/profile");
   };
 
