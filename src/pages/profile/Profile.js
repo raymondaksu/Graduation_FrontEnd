@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
@@ -11,9 +11,11 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 
 import { LoopCircleLoading } from "react-loadingg";
 
+import { Context } from "../../context/Context";
 import Navbar from "../../components/navbar/Navbar";
 import EditModal from "./EditModal";
 import Stats from '../../components/stats/Stats';
+import Stories from '../../components/stories/Stories';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ProfilePage() {
+  const { storiesOpen, setStoriesOpen } = useContext(Context);
+
   let history = useHistory();
   const [profile, setProfile] = useState([]);
   const classes = useStyles();
@@ -95,7 +99,16 @@ export default function ProfilePage() {
       <LoopCircleLoading />
     </div>
   ) : (
-    <div
+    storiesOpen ? 
+      (
+        <div>
+          <Navbar />
+          <Stories />
+        </div>
+      ) 
+      : 
+    (
+      <div
       style={{
         backgroundColor: "#f6f5f5",
         height: "98vh",
@@ -183,7 +196,7 @@ export default function ProfilePage() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => null}
+                  onClick={() => setStoriesOpen(true)}
                   style={{marginLeft: '1rem'}}
                 >
                   <MenuBookIcon fontSize="small" />
@@ -197,5 +210,6 @@ export default function ProfilePage() {
         </Grid>
       </Grid>
     </div>
+    )
   );
 }

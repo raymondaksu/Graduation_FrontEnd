@@ -13,6 +13,7 @@ export const ContextProvider = ({ children }) => {
   const [selectedOption, setSelectedOption] = useState(
     categoryDisplay.map((e) => e.value)
   );
+  const [storiesOpen, setStoriesOpen] = useState(false);
 
   return (
     <Provider
@@ -25,6 +26,8 @@ export const ContextProvider = ({ children }) => {
         setCategoryDisplay,
         selectedOption,
         setSelectedOption,
+        storiesOpen,
+        setStoriesOpen
       }}
     >
       {children}
