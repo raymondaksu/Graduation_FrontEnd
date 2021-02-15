@@ -90,7 +90,7 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
         <div style={iconContainerStyle}>
           <input
             name="image"
-            type="url"
+            type="text"
             // placeholder="Image"
             value={formik.values.image}
             onChange={formik.handleChange}
