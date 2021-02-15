@@ -1,51 +1,13 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-
+import "./EditModalStyle.css";
 import { putData } from "../../utils/Utils";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
-// ------------INLINE STYLES--------
-const iconContainerStyle = {
-  width: "300px",
-  height: "40px",
-  position: "relative",
-  margin: "30px auto",
-};
-
+//-------------MAIN FUNC------------
 export default function EditModal({ open, setOpen, profile, refresh }) {
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
-
   // ------------FORMIK-------------
   const formik = useFormik({
     initialValues: {
@@ -55,7 +17,7 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
     },
     validationSchema: Yup.object({
       image: Yup.string(),
-      bio: Yup.string().max(1000, "Must be less than 1000 chars"),
+      bio: Yup.string().max(10000, "Must be less than 10000 chars"),
     }),
     onSubmit: (values) => {
       fetchData(values);
@@ -78,20 +40,19 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-      {/* <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p> */}
+    <div className="modalContainer">
       <form onSubmit={formik.handleSubmit}>
-        <div style={iconContainerStyle}>
-          <p>{profile.user}</p>
+        <div className="itemContainer">
+          <h2 style={{ textAlign: "center" }}>{profile.user}'s Profile Edit</h2>
         </div>
-        <div style={iconContainerStyle}>
+        <div className="itemContainer">
+          <div className="label">
+            <label htmlFor="image">Image URL</label>
+          </div>
           <input
+            className="input"
             name="image"
             type="text"
-            // placeholder="Image"
             value={formik.values.image}
             onChange={formik.handleChange}
           />
@@ -99,11 +60,15 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
             <div className="error-message">{formik.errors.image}</div>
           ) : null}
         </div>
-        <div style={iconContainerStyle}>
-          <input
+        <div className="itemContainer">
+          <div className="label">
+            <label htmlFor="bio">Biography</label>
+          </div>
+          <textarea
+            className="textarea"
+            style={{ minHeight: "100px", overflow: "scroll" }}
             name="bio"
             type="text"
-            // placeholder="Password"
             value={formik.values.bio}
             onChange={formik.handleChange}
           />
@@ -111,12 +76,15 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
             <div className="error-message">{formik.errors.bio}</div>
           ) : null}
         </div>
-        <button className="btn" type="submit" onClick={refresh}>
-          Submit
-        </button>
-        <button className="btn" onClick={() => setOpen(false)}>
-          Cancel
-        </button>
+        <div className="buttonContainer">
+          <button className="btn-submit" type="submit" onClick={refresh}>
+            Submit
+          </button>
+
+          <button className="btn-cancel" onClick={() => setOpen(false)}>
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -95,14 +95,22 @@ export default function MenuListComposition() {
                     >
                       Home
                     </MenuItem>
-                    <MenuItem onClick={() => {
+                    <MenuItem
+                      onClick={() => {
                         history.push("/about");
                         setOpen(false);
-                      }}>About Us</MenuItem>
-                    <MenuItem onClick={() => {
+                      }}
+                    >
+                      About Us
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
                         history.push("/contact");
                         setOpen(false);
-                      }}>Contact</MenuItem>
+                      }}
+                    >
+                      Contact
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

@@ -1,20 +1,23 @@
 import "./SignInUp.css";
+
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
+
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { postData } from "../utils/Utils";
+
 // ------------MAIN FUNCTION------------------------
 export default function SignUp() {
   const fetchData = async (values) => {
     try {
       const result = await postData("user/register/", values);
-      alert(`${values.username}'s account created successfully!`)
+      alert(`${values.username}'s account created successfully!`);
     } catch ({ response }) {
       if (response) {
         let res = response.data;
-        let err_list = []
+        let err_list = [];
         for (const property in res) {
           err_list.push(`\n ${property}: ${res[property]}`);
         }
@@ -39,6 +42,7 @@ export default function SignUp() {
     top: "10px",
     left: "15px",
   };
+
   // ------------FORMIK-------------
   const formik = useFormik({
     initialValues: {
@@ -67,6 +71,7 @@ export default function SignUp() {
       fetchData(values);
     },
   });
+
   // ------------RETURN-------------
   return (
     <div className="sign-in-up-form-box">

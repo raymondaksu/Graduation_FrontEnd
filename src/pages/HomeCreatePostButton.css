@@ -1,0 +1,66 @@
+.flyingButton {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    position: fixed;
+    top: 90px;
+    right: 50px;
+    background-color: tomato;
+    color: #fff;
+    font-weight: bold;
+    font-size: 3rem;
+    text-align: center;
+    line-height: 5rem;
+    box-shadow: 3px 3px 6px #837777;
+  }
+  
+  .createPostContainer {
+    position: absolute;
+    width: 8rem;
+    height: 3.4rem;
+    line-height: 3.4rem;
+    border-radius: 1.2rem;
+    top: 6rem;
+    left: 8rem;
+    font-size: 1rem;
+    background-color: #383e56;
+    color: #fb743e;
+    box-shadow: 3px 3px 6px #837777;
+    transition: all 0.6s ease-in-out;
+  }
+  
+  .flyingButton:hover {
+    cursor: pointer;
+    background-color: rgb(245, 48, 13);
+  }
+  .flyingButton:active {
+    top: 92px;
+  }
+  
+  .flyingButton:hover .createPostContainer {
+    left: -1.5rem;
+  }
+  
+  @media (max-width: 500px) {
+    .flyingButton {
+      width: 3rem;
+      height: 3rem;
+      top: 110px;
+      right: 20px;
+      font-size: 3rem;
+      line-height: 3rem;
+    }
+  
+    .createPostContainer {
+      visibility: hidden;
+    }
+  
+    .flyingButton:hover {
+      cursor: pointer;
+      background-color: rgb(245, 48, 13);
+    }
+  
+    .flyingButton:active {
+      top: 112px;
+    }
+  }
