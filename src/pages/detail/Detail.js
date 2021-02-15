@@ -3,6 +3,8 @@ import Navbar from "../../components/navbar/Navbar";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
+
 import { Context } from "../../context/Context";
 
 import TextField from "@material-ui/core/TextField";
@@ -24,21 +26,38 @@ import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles({
   root: {
-    width: "60%",
+    minWidth: "300px",
+    maxWidth: "60vw",
     margin: "20px auto",
   },
   media: {
-    height: 140,
+    height: 300,
   },
-  module: {},
+
+  title: {
+    color: "tomato",
+    textAlign: "center",
+    fontSize: "1.8rem",
+    fontWeight: "bold",
+    margin: "1.6rem auto",
+  },
+  module: {
+    fontSize: "1rem",
+    lineHeight: "1.5rem",
+    textAlign: "justify",
+  },
   image: {
     padding: 3,
+  },
+  authorGroup: {
+    right: "50px",
   },
   avatar: {
     marginBottom: "0.35em",
   },
 });
 
+//--------------MAIN FUNCTION-----------
 const Detail = () => {
   const { userId, setUserId } = useContext(Context);
 
@@ -196,22 +215,6 @@ const Detail = () => {
     fetchData();
   }, []);
 
-  //   title,
-  //   content,
-  //   image_URL,
-  //   category,
-  //   publish_date,
-  //   update_date,
-  //   author,
-  //   author_name,
-  //   author_avatar,
-  //   status,
-  //   is_liked,
-  //   comment_count,
-  //   like_count,
-  //   view_count,
-  //   comments,
-
   return (
     <div>
       <Navbar />
@@ -223,25 +226,25 @@ const Detail = () => {
             title={title}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {title}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {publish_date}
+            <Typography className={classes.title}>{title}</Typography>
+            <CardActions>
+              <Avatar
+                alt="User Avatar"
+                src={author_avatar}
+                className={classes.small}
+              />
+              <Typography gutterBottom variant="h6" component="h2">
+                {author_name}
+              </Typography>
+            </CardActions>
+            <Typography
+              style={{ textAlign: "right", fontSize: "13px", color: "#3c6382" }}
+            >
+              {moment(item.publish_date).format("MMMM Do YYYY, h:mm")}
             </Typography>
             <p className={classes.module}>{content}</p>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Avatar
-            alt="User Avatar"
-            src={author_avatar}
-            className={classes.small}
-          />
-          <Typography gutterBottom variant="h6" component="h2">
-            {author_name}
-          </Typography>
-        </CardActions>
         <CardActions>
           <IconButton
             aria-label="add to favorites"
@@ -267,34 +270,87 @@ const Detail = () => {
           </Typography>
         </CardActions>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography
+            style={{
+              fontSize: "1.5rem",
+              color: "#079992",
+              fontWeight: "bold",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
             Comments
           </Typography>
           {comments?.length
             ? comments.map((item, idx) => {
                 return (
-                  <Fragment key={idx}>
-                    <hr />
-                    <Typography variant="h6">
-                      {item?.commenter_name}:
+                  <div
+                    key={idx}
+                    style={{
+                      backgroundColor: "#ecf0f1",
+                      marginBottom: "5px",
+                      padding: "5px",
+                      paddingLeft: "12px",
+                      borderRadius: "6px",
+                    }}
+                  >
+                    <Typography
+                      style={{
+                        fontSize: "14px",
+                        color: "#079992",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {item?.commenter_name}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography
+                      style={{
+                        fontSize: "14px",
+                      }}
+                    >
                       {item?.content}
                     </Typography>
-                  </Fragment>
+                  </div>
                 );
               })
             : "No comments"}
-          <TextField
+          {/* <TextField
             ref={commentRef}
             fullWidth
             margin="normal"
             id="comment"
             name="comment"
-            label="Add comment"
+            label="Add a comment"
             value={comment}
             onChange={handleCommentChange}
             onKeyPress={handleCommentSend}
+            style={{
+              backgroundColor: "#b8e994",
+              padding: "8px",
+              paddingLeft: "15px",
+            }}
+          /> */}
+          <textarea
+            ref={commentRef}
+            id="comment"
+            name="comment"
+            label="Add a comment"
+            placeholder="Share your thoughts..."
+            value={comment}
+            onChange={handleCommentChange}
+            onKeyPress={handleCommentSend}
+            style={{
+              backgroundColor: "#eae3c8",
+              padding: "8px",
+              paddingLeft: "15px",
+              width: "100%",
+              height: "80px",
+              fontFamily: "Arial",
+              margin: "1rem auto",
+              borderRadius: "10px",
+              fontSize: "14px",
+              outline: "none",
+            }}
           />
           <Button
             onClick={() => {

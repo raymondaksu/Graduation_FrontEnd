@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from '../../context/Context';
+import { Context } from "../../context/Context";
 import Select from "react-select";
 
 import axios from "axios";
@@ -7,7 +7,7 @@ import axios from "axios";
 export const CategoryDropDown = ({ setSelectedOption }) => {
   const [categories, setCategories] = useState([]);
 
-  const { categoryDisplay, setCategoryDisplay, reset } = useContext(Context);
+  const { categoryDisplay, setCategoryDisplay } = useContext(Context);
 
   // --------fetch category list------------
   const fetchData = async (
@@ -32,25 +32,29 @@ export const CategoryDropDown = ({ setSelectedOption }) => {
 
   useEffect(() => {
     fetchData();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    setCategoryDisplay(categories.map((item) => {
-      return {value: item.name, label: item.name.charAt(0).toUpperCase() + item.name.slice(1) }
-    }))
-  }, [categories])
+    setCategoryDisplay(
+      categories.map((item) => {
+        return {
+          value: item.name,
+          label: item.name.charAt(0).toUpperCase() + item.name.slice(1),
+        };
+      })
+    );
+  }, [categories]);
 
   return (
-    <div style={{minWidth: '250px'}}>
+    <div style={{ minWidth: "250px" }}>
       <Select
         isMulti
-        name="colors"
+        name="categories"
         options={categoryDisplay}
         className="basic-multi-select"
         classNamePrefix="select"
-        placeholder="Select a Category..."
         onChange={(e) => {
-          selectedFunc(e)
+          selectedFunc(e);
         }}
       />
     </div>

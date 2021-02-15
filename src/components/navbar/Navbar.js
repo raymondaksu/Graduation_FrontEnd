@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import MenuListComposition from "./NavbarMenuList";
 import { Context } from "../../context/Context";
@@ -32,14 +34,22 @@ const useStyles = makeStyles((theme) => ({
 // -------------MAIN FUNCTION-------------
 export default function Navbar() {
   const history = useHistory();
-  const { token, setToken, setKeyword, setSelectedOption, categoryDisplay, setStoriesOpen, setUserId } = useContext(Context);
+  const {
+    token,
+    setToken,
+    setKeyword,
+    setSelectedOption,
+    categoryDisplay,
+    setStoriesOpen,
+    setUserId,
+  } = useContext(Context);
   const [image, setImage] = useState("");
 
   const classes = useStyles();
 
   const handleProfileOpen = () => {
-    setStoriesOpen(false);
     history.push("/profile");
+    setStoriesOpen(false);
   };
 
   const handleMainPage = () => {
@@ -72,6 +82,7 @@ export default function Navbar() {
         },
       });
       setImage(result?.data?.image);
+      console.log("Profile info fetched");
     } catch ({ response }) {
       if (response) {
         console.log("No data");
@@ -117,7 +128,7 @@ export default function Navbar() {
                   />
                 </IconButton>
                 <Button onClick={handleLogout} color="inherit">
-                  Logout
+                  <ExitToAppIcon fontSize="large" />
                 </Button>
               </div>
             ) : (

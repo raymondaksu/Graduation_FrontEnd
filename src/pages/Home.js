@@ -2,12 +2,16 @@ import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import ReactPaginate from "react-paginate";
 import "./HomePagination.css";
+import "./HomeCreatePostButton.css";
+
+import { Context } from "../context/Context";
 
 import Navbar from "../components/navbar/Navbar";
 import PostCard from "../components/card/Card";
-import { Context } from "../context/Context";
 import { SearchBox } from "../components/searchbox/SearchBox";
 import { CategoryDropDown } from "../components/categorydropdown/CategoryDropDown";
+
+import ControlPointIcon from "@material-ui/icons/ControlPoint";
 
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
@@ -33,8 +37,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // -----------INLINE STYLES--------
+
 const searchContainerStyle = {
-  width: "100%",
+  width: "50%",
   height: "80px",
   display: "flex",
   alignItems: "center",
@@ -54,9 +59,17 @@ const buttonStyle = {
   padding: "10px",
   outline: "none",
 };
+
 // ---------MAIN FUNCTION----------
 function Home() {
-  const { keyword, setKeyword, categoryDisplay, selectedOption, setSelectedOption} = useContext(Context);
+  const {
+    keyword,
+    setKeyword,
+    categoryDisplay,
+    selectedOption,
+    setSelectedOption,
+    userId,
+  } = useContext(Context);
 
   const [postDisplayList, setPostDisplayList] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -64,12 +77,13 @@ function Home() {
   const [filteredDataWithPagination, setFilteredDataWithPagination] = useState(
     []
   );
+
   const classes = useStyles();
 
-    // -------for pagination---------
-    const [offset, setOffset] = useState(0);
-    const [perPage] = useState(6);
-    const [pageCount, setPageCount] = useState(0);
+  // -------for pagination---------
+  const [offset, setOffset] = useState(0);
+  const [perPage] = useState(6);
+  const [pageCount, setPageCount] = useState(0);
 
   // --------fetch data------------
   const fetchData = async (
@@ -87,7 +101,7 @@ function Home() {
       }
     }
   };
-  
+
   //-----------filter data---------
   const filterPosts = (keyword, data) => {
     const filterPostList = data.filter((item) => {
@@ -103,21 +117,21 @@ function Home() {
       setFilteredData(postDisplayList);
     }
   };
-  
+
   // -------category filter-------------
-  const categoryFilterData = []
+  const categoryFilterData = [];
 
   function categoryFilterFunc() {
     selectedOption.forEach((e) => {
       filteredData.forEach((x) => {
         if (e === x.category) {
-          categoryFilterData.push(x)
+          categoryFilterData.push(x);
         }
-      })
-    })
+      });
+    });
   }
 
-// ---------------Pagination logic---------------------------
+  // ---------------Pagination logic---------------------------
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
     setOffset(selectedPage * 6);
@@ -128,32 +142,32 @@ function Home() {
     setPageCount(Math.ceil(sanitizedData.length / perPage));
     setFilteredDataWithPagination(slice);
   }
-//------------------------------------------------------------
 
+  // ----------useEffects--------
   useEffect(() => {
     fetchData();
+    console.log("token : ", localStorage.getItem("token"));
   }, []);
 
   useEffect(() => {
     filteredDataFunc();
   }, [keyword, postDisplayList]);
 
-  
   useEffect(() => {
     categoryFilterFunc();
     setSanitizedData(categoryFilterData);
-  }, [filteredData, selectedOption])
-  
+  }, [filteredData, selectedOption]);
+
   useEffect(() => {
     paginationFunc();
-    console.log(sanitizedData)
+    // console.log(sanitizedData);
   }, [sanitizedData, offset, postDisplayList]);
 
   useEffect(() => {
     if (!selectedOption.length) {
-    setSelectedOption(categoryDisplay.map(e => e.value))
+      setSelectedOption(categoryDisplay.map((e) => e.value));
     }
-  }, [selectedOption])
+  }, [selectedOption]);
 
   // -----------------RETURN------------------
   return !postDisplayList?.length ? (
@@ -173,13 +187,36 @@ function Home() {
       }}
     >
       <Navbar />
-      <div style={{ ...searchContainerStyle, width: '50%', margin: '30px auto auto auto' }}>
+      {userId && (
+        <div className="flyingButton" onClick={() => null}>
+          <ControlPointIcon fontSize="large" />
+          <div className="createPostContainer">Create a Post</div>
+        </div>
+      )}
+      <div
+        style={{
+          ...searchContainerStyle,
+          margin: "30px auto",
+        }}
+      >
         <SearchBox />
-        <div style={{ ...searchContainerStyle, width: '50%', position: "absolute", top: '107px' }}>
-        {keyword?.length ? <p style={{color: 'tomato', fontWeight: 'bolder', padding: '10px'}}>Results shown with keyword: "{keyword}"</p> : null}
+        <div
+          style={{
+            ...searchContainerStyle,
+            position: "absolute",
+            top: "107px",
+          }}
+        >
+          {keyword?.length ? (
+            <p
+              style={{ color: "tomato", fontWeight: "bolder", padding: "10px" }}
+            >
+              Results shown with keyword: "{keyword}"
+            </p>
+          ) : null}
         </div>
       </div>
-      <div style={{ ...searchContainerStyle, marginTop: "10px" }}>
+      <div style={{ ...searchContainerStyle, margin: "10px auto" }}>
         <CategoryDropDown
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
@@ -194,13 +231,15 @@ function Home() {
               })
             ) : (
               <div>
-                {keyword?.length ? <p>"{keyword}" is not available in bloglist titles.</p> : null}
+                {keyword?.length ? (
+                  <p>"{keyword}" is not available in bloglist titles.</p>
+                ) : null}
                 <Box p={9}>
                   <button
                     type=""
                     onClick={() => {
                       setKeyword("");
-                      setSelectedOption(categoryDisplay.map(e => e.value));
+                      setSelectedOption(categoryDisplay.map((e) => e.value));
                     }}
                     style={buttonStyle}
                   >

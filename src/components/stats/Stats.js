@@ -1,47 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
+import "./Stats.css";
 import Modal from "@material-ui/core/Modal";
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+// ------------MAIN FUNCTION--------
 
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
-// ------------INLINE STYLES--------
-const iconContainerStyle = {
-  width: "300px",
-  height: "40px",
-  position: "relative",
-  margin: "30px auto",
-};
-
-export default function Stats({open, setOpen}) {
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = useState(getModalStyle);
+export default function Stats({ open, setOpen }) {
   const [postList, setPostList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [allValues, setAllValues] = useState({
@@ -134,16 +99,40 @@ export default function Stats({open, setOpen}) {
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <p>Count of all stories: {filteredList.length}</p>
-      <p>Count of published stories: {allValues.publishedCount}</p>
-      <p>Count of draft stories: {filteredList.length - allValues.publishedCount}</p>
-      <p>Total comment counts of stories: {allValues.totalCommentCount}</p>
-      <p>Total view counts of stories: {allValues.totalViewCount}</p>
-      <p>Total like counts of stories: {allValues.totalLikeCount}</p>
-      <button className="btn" onClick={() => setOpen(false)}>
-        Cancel
-      </button>
+    <div className="statsContainer">
+      <h2>Post Statistics</h2>
+      <table>
+        <tr>
+          <td>Number of all stories</td>
+          <td>{filteredList.length}</td>
+        </tr>
+        <tr>
+          <td>Number of published stories</td>
+          <td>{allValues.publishedCount}</td>
+        </tr>
+        <tr>
+          <td>Number of draft stories</td>
+          <td>{filteredList.length - allValues.publishedCount}</td>
+        </tr>
+        <tr>
+          <td>Number of post views</td>
+          <td>{allValues.totalViewCount}</td>
+        </tr>
+        <tr>
+          <td>Number of received comments</td>
+          <td>{allValues.totalCommentCount}</td>
+        </tr>
+        <tr>
+          <td>Number of received likes</td>
+          <td>{allValues.totalLikeCount}</td>
+        </tr>
+      </table>
+
+      <div className="btn-container">
+        <button className="btn-ok" onClick={() => setOpen(false)}>
+          OK
+        </button>
+      </div>
     </div>
   );
 
@@ -160,8 +149,8 @@ export default function Stats({open, setOpen}) {
   }, [filteredList]);
 
   useEffect(() => {
-    console.log(allValues)
-  }, [allValues])
+    console.log(allValues);
+  }, [allValues]);
 
   return (
     <div>
@@ -174,24 +163,5 @@ export default function Stats({open, setOpen}) {
         {body}
       </Modal>
     </div>
-  )
-
+  );
 }
-
-
-// "title": "Is Angular For You?",
-// "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
-// "image_URL": "https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15991/top-18-most-common-angularjs-developer-mistakes-41f9ad303a51db70e4a5204e101e7414.png",
-// "category": "frontend",
-// "publish_date": "2021-02-01T17:17:52.656309Z",
-// "update_date": "2021-02-01T17:17:52.656338Z",
-// "author": 2,
-// "author_name": "eric",
-// "author_avatar": "https://cdn.united.no/uploads/united_ez/cantona_eric_profil_stor-269x313.jpg",
-// "status": "published",
-// "is_liked": null,
-// "slug": "eric-is-angular-for-you017fb8f917",
-// "comment_count": 0,
-// "like_count": 0,
-// "view_count": 0,
-// "comments": []

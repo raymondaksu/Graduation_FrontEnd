@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 15,
     backgroundColor: "#351f39",
     color: "#a0c1b8",
-    cursor: 'pointer',
+    borderRadius: "26px",
+    cursor: "pointer",
   },
   media: {
     height: 0,
@@ -35,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
   Subheader: {
     color: "white",
-    fontWeight: 200,
+    fontSize: "0.8rem",
+    fontWeight: 400,
   },
   timeContent: {
     textAlign: "right",
@@ -51,12 +53,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//--------inline styles----------------
+const statusStyle = {
+  height: "1.2rem",
+  lineHeight: "1.2rem",
+  textAlign: "center",
+  backgroundColor: "#44bd32",
+  color: "#fff",
+  borderRadius: "9px",
+  width: "8rem",
+  fontSize: "0.7rem",
+  margin: "0.3rem",
+  marginBottom: "0.7rem",
+};
+
+const iconContainer = {
+  margin: "5px auto",
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-around",
+  borderTop: "1px solid rgba(220, 221, 225, 0.2)",
+};
+
+const iconStyle = {
+  fill: "white",
+  marginRight: 5,
+  color: "#fff",
+};
+
+//---------------MAIN FUNCTION-------------------
 export default function PostCard({ item, itemStatus, id }) {
   const classes = useStyles();
   const history = useHistory();
 
   return (
-    <Card className={classes.root} onClick={() => history.push(`/detail/${item.slug}`)}>
+    <Card
+      className={classes.root}
+      onClick={() => history.push(`/detail/${item.slug}`)}
+    >
       <CardHeader
         classes={{
           title: classes.headerTitle,
@@ -87,37 +121,43 @@ export default function PostCard({ item, itemStatus, id }) {
         />
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon style={{ fill: "white", marginRight: 5 }} />
-          <span style={{ color: "white", fontSize: "1rem" }}>
-            {item.like_count}
-          </span>
-        </IconButton>
-        <IconButton aria-label="page visited">
-          <VisibilityIcon style={{ fill: "white", marginRight: 5 }} />
-          <span style={{ color: "white", fontSize: "1rem" }}>
-            {item.view_count}
-          </span>
-        </IconButton>
-        <IconButton aria-label="comment count">
-          <ChatBubbleIcon style={{ fill: "white", marginRight: 5 }} />
-          <span style={{ color: "white", fontSize: "1rem" }}>
-            {item.comment_count}
-          </span>
-        </IconButton>
+        <div style={iconContainer}>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon style={iconStyle} />
+            <span style={{ ...iconStyle, fontSize: "1rem" }}>
+              {item.like_count}
+            </span>
+          </IconButton>
+          <IconButton aria-label="page visited">
+            <VisibilityIcon style={iconStyle} />
+            <span style={{ ...iconStyle, fontSize: "1rem" }}>
+              {item.view_count}
+            </span>
+          </IconButton>
+          <IconButton aria-label="comment count">
+            <ChatBubbleIcon style={iconStyle} />
+            <span style={{ ...iconStyle, fontSize: "1rem" }}>
+              {item.comment_count}
+            </span>
+          </IconButton>
+        </div>
       </CardActions>
-      {itemStatus == false ? (
-        null
+      {itemStatus == false ? null : item.status == "published" ? (
+        <CardContent
+          classes={{ root: classes.contentRoot }}
+          style={{ padding: "0 0 5px 15px" }}
+        >
+          <p style={statusStyle}>Status: Published</p>
+        </CardContent>
       ) : (
-        item.status == "published" ? (
-          <CardContent classes={{ root: classes.contentRoot }} style={{padding: '0 0 5px 15px'}} >
-            <p style={{color: 'red'}}> <i>Status: Published</i> </p>
-          </CardContent>
-        ) : (
-          <CardContent classes={{ root: classes.contentRoot }} style={{padding: '0 0 5px 15px'}}>
-            <p style={{color: 'red'}}> <i>Status: Draft</i> </p>
-          </CardContent>
-        )
+        <CardContent
+          classes={{ root: classes.contentRoot }}
+          style={{ padding: "0 0 5px 15px" }}
+        >
+          <p style={{ ...statusStyle, backgroundColor: "#e1b12c" }}>
+            Status: Draft
+          </p>
+        </CardContent>
       )}
     </Card>
   );

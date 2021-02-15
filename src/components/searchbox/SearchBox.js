@@ -1,5 +1,5 @@
 import { useRef, useContext } from "react";
-import { Context } from '../../context/Context';
+import { Context } from "../../context/Context";
 import {
   StyledSearchBox,
   StyledSearchInput,
@@ -10,14 +10,12 @@ import SearchIcon from "@material-ui/icons/Search";
 
 export const SearchBox = () => {
   const inputRef = useRef();
-
   const { setKeyword } = useContext(Context);
-
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-        setKeyword(inputRef?.current?.value);
-        inputRef.current.value = '';
+      setKeyword(inputRef?.current?.value);
+      inputRef.current.value = "";
     }
   };
 
