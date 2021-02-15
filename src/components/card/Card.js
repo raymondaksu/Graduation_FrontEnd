@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 15,
     backgroundColor: "#351f39",
     color: "#a0c1b8",
+    cursor: 'pointer',
   },
   media: {
     height: 0,
@@ -51,9 +53,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PostCard({ item, itemStatus, id }) {
   const classes = useStyles();
+  const history = useHistory();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onClick={() => history.push(`/detail/${item.slug}`)}>
       <CardHeader
         classes={{
           title: classes.headerTitle,

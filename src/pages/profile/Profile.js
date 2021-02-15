@@ -83,7 +83,6 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchData();
-    // fetchPostData();
   }, []);
 
   //-------------Refresh-------------------
@@ -131,7 +130,7 @@ export default function ProfilePage() {
               />
             </Grid>
             <Grid container xs={10} justify="center" className={classes.bioContainer}>
-              <p style={{textIndent: '40px', textTransform: 'capitalize', alignSelf: 'stretch'}}>{profile.bio}</p>
+              <p style={{textIndent: '40px', alignSelf: 'stretch'}}>{profile.bio}</p>
             </Grid>
             <Grid container justify="center">
               <EditModal open={open} setOpen={setOpen} profile={profile} refresh={refresh}/>

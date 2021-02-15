@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 // -------------MAIN FUNCTION-------------
 export default function Navbar() {
   const history = useHistory();
-  const { token, setToken, setKeyword, setSelectedOption, categoryDisplay, setStoriesOpen } = useContext(Context);
+  const { token, setToken, setKeyword, setSelectedOption, categoryDisplay, setStoriesOpen, setUserId } = useContext(Context);
   const [image, setImage] = useState("");
 
   const classes = useStyles();
@@ -55,6 +55,7 @@ export default function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     setToken(null);
+    setUserId(null);
     alert("You successfully logged out.");
     history.push("/home");
   };

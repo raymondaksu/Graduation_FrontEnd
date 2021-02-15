@@ -34,7 +34,7 @@ const buttonStyle = {
 };
 
 const Stories = () => {
-  const { storiesOpen, setStoriesOpen } = useContext(Context);
+  const { setStoriesOpen } = useContext(Context);
 
   const [postList, setPostList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
@@ -121,9 +121,13 @@ const Stories = () => {
           Back to Profile Page
         </button>
       </Box>
-      {!filteredList?.length ? (
+      {!postList?.length ? (
         <div>
           <LoopCircleLoading />
+        </div>
+      ) : !filteredList?.length ? (
+        <div>
+          <p>You have no article to shown yet.</p>
         </div>
       ) : (
         <>
@@ -133,7 +137,7 @@ const Stories = () => {
               <Grid container justify="center" spacing={5}>
                 {published.length ? (
                   published.map((item, id) => {
-                    return <PostCard item={item} id={id} />;
+                    return <PostCard item={item} itemStatus={true} id={id} />;
                   })
                 ) : (
                   <div>

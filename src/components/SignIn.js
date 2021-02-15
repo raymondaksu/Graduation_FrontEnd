@@ -11,17 +11,17 @@ import { postData } from "../utils/Utils";
 
 // ------------MAIN FUNCTION------------------------
 export default function SignIn() {
-  const { token, setToken } = useContext(Context);
+  const { setToken, setUserId } = useContext(Context);
   const [signInError, setSignInError] = useState(null);
   const history = useHistory();
 
   const fetchData = async (values) => {
     try {
       const result = await postData("auth/login/", values);
-      setToken(result?.data?.key);
       localStorage.setItem("token", result?.data?.key);
       localStorage.setItem("userId", result?.data?.user.id);
-      console.log(result)
+      setToken(result?.data?.key);
+      setUserId(result?.data?.user.id);
       history.push("/home");
     } catch ({ response }) {
       if (response) {

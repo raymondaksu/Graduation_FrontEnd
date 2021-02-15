@@ -1,25 +1,28 @@
 import "./SignInUp.css";
-
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { postData } from "../utils/Utils";
-import { toast, ToastContainer } from "react-toastify";
-
 // ------------MAIN FUNCTION------------------------
 export default function SignUp() {
-  const fetchData = (values) => {
-    postData("user/register/", values)
-      .then((data, err) => {
-        alert("Successfully registered, You can Log In now");
-      })
-      .catch((err) => {
-        toast(err?.message || "An error occured");
-        alert(err?.message || "An error occured");
-      });
+  const fetchData = async (values) => {
+    try {
+      const result = await postData("user/register/", values);
+      alert(`${values.username}'s account created successfully!`)
+    } catch ({ response }) {
+      if (response) {
+        let res = response.data;
+        let err_list = []
+        for (const property in res) {
+          err_list.push(`\n ${property}: ${res[property]}`);
+        }
+        alert(err_list);
+      } else {
+        console.log("Something went wrong!");
+      }
+    }
   };
   const refresh = () => {
     window.location.reload(false);
@@ -36,7 +39,6 @@ export default function SignUp() {
     top: "10px",
     left: "15px",
   };
-
   // ------------FORMIK-------------
   const formik = useFormik({
     initialValues: {
@@ -65,13 +67,11 @@ export default function SignUp() {
       fetchData(values);
     },
   });
-
   // ------------RETURN-------------
   return (
     <div className="sign-in-up-form-box">
-      <ToastContainer />
       <form onSubmit={formik.handleSubmit}>
-      <div style={iconContainerStyle}>
+        <div style={iconContainerStyle}>
           <div style={iconStyle}>
             <PersonIcon fontSize="small" />
           </div>

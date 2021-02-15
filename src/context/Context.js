@@ -6,8 +6,10 @@ export const Context = createContext();
 const { Provider } = Context;
 
 export const ContextProvider = ({ children }) => {
-  const session_token = localStorage.getItem("token");
+  const user_id = localStorage.getItem('userId');
+  const session_token = localStorage.getItem('token');
   const [token, setToken] = useState(session_token);
+  const [userId, setUserId] = useState(user_id);
   const [keyword, setKeyword] = useState("");
   const [categoryDisplay, setCategoryDisplay] = useState([]);
   const [selectedOption, setSelectedOption] = useState(
@@ -27,7 +29,9 @@ export const ContextProvider = ({ children }) => {
         selectedOption,
         setSelectedOption,
         storiesOpen,
-        setStoriesOpen
+        setStoriesOpen,
+        userId,
+        setUserId
       }}
     >
       {children}
