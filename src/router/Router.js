@@ -6,6 +6,7 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import ProfilePage from "../pages/profile/Profile";
 import Detail from "../pages/detail/Detail";
+import PasswordReset from "../pages/PasswordReset";
 import PrivateRouter from './PrivateRouter'
 
 export default function Router() {
@@ -17,6 +18,7 @@ export default function Router() {
           <Route path="/home" component={Home} exact />
           <Route path="/about" component={About} exact />
           <Route path="/contact" component={Contact} exact />
+          <Route path="/password-reset" component={PasswordReset} exact />
           <PrivateRouter path="/profile" component={ProfilePage} exact />
           <PrivateRouter path="/detail/:slug" component={Detail} exact />
           {/* 

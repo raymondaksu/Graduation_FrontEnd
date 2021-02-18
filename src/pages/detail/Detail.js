@@ -4,14 +4,11 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-
 import { Context } from "../../context/Context";
-
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
-
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -23,7 +20,6 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import Avatar from "@material-ui/core/Avatar";
-
 const useStyles = makeStyles({
   root: {
     minWidth: "300px",
@@ -33,7 +29,6 @@ const useStyles = makeStyles({
   media: {
     height: 300,
   },
-
   title: {
     color: "tomato",
     textAlign: "center",
@@ -49,32 +44,25 @@ const useStyles = makeStyles({
   image: {
     padding: 3,
   },
-  authorGroup: {
-    right: "50px",
-  },
   avatar: {
     marginBottom: "0.35em",
   },
 });
-
 //--------------MAIN FUNCTION-----------
 const Detail = () => {
   const { userId, setUserId } = useContext(Context);
-
   const commentRef = useRef("");
-
   let { slug } = useParams();
   const [item, setItem] = useState([]);
   const [comment, setComment] = useState("");
   const classes = useStyles();
   const history = useHistory();
-
   // --------fetch data------------
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/post-detail/`,
+        `https://fsblog-backend.herokuapp.com/api/${slug}/post-detail/`,
         {
           headers: {
             Accept: "application/json",
@@ -92,7 +80,6 @@ const Detail = () => {
       }
     }
   };
-
   //----------------Destruction----------------
   const {
     title,
@@ -111,11 +98,10 @@ const Detail = () => {
     view_count,
     comments,
   } = item;
-
   const handleLikeClick = async () => {
     try {
       const result = await axios.post(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/like/`,
+        `https://fsblog-backend.herokuapp.com/api/${slug}/like/`,
         null,
         {
           headers: {
@@ -134,7 +120,6 @@ const Detail = () => {
       }
     }
   };
-
   //   const handleDeleteClick = async () => {
   //     try {
   //       const result = await axios.delete(
@@ -156,16 +141,14 @@ const Detail = () => {
   //       }
   //     }
   //   };
-
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
-
   const handleCommentSend = async (key) => {
     if (key?.charCode === 13) {
       try {
         const result = await axios.post(
-          `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
+          `https://fsblog-backend.herokuapp.com/api/${slug}/comment-create/`,
           { content: comment },
           {
             headers: {
@@ -186,11 +169,10 @@ const Detail = () => {
       }
     }
   };
-
   const handleCommentSendWithClick = async () => {
     try {
       const result = await axios.post(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
+        `https://fsblog-backend.herokuapp.com/api/${slug}/comment-create/`,
         { content: comment },
         {
           headers: {
@@ -210,11 +192,9 @@ const Detail = () => {
       }
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
-
   return (
     <div>
       <Navbar />
@@ -281,6 +261,7 @@ const Detail = () => {
           >
             Comments
           </Typography>
+          {/* comment-box---------------------- */}
           {comments?.length
             ? comments.map((item, idx) => {
                 return (
@@ -292,24 +273,57 @@ const Detail = () => {
                       padding: "5px",
                       paddingLeft: "12px",
                       borderRadius: "6px",
+                      display: "flex",
+                      boxShadow: "2px 2px 5px #636e72",
                     }}
                   >
-                    <Typography
+                    <div
                       style={{
-                        fontSize: "14px",
-                        color: "#079992",
-                        fontWeight: "bold",
+                        padding: "6px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "top",
                       }}
                     >
-                      {item?.commenter_name}
-                    </Typography>
-                    <Typography
+                      <Avatar
+                        alt="Commenter Avatar"
+                        src={item?.commenter_avatar}
+                        className={classes.small}
+                      />
+                    </div>
+                    <div
                       style={{
-                        fontSize: "14px",
+                        paddingLeft: "12px",
+                        paddingRight: "8px",
+                        width: "100%",
                       }}
                     >
-                      {item?.content}
-                    </Typography>
+                      <Typography
+                        style={{
+                          fontSize: "14px",
+                          color: "#079992",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {item?.commenter_name}
+                      </Typography>
+                      <Typography
+                        style={{
+                          fontSize: "14px",
+                        }}
+                      >
+                        {item?.content}
+                      </Typography>
+                      <Typography
+                        style={{
+                          textAlign: "right",
+                          fontSize: "12px",
+                          color: "#3c6382",
+                        }}
+                      >
+                        {moment(item?.time_stamp).format("MMMM Do YYYY, h:mm")}
+                      </Typography>
+                    </div>
                   </div>
                 );
               })
@@ -407,5 +421,4 @@ const Detail = () => {
     </div>
   );
 };
-
 export default Detail;

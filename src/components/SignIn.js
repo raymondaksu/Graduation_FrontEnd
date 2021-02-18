@@ -88,6 +88,18 @@ export default function SignIn() {
         <button className="btn" onClick={refresh}>
           Cancel
         </button>
+        <p
+          style={{
+            cursor: "pointer",
+            color: "yellow",
+            fontWeight: "bold",
+          }}
+          onClick={() => {
+            history.push("/password-reset");
+          }}
+        >
+          Forgot password?
+        </p>
       </form>
     </div>
   );

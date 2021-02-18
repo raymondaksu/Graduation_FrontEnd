@@ -44,7 +44,7 @@ const searchContainerStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  marginTop: "30px",
+  margin: "30px auto",
 };
 const paginationContainerStyle = {
   width: "100%",
@@ -87,7 +87,7 @@ function Home() {
 
   // --------fetch data------------
   const fetchData = async (
-    postListURL = "https://fs-blog-backend.herokuapp.com/api/post-list/"
+    postListURL = "https://fsblog-backend.herokuapp.com/api/post-list/"
   ) => {
     try {
       const result = await axios.get(postListURL);
@@ -173,7 +173,10 @@ function Home() {
   return !postDisplayList?.length ? (
     <div>
       <Navbar />
-      <div style={searchContainerStyle}>
+      <div style={{
+          ...searchContainerStyle,
+          margin: "30px auto",
+        }}>
         <SearchBox />
       </div>
       <LoopCircleLoading />
