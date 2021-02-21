@@ -1,11 +1,12 @@
-import React, { useRef } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useRef, useState } from "react";
 import axios from "axios";
+import Navbar from "../components/navbar/Navbar";
 
 //-------------MAIN FUNC------------
 export default function Passwordreset() {
   const inputRef = useRef();
-  const history = useHistory();
+  const [returnData, setReturnData] = useState([]);
+  const [error, setError] = useState([]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -18,40 +19,65 @@ export default function Passwordreset() {
     try {
       console.log(email);
       const result = await axios.post(
-        "https://fsblog-backend.herokuapp.com/auth/password/reset/",
+        "https://fs-blog-backend.herokuapp.com/user/reset-password/",
         { email: email }
-        // {
-        //   headers: {
-        //     Accept: "application/json",
-        //     "Content-Type": "application/json",
-        //     Authorization: null,
-        //   },
-        // }
       );
-      //history.push("/password-reset-done");
-      console.log(result.data);
+      setReturnData(result.data);
+      console.log(result.data.success);
     } catch ({ response }) {
       if (response) {
-        console.log("No data");
+        setError(response.data.error);
       } else {
-        console.log("Something went wrong!");
+        alert("Something went wrong!");
       }
     }
   };
 
   return (
     <div>
-      <label>Enter your email</label>
-
-      <input type="email" ref={inputRef} onKeyDown={handleKeyDown} />
-      <button
-        onClick={() => {
-          fetchData(inputRef?.current?.value);
-          inputRef.current.value = "";
+      <Navbar />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          alignItems: "center",
         }}
       >
-        Send
-      </button>
+        <h2>Password Reset</h2>
+
+        {!returnData.success ? (
+          <>
+            <label>Enter your email</label>
+            <input
+              type="email"
+              ref={inputRef}
+              onKeyDown={handleKeyDown}
+              style={{
+                width: "200px",
+                backgroundColor: "#ffda79",
+                borderRadius: "10px",
+                textAlign: "center",
+                padding: "5px",
+              }}
+            />
+            <button
+              onClick={() => {
+                fetchData(inputRef?.current?.value);
+              }}
+            >
+              Send
+            </button>
+            {error.length ? (
+            <p style={{ color: "red" }}>
+              This email is not registered to any user
+            </p>
+          ) : null}
+          </>
+        ) : (
+          <p>Reset email has been sent to your email account.</p>
+        )}
+      </div>
     </div>
   );
 }
