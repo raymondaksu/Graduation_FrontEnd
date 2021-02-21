@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { postData } from "../utils/Utils";
 
 // ------------MAIN FUNCTION------------------------
-export default function SignUp() {
+export default function SignUp({setShowSI}) {
   const fetchData = async (values) => {
     try {
       const result = await postData("user/register/", values);
@@ -27,9 +27,7 @@ export default function SignUp() {
       }
     }
   };
-  const refresh = () => {
-    window.location.reload(false);
-  };
+
   // ------------INLINE STYLES--------
   const iconContainerStyle = {
     width: "300px",
@@ -46,10 +44,10 @@ export default function SignUp() {
   // ------------FORMIK-------------
   const formik = useFormik({
     initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      password2: "",
+      username: undefined,
+      email: undefined,
+      password: undefined,
+      password2: undefined,
     },
     validationSchema: Yup.object({
       username: Yup.string()
@@ -138,7 +136,7 @@ export default function SignUp() {
         <button className="btn" type="submit">
           Submit
         </button>
-        <button className="btn" onClick={refresh}>
+        <button className="btn" onClick={() => setShowSI(true)}>
           Cancel
         </button>
       </form>

@@ -14,7 +14,8 @@ import { LoopCircleLoading } from "react-loadingg";
 
 import { Context } from "../../context/Context";
 import Navbar from "../../components/navbar/Navbar";
-import EditModal from "./EditModal";
+import EditModal from "../../components/editProfile/EditModal";
+import ChangePassword from "../../components/changePassword/ChangePassword";
 import Stats from "../../components/stats/Stats";
 import Stories from "../../components/stories/Stories";
 
@@ -60,6 +61,7 @@ export default function ProfilePage() {
 
   //----------Modal------------------------
   const [open, setOpen] = useState(false);
+  const [openPassword, setOpenPassword] = useState(false);
   const [statsOpen, setStatsOpen] = useState(false);
 
   //----------Fetch Profile Data------------
@@ -180,7 +182,33 @@ export default function ProfilePage() {
               />
             </Grid>
             <Grid container justify="center">
+              <ChangePassword
+                openPassword={openPassword}
+                setOpenPassword={setOpenPassword}
+              />
+            </Grid>
+            <Grid container justify="center">
               <Stats open={statsOpen} setOpen={setStatsOpen} />
+            </Grid>
+            <Grid container xs={10} justify="center">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setOpen(true)}
+                style={{ minWidth: "8rem", margin: "0.5rem" }}
+              >
+                <EditIcon fontSize="small" />
+                &nbsp; Edit Profile
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setOpenPassword(true)}
+                style={{ minWidth: "8rem", margin: "0.5rem" }}
+              >
+                <EditIcon fontSize="small" />
+                &nbsp; Change Password
+              </Button>
             </Grid>
             <Grid container xs={10} justify="center">
               <Button
@@ -191,15 +219,6 @@ export default function ProfilePage() {
               >
                 <ArrowBackIosIcon fontSize="small" />
                 &nbsp; Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setOpen(true)}
-                style={{ width: "8rem", margin: "0.5rem" }}
-              >
-                <EditIcon fontSize="small" />
-                &nbsp; Edit
               </Button>
             </Grid>
           </Grid>

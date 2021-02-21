@@ -36,7 +36,7 @@ function Landing() {
             Sign Up
           </button>
         </div>
-        {showSI ? <SignIn /> : <SignUp />}
+        {showSI ? <SignIn /> : <SignUp setShowSI={setShowSI} />}
       </div>
       <div className="continue" onClick={goHome}>
         <a>Continue without an account</a>
