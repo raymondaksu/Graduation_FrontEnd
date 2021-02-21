@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import { Context } from "../../context/Context";
-import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
@@ -25,6 +24,7 @@ const useStyles = makeStyles({
     minWidth: "300px",
     maxWidth: "60vw",
     margin: "20px auto",
+    pointerEvents: 'none',
   },
   media: {
     height: 300,
@@ -43,10 +43,14 @@ const useStyles = makeStyles({
   },
   image: {
     padding: 3,
+    pointerEvents: 'all',
   },
   avatar: {
     marginBottom: "0.35em",
   },
+  small: {
+    pointerEvents: 'all',
+  }
 });
 //--------------MAIN FUNCTION-----------
 const Detail = () => {
@@ -62,7 +66,7 @@ const Detail = () => {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `https://fsblog-backend.herokuapp.com/api/${slug}/post-detail/`,
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/post-detail/`,
         {
           headers: {
             Accept: "application/json",
@@ -101,7 +105,7 @@ const Detail = () => {
   const handleLikeClick = async () => {
     try {
       const result = await axios.post(
-        `https://fsblog-backend.herokuapp.com/api/${slug}/like/`,
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/like/`,
         null,
         {
           headers: {
@@ -148,7 +152,7 @@ const Detail = () => {
     if (key?.charCode === 13) {
       try {
         const result = await axios.post(
-          `https://fsblog-backend.herokuapp.com/api/${slug}/comment-create/`,
+          `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
           { content: comment },
           {
             headers: {
@@ -172,7 +176,7 @@ const Detail = () => {
   const handleCommentSendWithClick = async () => {
     try {
       const result = await axios.post(
-        `https://fsblog-backend.herokuapp.com/api/${slug}/comment-create/`,
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
         { content: comment },
         {
           headers: {
@@ -192,9 +196,18 @@ const Detail = () => {
       }
     }
   };
+
+  const capitalize = (s) => {
+    if (typeof s !== "string") return "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
+
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  // -------------RETURN---------------
   return (
     <div>
       <Navbar />
@@ -213,8 +226,15 @@ const Detail = () => {
                 src={author_avatar}
                 className={classes.small}
               />
-              <Typography gutterBottom variant="h6" component="h2">
-                {author_name}
+              <Typography
+                style={{
+                  fontSize: "18px",
+                  color: "#079992",
+                  fontWeight: "bold",
+                  pointerEvents: 'stroke',
+                }}
+              >
+                {capitalize(author_name)}
               </Typography>
             </CardActions>
             <Typography
@@ -269,9 +289,9 @@ const Detail = () => {
                     key={idx}
                     style={{
                       backgroundColor: "#ecf0f1",
-                      marginBottom: "5px",
+                      marginBottom: "12px",
                       padding: "5px",
-                      paddingLeft: "12px",
+                      paddingLeft: "8px",
                       borderRadius: "6px",
                       display: "flex",
                       boxShadow: "2px 2px 5px #636e72",
@@ -281,7 +301,7 @@ const Detail = () => {
                       style={{
                         padding: "6px",
                         display: "flex",
-                        justifyContent: "center",
+                        justifyContent: "flex-start",
                         alignItems: "top",
                       }}
                     >
@@ -305,7 +325,7 @@ const Detail = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {item?.commenter_name}
+                        {capitalize(item?.commenter_name)}
                       </Typography>
                       <Typography
                         style={{

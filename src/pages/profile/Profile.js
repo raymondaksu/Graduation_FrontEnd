@@ -67,7 +67,7 @@ export default function ProfilePage() {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `http://fsblog-backend.herokuapp.com/user/profile`,
+        `http://fs-blog-backend.herokuapp.com/user/profile`,
         {
           headers: {
             Accept: "application/json",
