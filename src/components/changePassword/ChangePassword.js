@@ -18,7 +18,7 @@ const iconContainerStyle = {
 };
 const iconStyle = {
   position: "absolute",
-  top: "28px",
+  top: "10px",
   left: "15px",
 };
 
@@ -84,9 +84,9 @@ export default function ChangePassword({ openPassword, setOpenPassword }) {
 
   const body = (
     <div className="modalContainer">
+      <h2 style={{ margin: "2rem auto" }}>Password Change</h2>
       <form onSubmit={formik.handleSubmit}>
         <div style={iconContainerStyle}>
-          <label for="oldPassword">Old Password</label>
           <div style={iconStyle}>
             <VpnKeyIcon fontSize="small" />
           </div>
@@ -103,7 +103,6 @@ export default function ChangePassword({ openPassword, setOpenPassword }) {
           ) : null}
         </div>
         <div style={iconContainerStyle}>
-          <label for="newPassword1">New Password</label>
           <div style={iconStyle}>
             <LockIcon fontSize="small" />
           </div>
@@ -120,7 +119,6 @@ export default function ChangePassword({ openPassword, setOpenPassword }) {
           ) : null}
         </div>
         <div style={iconContainerStyle}>
-          <label for="newPassword2">New Password Again</label>
           <div style={iconStyle}>
             <LockIcon fontSize="small" />
           </div>
@@ -136,23 +134,25 @@ export default function ChangePassword({ openPassword, setOpenPassword }) {
             <div className="error-message">{formik.errors.newPassword2}</div>
           ) : null}
         </div>
-        <button className="btn" type="submit">
-          Submit
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            handleClose();
-            formik.values.oldPassword = undefined;
-            formik.values.newPassword1 = undefined;
-            formik.values.newPassword2 = undefined;
-            formik.errors.oldPassword = "";
-            formik.errors.newPassword1 = "";
-            formik.errors.newPassword2 = "";
-          }}
-        >
-          Cancel
-        </button>
+        <div className="buttonContainer">
+          <button className="btn-submit" type="submit">
+            Submit
+          </button>
+          <button
+            className="btn-cancel"
+            onClick={() => {
+              handleClose();
+              formik.values.oldPassword = undefined;
+              formik.values.newPassword1 = undefined;
+              formik.values.newPassword2 = undefined;
+              formik.errors.oldPassword = "";
+              formik.errors.newPassword1 = "";
+              formik.errors.newPassword2 = "";
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
@@ -160,13 +160,16 @@ export default function ChangePassword({ openPassword, setOpenPassword }) {
   const confirmed = (
     <div className="modalContainer">
       <p>{returnData.message}</p>
-      <button className="btn" onClick={() => {
+      <button
+        className="btn"
+        onClick={() => {
           handleClose();
           setReturnData([]);
           formik.values.oldPassword = undefined;
           formik.values.newPassword1 = undefined;
           formik.values.newPassword2 = undefined;
-      }}>
+        }}
+      >
         Ok
       </button>
     </div>

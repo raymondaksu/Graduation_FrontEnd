@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { postData } from "../utils/Utils";
 
 // ------------MAIN FUNCTION------------------------
-export default function SignUp({setShowSI}) {
+export default function SignUp({ setShowSI }) {
   const fetchData = async (values) => {
     try {
       const result = await postData("user/register/", values);
@@ -67,6 +67,7 @@ export default function SignUp({setShowSI}) {
     }),
     onSubmit: (values) => {
       fetchData(values);
+      setShowSI(true);
     },
   });
 

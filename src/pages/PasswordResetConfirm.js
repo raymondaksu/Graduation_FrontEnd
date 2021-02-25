@@ -2,15 +2,89 @@ import React, { useState, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
+import Modal from "@material-ui/core/Modal";
 
 const inputStyle = {
+  margin: "0.5rem auto 1.4rem",
   width: "200px",
   backgroundColor: "#ffda79",
   borderRadius: "10px",
   textAlign: "center",
-  padding: "5px",
+  padding: "0px",
   border: "2px solid grey",
 };
+
+const buttonStyle = {
+  padding: "10px",
+  outline: "none",
+  border: "0",
+  borderRadius: "20px",
+  cursor: "pointer",
+  width: "10rem",
+  fontSize: "1rem",
+  fontWeight: "bold",
+  backgroundColor: "#83acf1",
+  color: "#fff",
+  marginTop: "1.5rem",
+};
+//------------Minimodal-----------
+function MiniModal({ open, setOpen }) {
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const minimodalStyle = {
+    width: "33rem",
+    position: "absolute",
+    top: "8rem",
+    left: "50%",
+    transform: "translateX(-50%)",
+    backgroundColor: "#eaffd0",
+    fontSize: "12px",
+    padding: "10px",
+    borderRadius: "10px",
+    border: "1px solid gray",
+    outline: "none",
+    fontFamily: "courier",
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "space-around",
+  };
+  const okButton = {
+    width: "2rem",
+    height: "2rem",
+    borderRadius: "50%",
+    border: "2px solid tomato",
+    outline: "none",
+    cursor: "pointer",
+  };
+
+  const body = (
+    <div style={minimodalStyle}>
+      <div>
+        Password must be at least 6 characters, contain minimum one uppercase,
+        one lowercase and one number!
+      </div>
+      <div>
+        <button onClick={handleClose} style={okButton}>
+          ✔️
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+    </div>
+  );
+}
 
 //-------------MAIN FUNC------------
 export default function PasswordResetConfirm() {
@@ -20,6 +94,8 @@ export default function PasswordResetConfirm() {
     password_first: "",
     password_second: "",
   });
+  const [open, setOpen] = useState(true);
+
   const inputRef2 = useRef();
   const history = useHistory();
 
@@ -79,8 +155,9 @@ export default function PasswordResetConfirm() {
     }
   };
 
+  //-----------------RETURN-------------
   return (
-    <div>
+    <div style={{ backgroundColor: "#f0f0f0", height: "100vh" }}>
       <Navbar />
       <div
         style={{
@@ -90,7 +167,8 @@ export default function PasswordResetConfirm() {
           alignItems: "center",
         }}
       >
-        <h2>Create New Password</h2>
+        <h2 style={{ margin: "2rem auto 4.5rem" }}>Create New Password</h2>
+        <MiniModal open={open} setOpen={setOpen} />
 
         {!returnData.success ? (
           <>
@@ -116,19 +194,20 @@ export default function PasswordResetConfirm() {
               onClick={() => {
                 postData(pass.password_second);
               }}
+              style={buttonStyle}
               disabled={!passwordCheck(inputRef2?.current?.value)}
             >
               Send
             </button>
-            <p>
-              Password must contain min one uppercase, one lowercase, one number
-              and must be at least 6 characters
-            </p>
           </>
         ) : (
           <>
-            <p>Now, you can login.</p>
-            <button onClick={() => history.push("/")}>Go to Login Page</button>
+            <p style={{ fontWeight: "bold", color: "#009432" }}>
+              ✅ Password is successfully changed. Now, you can login.
+            </p>
+            <button onClick={() => history.push("/")} style={buttonStyle}>
+              Go to Login Page
+            </button>
           </>
         )}
       </div>
