@@ -162,6 +162,37 @@ const Detail = () => {
   //     }
   //   };
 
+  //---------------Publish Post----------------------
+  const handlePostMakePublish = async () => {
+    try {
+      const result = await axios.put(
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/edit/`,
+        {
+          status: "published",
+          author_avatar: author,
+          content,
+          image_URL,
+          title,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Token " + localStorage.getItem("token"),
+          },
+        }
+      );
+      fetchData();
+    } catch ({ response }) {
+      if (response) {
+        console.log(response?.data);
+      } else {
+        console.log("Something went wrong!");
+      }
+    }
+  };
+
+  //--------------Comment Change---------------------
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
@@ -329,118 +360,124 @@ const Detail = () => {
           </Typography>
           {/* comment-box---------------------- */}
           {comments?.length
-            ? comments.map((item, idx) => {
-                return (
-                  <div
-                    key={idx}
-                    style={{
-                      backgroundColor: "#ecf0f1",
-                      marginBottom: "12px",
-                      padding: "5px",
-                      paddingLeft: "8px",
-                      borderRadius: "6px",
-                      display: "flex",
-                      boxShadow: "2px 2px 5px #636e72",
-                    }}
-                  >
+            ? comments
+                .sort(
+                  ({ id: previousID }, { id: currentID }) =>
+                    previousID - currentID
+                )
+                .map((item) => {
+                  return (
                     <div
+                      key={item.time_stamp}
                       style={{
-                        padding: "6px",
+                        backgroundColor: "#ecf0f1",
+                        marginBottom: "12px",
+                        padding: "5px",
+                        paddingLeft: "8px",
+                        borderRadius: "6px",
                         display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "top",
-                      }}
-                    >
-                      <Avatar
-                        alt="Commenter Avatar"
-                        src={item?.commenter_avatar}
-                        className={classes.small}
-                      />
-                    </div>
-                    <div
-                      style={{
-                        paddingLeft: "12px",
-                        paddingRight: "8px",
-                        width: "100%",
+                        boxShadow: "2px 2px 5px #636e72",
                       }}
                     >
                       <div
                         style={{
+                          padding: "6px",
                           display: "flex",
-                          justifyContent: "space-between",
+                          justifyContent: "flex-start",
+                          alignItems: "top",
                         }}
                       >
-                        <div>
-                          <Typography
-                            style={{
-                              fontSize: "14px",
-                              color: "#079992",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {capitalize(item?.commenter_name)}
-                          </Typography>
-                        </div>
-                        {item.commenter === userId ? (
-                          <div>
-                            <Button
-                              onClick={() => {
-                                setEditComment(true);
-                                setEditCommentContent(item);
-                                setChangedContent(item.content);
-                              }}
-                              style={{
-                                height: "1rem",
-                                maxWidth: "5px",
-                                color: "blue",
-                              }}
-                            >
-                              <Edit />
-                            </Button>
-                            <Button
-                              onClick={() => {
-                                setDeleteComment(true);
-                                setEditCommentContent(item);
-                              }}
-                              style={{
-                                height: "1rem",
-                                maxWidth: "5px",
-                                color: "red",
-                              }}
-                            >
-                              <DeleteForever />
-                            </Button>
-                          </div>
-                        ) : null}
+                        <Avatar
+                          alt="Commenter Avatar"
+                          src={item?.commenter_avatar}
+                          className={classes.small}
+                        />
                       </div>
+                      <div
+                        style={{
+                          paddingLeft: "12px",
+                          paddingRight: "8px",
+                          width: "100%",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div>
+                            <Typography
+                              style={{
+                                fontSize: "14px",
+                                color: "#079992",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {capitalize(item?.commenter_name)}
+                            </Typography>
+                          </div>
+                          {console.log("id: ", item.id)}
+                          {item.commenter == userId ? (
+                            <div>
+                              <Button
+                                onClick={() => {
+                                  setEditComment(true);
+                                  setEditCommentContent(item);
+                                  setChangedContent(item.content);
+                                }}
+                                style={{
+                                  height: "1rem",
+                                  maxWidth: "5px",
+                                  color: "blue",
+                                }}
+                              >
+                                <Edit />
+                              </Button>
+                              <Button
+                                onClick={() => {
+                                  setDeleteComment(true);
+                                  setEditCommentContent(item);
+                                }}
+                                style={{
+                                  height: "1rem",
+                                  maxWidth: "5px",
+                                  color: "red",
+                                }}
+                              >
+                                <DeleteForever />
+                              </Button>
+                            </div>
+                          ) : null}
+                        </div>
 
-                      <Typography
-                        style={{
-                          fontSize: "14px",
-                        }}
-                      >
-                        {item?.content}
-                      </Typography>
-                      <Typography
-                        style={{
-                          textAlign: "right",
-                          fontSize: "12px",
-                          color: "#3c6382",
-                        }}
-                      >
-                        {moment(item?.time_stamp).format("mm:ss") ===
-                        moment(item?.edit_time).format("mm:ss")
-                          ? moment(item?.time_stamp).format(
-                              "MMMM Do YYYY, h:mm"
-                            )
-                          : moment(item?.edit_time).format(
-                              "MMMM Do YYYY, h:mm"
-                            ) + " (edited)"}
-                      </Typography>
+                        <Typography
+                          style={{
+                            fontSize: "14px",
+                          }}
+                        >
+                          {item?.content}
+                        </Typography>
+                        <Typography
+                          style={{
+                            textAlign: "right",
+                            fontSize: "12px",
+                            color: "#3c6382",
+                          }}
+                        >
+                          {moment(item?.time_stamp).format("mm:ss") ===
+                          moment(item?.edit_time).format("mm:ss")
+                            ? moment(item?.time_stamp).format(
+                                "MMMM Do YYYY, h:mm"
+                              )
+                            : moment(item?.edit_time).format(
+                                "MMMM Do YYYY, h:mm"
+                              ) + " (edited)"}
+                        </Typography>
+                      </div>
                     </div>
-                  </div>
-                );
-              })
+                  );
+                })
             : "No comments"}
           {/* <TextField
             ref={commentRef}
@@ -517,6 +554,20 @@ const Detail = () => {
                 color="primary"
               >
                 Edit post
+              </Button>
+            </Box>
+          </>
+        )}
+
+        {author == userId && status == "draft" && (
+          <>
+            <Box p={1}>
+              <Button
+                onClick={() => handlePostMakePublish()}
+                variant="contained"
+                color="primary"
+              >
+                Publish Your Post
               </Button>
             </Box>
           </>
