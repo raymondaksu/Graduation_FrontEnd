@@ -59,6 +59,7 @@ const useStyles = makeStyles({
   },
   small: {
     pointerEvents: "all",
+    cursor: "pointer",
   },
 });
 
@@ -264,6 +265,10 @@ const Detail = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const goToUserDetailPage = (idOfUser) => {
+    history.push(`/user-detail/${idOfUser}`);
+  };
+
   // -------------RETURN---------------
   return (
     <div>
@@ -282,8 +287,10 @@ const Detail = () => {
                 alt="User Avatar"
                 src={author_avatar}
                 className={classes.small}
+                onClick={() => goToUserDetailPage(author_name)}
               />
               <Typography
+                onClick={() => goToUserDetailPage(author_name)}
                 style={{
                   fontSize: "18px",
                   color: "#079992",
@@ -391,6 +398,9 @@ const Detail = () => {
                           alt="Commenter Avatar"
                           src={item?.commenter_avatar}
                           className={classes.small}
+                          onClick={() =>
+                            goToUserDetailPage(item?.commenter_name)
+                          }
                         />
                       </div>
                       <div
@@ -408,10 +418,14 @@ const Detail = () => {
                         >
                           <div>
                             <Typography
+                              onClick={() =>
+                                goToUserDetailPage(item?.commenter_name)
+                              }
                               style={{
                                 fontSize: "14px",
                                 color: "#079992",
                                 fontWeight: "bold",
+                                cursor: "pointer",
                               }}
                             >
                               {capitalize(item?.commenter_name)}
@@ -514,12 +528,13 @@ const Detail = () => {
               padding: "8px",
               paddingLeft: "15px",
               width: "100%",
-              height: "80px",
+              minHeight: "80px",
               fontFamily: "Arial",
               margin: "1rem auto",
               borderRadius: "10px",
               fontSize: "14px",
               outline: "none",
+              resize: "vertical",
             }}
           />
           <Button

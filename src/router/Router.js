@@ -7,9 +7,10 @@ import Contact from "../pages/Contact";
 import ProfilePage from "../pages/profile/Profile";
 import AccountPage from "../pages/AccountSettings";
 import Detail from "../pages/detail/Detail";
+import UserDetail from "../pages/userDetail/userDetail";
 import PasswordReset from "../pages/PasswordReset";
 import PasswordResetConfirm from "../pages/PasswordResetConfirm";
-import PrivateRouter from './PrivateRouter'
+import PrivateRouter from './PrivateRouter';
 
 export default function Router() {
   return (
@@ -24,6 +25,7 @@ export default function Router() {
           <Route path="/password-reset/:uidb64/:token" component={PasswordResetConfirm} exact />
           <PrivateRouter path="/profile" component={ProfilePage} exact />
           <PrivateRouter path="/account" component={AccountPage} exact />
+          <PrivateRouter path="/user-detail/:username" component={UserDetail} exact />
           <PrivateRouter path="/detail/:slug" component={Detail} exact />
           {/* <Route path="/create" component={PostPage} exact/>
               <Route path="/edit/:slug" component={CustomPostPage} exact/> */}
