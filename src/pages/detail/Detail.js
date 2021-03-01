@@ -1,4 +1,4 @@
-import { useState, useRef, useContext, useEffect, useMemo } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -80,7 +80,7 @@ const Detail = () => {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/post-detail/`,
+        `http://127.0.0.1:8000/api/${slug}/post-detail/`,
         {
           headers: {
             Accept: "application/json",
@@ -119,8 +119,8 @@ const Detail = () => {
 
   const handleLikeClick = async () => {
     try {
-      const result = await axios.post(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/like/`,
+      await axios.post(
+        `http://127.0.0.1:8000/api/${slug}/like/`,
         null,
         {
           headers: {
@@ -143,7 +143,7 @@ const Detail = () => {
   //   const handleDeleteClick = async () => {
   //     try {
   //       const result = await axios.delete(
-  //         `https://clarusway-blogapp.herokuapp.com/api/delete/${slug}/`,
+  //         `http://clarusway-blogapp.herokuapp.com/api/delete/${slug}/`,
   //         {
   //           headers: {
   //             Accept: "application/json",
@@ -165,8 +165,8 @@ const Detail = () => {
   //---------------Publish Post----------------------
   const handlePostMakePublish = async () => {
     try {
-      const result = await axios.put(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/edit/`,
+      await axios.put(
+        `http://127.0.0.1:8000/api/${slug}/edit/`,
         {
           status: "published",
           author_avatar: author,
@@ -200,8 +200,8 @@ const Detail = () => {
   const handleCommentSend = async (key) => {
     if (key?.charCode === 13) {
       try {
-        const result = await axios.post(
-          `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
+        await axios.post(
+          `http://127.0.0.1:8000/api/${slug}/comment-create/`,
           { content: comment },
           {
             headers: {
@@ -225,8 +225,8 @@ const Detail = () => {
 
   const handleCommentSendWithClick = async () => {
     try {
-      const result = await axios.post(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
+      await axios.post(
+        `http://127.0.0.1:8000/api/${slug}/comment-create/`,
         { content: comment },
         {
           headers: {
@@ -420,33 +420,38 @@ const Detail = () => {
                           {console.log("id: ", item.id)}
                           {item.commenter == userId ? (
                             <div>
-                              <Button
+                              <IconButton
+                                size="small"
                                 onClick={() => {
                                   setEditComment(true);
                                   setEditCommentContent(item);
                                   setChangedContent(item.content);
                                 }}
-                                style={{
-                                  height: "1rem",
-                                  maxWidth: "5px",
-                                  color: "blue",
-                                }}
                               >
-                                <Edit />
-                              </Button>
-                              <Button
+                                <Edit
+                                  style={{
+                                    width: "1.2rem",
+                                    height: "1.2rem",
+                                    color: "green",
+                                  }}
+                                />
+                              </IconButton>
+                              <IconButton
+                                size="small"
+                                style={{ marginLeft: "1rem" }}
                                 onClick={() => {
                                   setDeleteComment(true);
                                   setEditCommentContent(item);
                                 }}
-                                style={{
-                                  height: "1rem",
-                                  maxWidth: "5px",
-                                  color: "red",
-                                }}
                               >
-                                <DeleteForever />
-                              </Button>
+                                <DeleteForever
+                                  style={{
+                                    width: "1.2rem",
+                                    height: "1.2rem",
+                                    color: "tomato",
+                                  }}
+                                />
+                              </IconButton>
                             </div>
                           ) : null}
                         </div>
@@ -461,7 +466,7 @@ const Detail = () => {
                         <Typography
                           style={{
                             textAlign: "right",
-                            fontSize: "12px",
+                            fontSize: "11px",
                             color: "#3c6382",
                           }}
                         >
@@ -471,7 +476,7 @@ const Detail = () => {
                                 "MMMM Do YYYY, h:mm"
                               )
                             : moment(item?.edit_time).format(
-                                "MMMM Do YYYY, h:mm"
+                                "MMM Do YYYY, h:mm"
                               ) + " (edited)"}
                         </Typography>
                       </div>
@@ -585,15 +590,21 @@ const Detail = () => {
       <div
         style={{
           position: "fixed",
-          bottom: "3rem",
-          right: "1rem",
-          backgroundColor: "#3f51b5",
+          bottom: "1.5rem",
+          right: "1.5rem",
           borderRadius: "50%",
+          backgroundColor: "#99bbad",
         }}
       >
-        <Button onClick={scrollTop} style={{ height: "3rem", color: "white" }}>
-          <ExpandLess />
-        </Button>
+        <IconButton onClick={scrollTop}>
+          <ExpandLess
+            style={{
+              width: "1.6rem",
+              height: "1.6rem",
+              color: "white",
+            }}
+          />
+        </IconButton>
       </div>
     </div>
   );

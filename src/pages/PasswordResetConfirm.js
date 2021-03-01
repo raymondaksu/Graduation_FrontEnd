@@ -138,7 +138,7 @@ export default function PasswordResetConfirm() {
       try {
         console.log(values);
         const result = await axios.patch(
-          "https://fs-blog-backend.herokuapp.com/user/reset-password-complete/",
+          "http://127.0.0.1:8000/user/reset-password-complete/",
           { password: values, uidb64: uidb64, token: token }
         );
         console.log(result.data);

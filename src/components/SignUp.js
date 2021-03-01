@@ -12,7 +12,7 @@ import { postData } from "../utils/Utils";
 export default function SignUp({ setShowSI }) {
   const fetchData = async (values) => {
     try {
-      const result = await postData("user/register/", values);
+      await postData("user/register/", values);
       alert(`${values.username}'s account created successfully!`);
     } catch ({ response }) {
       if (response) {

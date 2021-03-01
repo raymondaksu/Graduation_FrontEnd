@@ -3,7 +3,7 @@ import axios from "axios";
 export const postData = async (path, data) => {
   const token = localStorage.getItem("token");
   const response = await axios.post(
-    `https://fs-blog-backend.herokuapp.com/${path}`,
+    `http://127.0.0.1:8000/${path}`,
     data,
     {
       headers: {
@@ -19,7 +19,7 @@ export const postData = async (path, data) => {
 export const putData = async (path, data) => {
   const token = localStorage.getItem("token");
   const response = await axios.put(
-    `https://fs-blog-backend.herokuapp.com/${path}`,
+    `http://127.0.0.1:8000/${path}`,
     data,
     {
       headers: {

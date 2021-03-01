@@ -56,7 +56,7 @@ export default function ChangePassword({ openPassword, setOpenPassword }) {
     try {
       console.log(oldPassword, newPassword2);
       const result = await axios.patch(
-        "https://fs-blog-backend.herokuapp.com/user/change-password/",
+        "http://127.0.0.1:8000/user/change-password/",
         { old_password: oldPassword, new_password: newPassword2 },
         {
           headers: {
@@ -71,7 +71,12 @@ export default function ChangePassword({ openPassword, setOpenPassword }) {
     } catch ({ response }) {
       if (response) {
         console.log(response);
-        alert(response?.data?.detail || response?.data?.old_password);
+        alert(
+          response?.data?.detail ||
+            (response?.data?.old_password == "Wrong password."
+              ? "Check your old password"
+              : response?.data?.old_password)
+        );
       } else {
         alert("Something went wrong!");
       }

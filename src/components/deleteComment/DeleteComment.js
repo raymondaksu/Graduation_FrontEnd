@@ -14,7 +14,7 @@ export default function DeleteComment({
   const handleCommentDelete = async () => {
     try {
       const result = await axios.delete(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/${commentContent.id}/comment-edit/`,
+        `http://127.0.0.1:8000/api/${slug}/${commentContent.id}/comment-edit/`,
         {
           headers: {
             Accept: "application/json",
@@ -42,22 +42,12 @@ export default function DeleteComment({
   const body = (
     <div
       className="itemContainer"
-      style={{
-        position: "absolute",
-        width: "30%",
-        alignContent: "center",
-        outline: "none",
-        justifyContent: 'center',
-        top: '38%',
-        left: '35%'
-      }}
     >
       <div
         style={{
           backgroundColor: "#ecf0f1",
           marginBottom: "12px",
-          padding: "5px",
-          paddingLeft: "8px",
+          padding: "1rem",
           borderRadius: "6px",
           display: "flex",
           flexFlow: 'column',
@@ -67,21 +57,15 @@ export default function DeleteComment({
         }}
       >
         <div>
-          <p>Are you sure delete the comment?</p>
+        <p style={{ fontSize: "0.9rem", textAlign: "center" }}>
+            Are you sure to delete the comment?
+          </p>
         </div>
-        <div className="buttonContainer" style={{ height: "1rem", marginTop: '1rem' }}>
-          <button
-            className="btn-submit"
-            onClick={handleCommentDelete}
-            style={{ width: "3rem", height: "1rem", marginLeft: 0 }}
-          >
+        <div className="buttonContainer">
+          <button className="btn-submit" onClick={handleCommentDelete}>
             <p style={{ fontSize: "10px" }}>Yes</p>
           </button>
-          <button
-            className="btn-cancel"
-            onClick={() => setOpen(false)}
-            style={{ width: "3rem", height: "1rem" }}
-          >
+          <button className="btn-cancel" onClick={() => setOpen(false)}>
             <p style={{ fontSize: "10px" }}>No</p>
           </button>
         </div>

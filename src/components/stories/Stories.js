@@ -72,7 +72,7 @@ const Stories = () => {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `http://fs-blog-backend.herokuapp.com/api/post-list/`,
+        `http://127.0.0.1:8000/api/post-list/`,
         {
           headers: {
             Accept: "application/json",
@@ -146,37 +146,47 @@ const Stories = () => {
       ) : (
         <>
           <h3 style={h3Style}>Published</h3>
-          <Grid container className={classes.root} spacing={5} justify="center">
-            <Grid item xs={12}>
-              <Grid container justify="center" spacing={5}>
-                {published.length ? (
-                  published.map((item, id) => {
+          {published.length ? (
+            <Grid
+              container
+              className={classes.root}
+              spacing={5}
+              justify="center"
+            >
+              <Grid item xs={12}>
+                <Grid container justify="center" spacing={5}>
+                  {published.map((item, id) => {
                     return <PostCard item={item} itemStatus={true} />;
-                  })
-                ) : (
-                  <div>
-                    <p>You have no published articles.</p>
-                  </div>
-                )}
+                  })}
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <div style={noArticlesStyle}>
+              <p>You have no published articles yet 😕 </p>
+            </div>
+          )}
           <h3 style={h3Style}>Draft</h3>
-          <Grid container className={classes.root} spacing={5} justify="center">
-            <Grid item xs={12}>
-              <Grid container justify="center" spacing={5}>
-                {draft.length ? (
-                  draft.map((item, id) => {
+          {draft.length ? (
+            <Grid
+              container
+              className={classes.root}
+              spacing={5}
+              justify="center"
+            >
+              <Grid item xs={12}>
+                <Grid container justify="center" spacing={5}>
+                  {draft.map((item, id) => {
                     return <PostCard item={item} itemStatus={true} id={id} />;
-                  })
-                ) : (
-                  <div>
-                    <p>You have no draft articles.</p>
-                  </div>
-                )}
+                  })}
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <div style={noArticlesStyle}>
+              <p>You have no draft articles.</p>
+            </div>
+          )}
         </>
       )}
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
