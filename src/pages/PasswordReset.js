@@ -41,7 +41,7 @@ export default function Passwordreset() {
     try {
       console.log(email);
       const result = await axios.post(
-        "http://127.0.0.1:8000/user/reset-password/",
+        "https://fs-blog-backend.herokuapp.com/user/reset-password/",
         { email: email }
       );
       setReturnData(result.data);

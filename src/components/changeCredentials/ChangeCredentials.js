@@ -32,7 +32,7 @@ export default function ChangeCredentials({ open, setOpen, user, refresh }) {
     const token = localStorage.getItem("token");
     try {
       const result = await axios.put(
-        "http://127.0.0.1:8000/user/edit/",
+        "https://fs-blog-backend.herokuapp.com/user/edit/",
         { username: new_username == undefined ? user.username : new_username , email: new_email, password: password },
         {
           headers: {

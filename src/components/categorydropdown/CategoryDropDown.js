@@ -11,7 +11,7 @@ export const CategoryDropDown = ({ setSelectedOption }) => {
 
   // --------fetch category list------------
   const fetchData = async (
-    postListURL = "http://127.0.0.1:8000/api/category-list/"
+    postListURL = "https://fs-blog-backend.herokuapp.com/api/category-list/"
   ) => {
     try {
       const result = await axios.get(postListURL);

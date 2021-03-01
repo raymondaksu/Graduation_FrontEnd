@@ -80,7 +80,7 @@ const Detail = () => {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `http://127.0.0.1:8000/api/${slug}/post-detail/`,
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/post-detail/`,
         {
           headers: {
             Accept: "application/json",
@@ -120,7 +120,7 @@ const Detail = () => {
   const handleLikeClick = async () => {
     try {
       await axios.post(
-        `http://127.0.0.1:8000/api/${slug}/like/`,
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/like/`,
         null,
         {
           headers: {
@@ -143,7 +143,7 @@ const Detail = () => {
   //   const handleDeleteClick = async () => {
   //     try {
   //       const result = await axios.delete(
-  //         `http://clarusway-blogapp.herokuapp.com/api/delete/${slug}/`,
+  //         `https://clarusway-blogapp.herokuapp.com/api/delete/${slug}/`,
   //         {
   //           headers: {
   //             Accept: "application/json",
@@ -166,7 +166,7 @@ const Detail = () => {
   const handlePostMakePublish = async () => {
     try {
       await axios.put(
-        `http://127.0.0.1:8000/api/${slug}/edit/`,
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/edit/`,
         {
           status: "published",
           author_avatar: author,
@@ -201,7 +201,7 @@ const Detail = () => {
     if (key?.charCode === 13) {
       try {
         await axios.post(
-          `http://127.0.0.1:8000/api/${slug}/comment-create/`,
+          `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
           { content: comment },
           {
             headers: {
@@ -226,7 +226,7 @@ const Detail = () => {
   const handleCommentSendWithClick = async () => {
     try {
       await axios.post(
-        `http://127.0.0.1:8000/api/${slug}/comment-create/`,
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
         { content: comment },
         {
           headers: {

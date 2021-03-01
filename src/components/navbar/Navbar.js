@@ -71,7 +71,7 @@ export default function Navbar() {
   };
 
   const fetchUserProfile = async (
-    profilePath = `http://127.0.0.1:8000/user/profile/`
+    profilePath = `https://fs-blog-backend.herokuapp.com/user/profile/`
   ) => {
     try {
       const result = await axios.get(profilePath, {

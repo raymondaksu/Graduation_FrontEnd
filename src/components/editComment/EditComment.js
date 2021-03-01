@@ -23,7 +23,7 @@ export default function EditComment({
   const handleCommentSend = async () => {
     try {
       const result = await axios.put(
-        `http://127.0.0.1:8000/api/${slug}/${commentContent.id}/comment-edit/`,
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/${commentContent.id}/comment-edit/`,
         { content: changedContent },
         {
           headers: {

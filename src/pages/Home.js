@@ -95,7 +95,7 @@ function Home() {
 
   // --------fetch data------------
   const fetchData = async (
-    postListURL = "http://127.0.0.1:8000/api/post-list/"
+    postListURL = "https://fs-blog-backend.herokuapp.com/api/post-list/"
   ) => {
     try {
       const result = await axios.get(postListURL);

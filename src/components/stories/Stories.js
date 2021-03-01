@@ -72,7 +72,7 @@ const Stories = () => {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `http://127.0.0.1:8000/api/post-list/`,
+        `https://fs-blog-backend.herokuapp.com/api/post-list/`,
         {
           headers: {
             Accept: "application/json",
