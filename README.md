@@ -1,4 +1,4 @@
-# FullStack Graduation Project-BlogApp FrontEnd with React.js.
+# FullStack Graduation Project-BlogApp FrontEnd with React.js
 
 ## Getting Started with Create React App
 
