@@ -32,6 +32,7 @@ import Grid from "@material-ui/core/Grid";
 
 import EditComment from "../../components/editComment/EditComment";
 import DeleteComment from "../../components/DeleteComment";
+import DeletePost from "../../components/DeletePost";
 
 const useStyles = makeStyles({
   root: {
@@ -76,6 +77,7 @@ const Detail = () => {
   const [item, setItem] = useState([]);
   const [comment, setComment] = useState("");
   const [deleteComment, setDeleteComment] = useState(false);
+  const [deletePost, setDeletePost] = useState(false);
   const [editComment, setEditComment] = useState(false);
   const [editCommentContent, setEditCommentContent] = useState([]);
   const [changedContent, setChangedContent] = useState("");
@@ -166,6 +168,7 @@ const Detail = () => {
           },
         }
       );
+      alert("Your post is published!");
       fetchData();
     } catch ({ response }) {
       if (response) {
@@ -583,7 +586,7 @@ const Detail = () => {
             </Box>
             <Box p={1}>
               <button
-                onClick={() => null}
+                onClick={() => setDeletePost(true)}
                 style={{ ...squareButtonStyle, backgroundColor: "tomato" }}
               >
                 <DeleteForever />
@@ -591,6 +594,7 @@ const Detail = () => {
                 DELETE POST
               </button>
             </Box>
+            <DeletePost open={deletePost} setOpen={setDeletePost} slug={slug} />
           </>
         )}
       </Box>
