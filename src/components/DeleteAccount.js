@@ -116,41 +116,40 @@ export default function DeleteAccount({ open, setOpen }) {
     </div>
   );
 
+  //-------Confirmed-------------
   const confirmed = (
-    <div className="itemContainer">
-      <div
+    <div
+      style={{
+        ...statsModalContainer,
+        minHeight: "9rem",
+        height: "9rem",
+        textAlign: "center",
+      }}
+    >
+      <p
         style={{
-          backgroundColor: "#ecf0f1",
-          marginBottom: "12px",
-          padding: "1rem",
-          borderRadius: "6px",
-          display: "flex",
-          flexFlow: "column",
-          boxShadow: "2px 2px 5px #636e72",
-          alignItems: "center",
-          justifyContent: "center",
+          fontSize: "0.9rem",
+          textAlign: "center",
+          color: "tomato",
+          fontWeight: "bold",
         }}
       >
-        <div>
-          <p style={{ fontSize: "0.9rem", textAlign: "center" }}>
-            Your account permanently deleted.
-          </p>
-        </div>
-        <button
-          className="btn"
-          onClick={() => {
-            handleClose();
-            setToken(null);
-            setUserId(null);
-            localStorage.removeItem("token");
-            localStorage.removeItem("userId");
-            localStorage.removeItem("username");
-            history.push("/");
-          }}
-        >
-          Ok
-        </button>
-      </div>
+        Your account is permanently deleted 😔
+      </p>
+
+      <button
+        style={{ ...buttonStyle, width: "8rem", alignSelf: "center" }}
+        onClick={() => {
+          handleClose();
+          setToken(null);
+          setUserId(null);
+          localStorage.removeItem("token");
+          localStorage.removeItem("userId");
+          history.push("/");
+        }}
+      >
+        Ok
+      </button>
     </div>
   );
 

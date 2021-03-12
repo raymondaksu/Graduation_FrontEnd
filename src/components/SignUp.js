@@ -18,6 +18,7 @@ import { postData } from "../utils/Utils";
 // ------------MAIN FUNCTION------------------------
 export default function SignUp({ setShowSI }) {
   const fetchData = async (values) => {
+    console.log({ values });
     try {
       await postData("user/register/", values);
       alert(`${values.username}'s account created successfully!`);
@@ -62,6 +63,7 @@ export default function SignUp({ setShowSI }) {
     onSubmit: (values) => {
       fetchData(values);
       setShowSI(true);
+      console.log(values);
     },
   });
 

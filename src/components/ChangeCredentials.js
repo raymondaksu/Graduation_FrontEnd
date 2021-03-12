@@ -32,18 +32,18 @@ export default function ChangeCredentials({ open, setOpen, user, refresh }) {
       password: Yup.string().required("You must enter the password"),
     }),
     onSubmit: (values) => {
-      console.log(values);
       updateData(values);
     },
   });
 
   const updateData = async ({ new_username, new_email, password }) => {
     const token = localStorage.getItem("token");
+    //console.log({ new_username, new_email, password });
     try {
       const result = await axios.put(
         "https://fs-blog-backend.herokuapp.com/user/edit/",
         {
-          username: new_username == undefined ? user.username : new_username,
+          username: new_username === undefined ? user.username : new_username,
           email: new_email,
           password: password,
         },
@@ -64,7 +64,7 @@ export default function ChangeCredentials({ open, setOpen, user, refresh }) {
           alert(
             "Username or email already exist. Please enter a new username/email"
           );
-        } else if (response?.data?.password == "Wrong password.") {
+        } else if (response?.data?.password === "Wrong password.") {
           alert("Please check your password");
         } else {
           alert("Something went wrong!");
@@ -184,6 +184,7 @@ export default function ChangeCredentials({ open, setOpen, user, refresh }) {
     </div>
   );
 
+  //----------Confirmed-------------------
   const confirmed = (
     <div
       style={{
