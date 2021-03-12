@@ -111,6 +111,7 @@ export default function DeleteAccount({ open, setOpen }) {
             setUserId(null);
             localStorage.removeItem("token");
             localStorage.removeItem("userId");
+            localStorage.removeItem("username");
             history.push("/");
           }}
         >

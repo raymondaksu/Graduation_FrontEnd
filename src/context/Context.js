@@ -31,7 +31,7 @@ export const ContextProvider = ({ children }) => {
         storiesOpen,
         setStoriesOpen,
         userId,
-        setUserId
+        setUserId,
       }}
     >
       {children}

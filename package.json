@@ -23,7 +23,11 @@
     "web-vitals": "^0.2.4",
     "yup": "^0.32.8"
   },
-  "proxy": "https://localhost:3000",
+  "proxy": {
+    "/api":  {
+        "target": "http://django:8000/"
+    }
+},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

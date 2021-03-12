@@ -170,7 +170,6 @@ function Home() {
 
   useEffect(() => {
     paginationFunc();
-    // console.log(sanitizedData);
   }, [sanitizedData, offset, postDisplayList]);
 
   useEffect(() => {

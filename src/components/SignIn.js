@@ -20,6 +20,7 @@ export default function SignIn() {
       const result = await postData("auth/login/", values);
       localStorage.setItem("token", result?.data?.key);
       localStorage.setItem("userId", result?.data?.user.id);
+      localStorage.setItem("username", result?.data?.user.username);
       setToken(result?.data?.key);
       setUserId(result?.data?.user.id);
       history.push("/home");
