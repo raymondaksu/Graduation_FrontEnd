@@ -157,9 +157,9 @@ export default function Stats({ open, setOpen }) {
     logicalOperations();
   }, [filteredList]);
 
-  useEffect(() => {
-    console.log(allValues);
-  }, [allValues]);
+  // useEffect(() => {
+  //   console.log(allValues);
+  // }, [allValues]);
 
   return (
     <div>

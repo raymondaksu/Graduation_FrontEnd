@@ -2,27 +2,3 @@ textarea:hover {
   background-color: beige;
   box-shadow: 2px 2px 5px #555;
 }
-
-.btn-submit,
-.btn-cancel {
-  border: 0;
-  outline: none;
-  box-sizing: border-box;
-  font-size: 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  background-color: #83acf1;
-  color: #fff;
-  letter-spacing: 1px;
-  margin: 20px;
-  border-radius: 20px;
-}
-
-.btn-cancel {
-  background-color: hsl(34, 80%, 73%);
-}
-
-.btn-submit:hover,
-.btn-cancel:hover {
-  box-shadow: 2px 2px 5px rgb(88, 85, 85);
-}
