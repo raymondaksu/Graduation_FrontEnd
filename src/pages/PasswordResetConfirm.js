@@ -5,13 +5,14 @@ import Navbar from "../components/navbar/Navbar";
 import Modal from "@material-ui/core/Modal";
 
 const inputStyle = {
-  margin: "0.5rem auto 1.4rem",
-  width: "200px",
+  margin: "2rem auto",
+  width: "240px",
+  height: "2.5rem",
   backgroundColor: "#ffda79",
-  borderRadius: "10px",
+  borderRadius: "20px",
   textAlign: "center",
   padding: "0px",
-  border: "2px solid grey",
+  outline: "none",
 };
 
 const buttonStyle = {
@@ -174,13 +175,13 @@ export default function PasswordResetConfirm() {
           <>
             <label>Enter your new password</label>
             <input
-              type="email"
+              type="password"
               onChange={(e) => handleChange1(e.target.value)}
               style={inputStyle}
             />
             <label>Re-enter your new password</label>
             <input
-              type="email"
+              type="password"
               ref={inputRef2}
               onChange={(e) => handleChange2(e.target.value)}
               style={

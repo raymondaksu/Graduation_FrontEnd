@@ -179,8 +179,8 @@ function PostEdit() {
             value={formik.values.title}
             onChange={formik.handleChange}
           />
-          {formik.touched.title && formik.errors.title ? (
-            <div style={errorMessageStyle}>{formik.errors.title}</div>
+          {formik.touched.new_title && formik.errors.new_title ? (
+            <div style={errorMessageStyle}>{formik.errors.new_title}</div>
           ) : null}
         </div>
         <div style={sectionStyle}>
@@ -192,8 +192,8 @@ function PostEdit() {
             value={formik.values.image_URL}
             onChange={formik.handleChange}
           />
-          {formik.touched.image_URL && formik.errors.image_URL ? (
-            <div style={errorMessageStyle}>{formik.errors.image_URL}</div>
+          {formik.touched.new_image_URL && formik.errors.new_image_URL ? (
+            <div style={errorMessageStyle}>{formik.errors.new_image_URL}</div>
           ) : null}
         </div>
         <div style={sectionStyle}>
@@ -206,8 +206,8 @@ function PostEdit() {
             value={formik.values.content}
             onChange={formik.handleChange}
           />
-          {formik.touched.content && formik.errors.content ? (
-            <div style={errorMessageStyle}>{formik.errors.content}</div>
+          {formik.touched.new_content && formik.errors.new_content ? (
+            <div style={errorMessageStyle}>{formik.errors.new_content}</div>
           ) : null}
         </div>
         {/* -------------category radio buttons-------- */}
