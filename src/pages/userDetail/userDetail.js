@@ -209,21 +209,29 @@ function UserDetail() {
             spacing={5}
             style={{ marginTop: "2rem" }}
           >
-            {posts.length ? (
-              posts.map((item, idx) => {
-                return <PostCard item={item} itemStatus={false} id={idx} />;
-              })
-            ) : loading ? (
-              <div style={{ position: "relative" }}>
-                <LoopCircleLoading />
-              </div>
-            ) : (
-              <div>
-                <p style={{ textAlign: "center", fontWeight: "bold" }}>
-                  "{username}" has no article yet.
-                </p>
-              </div>
-            )}
+            <Grid container justify="center" spacing={5}>
+              <Grid container justify="center" style={{ margin: "2rem auto" }}>
+                <h2 style={{ textTransform: "capitalize" }}>
+                  {username}'s posts
+                </h2>
+              </Grid>
+
+              {posts.length ? (
+                posts.map((item, idx) => {
+                  return <PostCard item={item} itemStatus={false} id={idx} />;
+                })
+              ) : loading ? (
+                <div style={{ position: "relative" }}>
+                  <LoopCircleLoading />
+                </div>
+              ) : (
+                <div>
+                  <p style={{ textAlign: "center", fontWeight: "bold" }}>
+                    "{username}" has no article yet.
+                  </p>
+                </div>
+              )}
+            </Grid>
             <Box p={9}>
               <button onClick={() => history.goBack()} style={wideButtonStyle}>
                 Back

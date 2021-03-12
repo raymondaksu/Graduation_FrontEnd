@@ -9,11 +9,14 @@ import { Context } from "../../context/Context";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import { squareButtonStyle } from "../../styles/smallElements";
+import { squareButtonsContainerStyle } from "../../styles/smallElements";
+import { wideButtonStyle } from "../../styles/smallElements";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -21,6 +24,8 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import DeleteForever from "@material-ui/icons/DeleteForever";
 import Edit from "@material-ui/icons/Edit";
+import PublishIcon from "@material-ui/icons/Publish";
+import SendIcon from "@material-ui/icons/Send";
 import Avatar from "@material-ui/core/Avatar";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import Grid from "@material-ui/core/Grid";
@@ -498,22 +503,6 @@ const Detail = () => {
                   );
                 })
             : "No comments"}
-          {/* <TextField
-            ref={commentRef}
-            fullWidth
-            margin="normal"
-            id="comment"
-            name="comment"
-            label="Add a comment"
-            value={comment}
-            onChange={handleCommentChange}
-            onKeyPress={handleCommentSend}
-            style={{
-              backgroundColor: "#b8e994",
-              padding: "8px",
-              paddingLeft: "15px",
-            }}
-          /> */}
           <textarea
             ref={commentRef}
             id="comment"
@@ -542,12 +531,13 @@ const Detail = () => {
               handleCommentSendWithClick();
             }}
             variant="contained"
-            color="primary"
+            style={{ backgroundColor: "green" }}
           >
-            Add
+            <SendIcon style={{ color: "#fff" }} />
           </Button>
         </CardContent>
       </Card>
+      {/* buttons--------------------- */}
       <Box
         display="flex"
         justifyContent="center"
@@ -557,55 +547,52 @@ const Detail = () => {
       >
         {author == userId && (
           <>
-            {/* <Box p={1}>
-            <Button
-              onClick={handleDeleteClick}
-              variant="contained"
-              color="primary"
-            >
-              Delete post
-            </Button>
-          </Box> */}
+            {author == userId && status == "draft" && (
+              <>
+                <Box p={1}>
+                  <button
+                    style={squareButtonStyle}
+                    onClick={() => handlePostMakePublish()}
+                  >
+                    <PublishIcon />
+                    <br />
+                    PUBLISH POST
+                  </button>
+                </Box>
+              </>
+            )}
             <Box p={1}>
-              <Button
-                //   onClick={() => history.push(`/edit/${slug}`)}
+              <button
+                style={{ ...squareButtonStyle, backgroundColor: "#3c6382" }}
                 onClick={() => null}
-                variant="contained"
-                color="primary"
               >
-                Edit post
-              </Button>
+                <Edit />
+                <br />
+                EDIT POST
+              </button>
             </Box>
-          </>
-        )}
-
-        {author == userId && status == "draft" && (
-          <>
             <Box p={1}>
-              <Button
-                onClick={() => handlePostMakePublish()}
-                variant="contained"
-                color="primary"
+              <button
+                onClick={() => null}
+                style={{ ...squareButtonStyle, backgroundColor: "tomato" }}
               >
-                Publish Your Post
-              </Button>
+                <DeleteForever />
+                <br />
+                DELETE POST
+              </button>
             </Box>
           </>
         )}
-        <Box p={1}>
-          <Button
-            onClick={() => history.push("/home")}
-            variant="contained"
-            color="primary"
-          >
-            Back
-          </Button>
-        </Box>
       </Box>
+      <div style={{ ...squareButtonsContainerStyle, justifyContent: "center" }}>
+        <button onClick={() => history.push("/home")} style={wideButtonStyle}>
+          Back
+        </button>
+      </div>
       <div
         style={{
           position: "fixed",
-          bottom: "1.5rem",
+          bottom: "2.5rem",
           right: "1.5rem",
           borderRadius: "50%",
           backgroundColor: "#99bbad",
