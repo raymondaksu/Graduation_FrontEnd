@@ -16,15 +16,7 @@
     box-shadow: 3px 3px 7px #555, -3px -3px 7px #555;
     outline: none;
   }
-  h2 {
-    text-align: center;
-    color: #3d1f42;
-    margin-bottom: 1rem;
-  }
-  
-  table {
-    border-collapse: collapse;
-  }
+
   table td {
     font-weight: bold;
     padding: 8px;

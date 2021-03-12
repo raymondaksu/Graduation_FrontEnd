@@ -20,17 +20,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .title-container {
   width: 380px;
-  /* margin-top: -1rem; */
+  margin-top: 4rem;
   margin-bottom: 1.5rem;
   background-color: rgba(63, 182, 212, 0.4);
   box-shadow: 0 0 18px #333;
   text-align: center;
   padding: 10px;
   border-radius: 20px;
+  border: 1px solid #fbc531;
 }
 
 .title {
@@ -41,12 +42,13 @@ body {
 
 .form-box {
   width: 380px;
-  height: 520px;
+  height: 500px;
   position: relative;
   background-color: rgba(63, 182, 212, 0.4);
   box-shadow: 0 0 18px #333;
   padding: 5px;
   border-radius: 20px;
+  border: 1px solid #fbc531;
 }
 .button-box {
   display: flex;
@@ -108,6 +110,6 @@ body {
   }
   .form-box {
     width: 85vw;
-    height: 50vh;
+    height: 70vh;
   }
 }

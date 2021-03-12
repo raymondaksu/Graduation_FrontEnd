@@ -1,34 +1,14 @@
 import React from "react";
 import Modal from "@material-ui/core/Modal";
 import { putData } from "../../utils/Utils";
-
+import { profileModalContainerStyle } from "../../styles/modals";
+import { wideButtonStyle } from "../../styles/smallElements";
+import { modalTitleContainer } from "../../styles/titles";
+import { modalTitle } from "../../styles/titles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 //--------INLINE-STYLES----------
-const modalContainer = {
-  minWidth: "300px",
-  width: "650px",
-  minHeight: "550px",
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  backgroundColor: "#f0f0f0",
-  borderRadius: "20px",
-  border: "2px solid 03506f",
-  display: "flex",
-  flexDirection: "column",
-  boxShadow: "3px 3px 7px #555, -3px -3px 7px #555",
-};
-
-const titleContainer = {
-  width: "80%",
-  height: "auto",
-  margin: "30px auto",
-  textAlign: "center",
-};
-
 const labelStyle = {
   color: "#719fb0",
   fontWeight: "bold",
@@ -49,21 +29,6 @@ const buttonContainer = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-};
-
-const buttonStyle = {
-  width: "8rem",
-  height: "3rem",
-  border: "0",
-  outline: "none",
-  boxSizing: "border-box",
-  fontSize: "15px",
-  borderRadius: "20px",
-  cursor: "pointer",
-  backgroundColor: "#83acf1",
-  color: "#fff",
-  fontWeight: "bold",
-  margin: "20px",
 };
 
 //-------------MAIN FUNC------------
@@ -106,12 +71,12 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
   };
 
   const body = (
-    <div className="modalContainer" style={modalContainer}>
+    <div className="modalContainer" style={profileModalContainerStyle}>
       <form onSubmit={formik.handleSubmit}>
-      <div style={titleContainer}>
-          <h2>{capitalize(profile.user)}'s Profile Edit</h2>
+        <div style={modalTitleContainer}>
+          <h2 style={modalTitle}>{profile.user}'s Profile Edit</h2>
         </div>
-        <div style={titleContainer}>
+        <div style={modalTitleContainer}>
           <div style={labelStyle}>
             <label htmlFor="image">Image URL</label>
           </div>
@@ -126,7 +91,7 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
             <div className="error-message">{formik.errors.image}</div>
           ) : null}
         </div>
-        <div style={titleContainer}>
+        <div style={modalTitleContainer}>
           <div style={labelStyle}>
             <label htmlFor="bio">Biography</label>
           </div>
@@ -147,12 +112,19 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
           ) : null}
         </div>
         <div style={buttonContainer}>
-          <button style={buttonStyle} type="submit" onClick={refresh}>
+          <button
+            style={{ ...wideButtonStyle, width: "6rem" }}
+            type="submit"
+            onClick={refresh}
+          >
             Submit
           </button>
-
           <button
-            style={{ ...buttonStyle, backgroundColor: "hsl(34, 80%, 73%)" }}
+            style={{
+              ...wideButtonStyle,
+              backgroundColor: "hsl(34, 80%, 73%)",
+              width: "6rem",
+            }}
             onClick={() => setOpen(false)}
           >
             Cancel

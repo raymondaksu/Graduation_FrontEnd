@@ -4,6 +4,13 @@ import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
 
+import { signInUpFormBoxStyle } from "../styles/signInUp";
+import { iconContainerStyle } from "../styles/signInUp";
+import { inputStyle } from "../styles/signInUp";
+import { buttonStyle } from "../styles/signInUp";
+import { iconStyle } from "../styles/signInUp";
+import { errorMessageStyle } from "../styles/signInUp";
+
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { postData } from "../utils/Utils";
@@ -26,19 +33,6 @@ export default function SignUp({ setShowSI }) {
         console.log("Something went wrong!");
       }
     }
-  };
-
-  // ------------INLINE STYLES--------
-  const iconContainerStyle = {
-    width: "300px",
-    height: "40px",
-    position: "relative",
-    margin: "30px auto",
-  };
-  const iconStyle = {
-    position: "absolute",
-    top: "10px",
-    left: "15px",
   };
 
   // ------------FORMIK-------------
@@ -73,7 +67,7 @@ export default function SignUp({ setShowSI }) {
 
   // ------------RETURN-------------
   return (
-    <div className="sign-in-up-form-box">
+    <div style={signInUpFormBoxStyle}>
       <form onSubmit={formik.handleSubmit}>
         <div style={iconContainerStyle}>
           <div style={iconStyle}>
@@ -81,12 +75,14 @@ export default function SignUp({ setShowSI }) {
           </div>
           <input
             name="username"
+            className="inp"
+            style={inputStyle}
             placeholder="Username"
             value={formik.values.username}
             onChange={formik.handleChange}
           />
           {formik.touched.username && formik.errors.username ? (
-            <div className="error-message">{formik.errors.username}</div>
+            <div style={errorMessageStyle}>{formik.errors.username}</div>
           ) : null}
         </div>
         <div style={iconContainerStyle}>
@@ -95,13 +91,15 @@ export default function SignUp({ setShowSI }) {
           </div>
           <input
             name="email"
+            className="inp"
+            style={inputStyle}
             type="email"
             placeholder="Email"
             value={formik.values.email}
             onChange={formik.handleChange}
           />
           {formik.touched.email && formik.errors.email ? (
-            <div className="error-message">{formik.errors.email}</div>
+            <div style={errorMessageStyle}>{formik.errors.email}</div>
           ) : null}
         </div>
         <div style={iconContainerStyle}>
@@ -110,13 +108,15 @@ export default function SignUp({ setShowSI }) {
           </div>
           <input
             name="password"
+            className="inp"
+            style={inputStyle}
             type="password"
             placeholder="Password"
             value={formik.values.password}
             onChange={formik.handleChange}
           />
           {formik.touched.password && formik.errors.password ? (
-            <div className="error-message">{formik.errors.password}</div>
+            <div style={errorMessageStyle}>{formik.errors.password}</div>
           ) : null}
         </div>
         <div style={iconContainerStyle}>
@@ -125,19 +125,29 @@ export default function SignUp({ setShowSI }) {
           </div>
           <input
             name="password2"
+            className="inp"
+            style={inputStyle}
             type="password"
             placeholder="Confirm Password"
             value={formik.values.password2}
             onChange={formik.handleChange}
           />
           {formik.touched.password2 && formik.errors.password2 ? (
-            <div className="error-message">{formik.errors.password2}</div>
+            <div style={errorMessageStyle}>{formik.errors.password2}</div>
           ) : null}
         </div>
-        <button className="btn" type="submit">
+        <button
+          style={{ ...buttonStyle, marginTop: "6px" }}
+          className="btn"
+          type="submit"
+        >
           Submit
         </button>
-        <button className="btn" onClick={() => setShowSI(true)}>
+        <button
+          style={buttonStyle}
+          className="btn"
+          onClick={() => setShowSI(true)}
+        >
           Cancel
         </button>
       </form>

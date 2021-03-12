@@ -14,10 +14,6 @@ function Landing() {
     setShowSI(!showSI);
   };
 
-  const goHome = () => {
-    history.push("/home");
-  };
-
   return (
     <div className="hero">
       <div className="title-container">
@@ -37,9 +33,28 @@ function Landing() {
           </button>
         </div>
         {showSI ? <SignIn /> : <SignUp setShowSI={setShowSI} />}
-      </div>
-      <div className="continue" onClick={goHome}>
-        <a>Continue without an account</a>
+        <div
+          style={{
+            position: "absolute",
+            bottom: "1.2rem",
+            width: "100%",
+          }}
+        >
+          <p
+            style={{
+              cursor: "pointer",
+              color: "yellow",
+              fontSize: "15px",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              history.push("/home");
+            }}
+          >
+            Continue without an account
+          </p>
+        </div>
       </div>
     </div>
   );

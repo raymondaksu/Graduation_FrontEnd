@@ -7,6 +7,9 @@ import Navbar from "../components/navbar/Navbar";
 import ChangePassword from "../components/changePassword/ChangePassword";
 import ChangeCredentials from "../components/changeCredentials/ChangeCredentials";
 import DeleteAccount from "../components/deleteAccount/DeleteAccount";
+import { wideButtonStyle } from "../styles/smallElements";
+import { squareButtonsContainerStyle } from "../styles/smallElements";
+import { squareButtonStyle } from "../styles/smallElements";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -19,6 +22,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
+import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -26,38 +30,46 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 const useStyles = makeStyles({
   table: {
     width: "100%",
-    backgroundColor: "#7373f5",
+    backgroundColor: "#ffd384",
   },
 });
 
 //-----INLINE STYLES-----
-
 const bodyStyle = {
   width: "60%",
+  maxWidth: "600px",
+  minWidth: "300px",
   display: "flex",
   flexDirection: "column",
   margin: "auto",
 };
 const header = {
-  width: "30%",
-  fontSize: "2rem",
-  color: "black",
-  letterSpacing: "2px",
+  width: "100%",
+  fontSize: "1.8rem",
+  color: "#361E39",
   textAlign: "center",
   margin: "2rem auto",
   fontWeight: "bold",
 };
+const tableTitle = {
+  fontSize: "13px",
+  fontWeight: "bold",
+  padding: "3px 10px",
+};
+const tableInfo = {
+  fontSize: "13px",
+  padding: "10px",
+};
 
+//-----------MAIN FUNC-----------------
 function AccountPage() {
   const classes = useStyles();
   let history = useHistory();
   const [userData, setUserData] = useState([]);
-
   //----------Modal------------------------
   const [openPassword, setOpenPassword] = useState(false);
   const [openCredentials, setOpenCredentials] = useState(false);
   const [openDeleteAccount, setOpenDeleteAccount] = useState(false);
-
   //----------Fetch User Data------------
   const fetchData = async () => {
     try {
@@ -82,15 +94,12 @@ function AccountPage() {
       }
     }
   };
-
   const refreshData = () => {
     fetchData();
   };
-
   useEffect(() => {
     fetchData();
   }, []);
-
   return (
     <>
       <div>
@@ -98,112 +107,120 @@ function AccountPage() {
         <div style={header}>
           <p>Account Settings</p>
         </div>
-
         <div style={bodyStyle}>
           <TableContainer component={Paper} style={{ marginBottom: "1rem" }}>
             <Table className={classes.table} aria-label="simple table">
               <TableBody>
                 <TableRow>
-                  <TableCell component="th" scope="row">
-                    <p style={{ fontWeight: "bolder" }}>Username</p>
-                  </TableCell>
-                  <TableCell align="right">{userData?.username}</TableCell>
+                  <p style={tableTitle}>Username</p>
                 </TableRow>
                 <TableRow>
-                  <TableCell component="th" scope="row">
-                    <p style={{ fontWeight: "bolder" }}>Email</p>
-                  </TableCell>
-                  <TableCell align="right">{userData?.email}</TableCell>
+                  <p style={{ ...tableInfo, textTransform: "capitalize" }}>
+                    {userData?.username}
+                  </p>
                 </TableRow>
                 <TableRow>
-                  <TableCell component="th" scope="row">
-                    <p style={{ fontWeight: "bolder" }}>Member Since</p>
-                  </TableCell>
-                  <TableCell align="right">
+                  <p style={tableTitle}>Email</p>
+                </TableRow>
+                <TableRow>
+                  <p style={tableInfo}>{userData?.email}</p>
+                </TableRow>
+                <TableRow>
+                  <p style={tableTitle}>Member Since</p>
+                </TableRow>
+                <TableRow>
+                  <p style={tableInfo}>
                     {moment(userData?.date_joined).format("MMMM Do YYYY, h:mm")}
-                  </TableCell>
+                  </p>
                 </TableRow>
                 <TableRow>
-                  <TableCell component="th" scope="row">
-                    <p style={{ fontWeight: "bolder" }}>Last Login</p>
-                  </TableCell>
-                  <TableCell align="right">
+                  <p style={tableTitle}>Last Login</p>
+                </TableRow>
+                <TableRow>
+                  <p style={tableInfo}>
                     {moment(userData?.last_login).format("MMMM Do YYYY, h:mm")}
-                  </TableCell>
+                  </p>
                 </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
           <Grid container justify="center">
-              <ChangePassword
-                openPassword={openPassword}
-                setOpenPassword={setOpenPassword}
-              />
-            </Grid>
+            <ChangePassword
+              openPassword={openPassword}
+              setOpenPassword={setOpenPassword}
+            />
+          </Grid>
           <Grid container justify="center">
-              <ChangeCredentials
-                open={openCredentials}
-                setOpen={setOpenCredentials}
-                user={userData}
-                refresh={refreshData}
-              />
-            </Grid>
+            <ChangeCredentials
+              open={openCredentials}
+              setOpen={setOpenCredentials}
+              user={userData}
+              refresh={refreshData}
+            />
+          </Grid>
           <Grid container justify="center">
-              <DeleteAccount
-                open={openDeleteAccount}
-                setOpen={setOpenDeleteAccount}
-              />
-            </Grid>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
+            <DeleteAccount
+              open={openDeleteAccount}
+              setOpen={setOpenDeleteAccount}
+            />
+          </Grid>
+          {/* ---------Buttons----------- */}
+          <div style={squareButtonsContainerStyle}>
+            <button
+              style={squareButtonStyle}
+              title="Change Credentials"
               onClick={() => {
-                  setOpenCredentials(true);
-                }}
-              style={{ minWidth: "8rem", margin: "0.5rem" }}
+                setOpenCredentials(true);
+              }}
             >
               <PersonIcon fontSize="small" />
-              &nbsp; Change Credentials
-            </Button>
-          </div>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
+              <br /> CHANGE CREDENTIALS
+            </button>
+
+            <button
+              style={{
+                ...squareButtonStyle,
+                marginLeft: "10px",
+                marginRight: "10px",
+                backgroundColor: "#3c6382",
+              }}
+              title="Change Password"
               onClick={() => setOpenPassword(true)}
-              style={{ minWidth: "8rem", margin: "0.5rem" }}
             >
-              <EditIcon fontSize="small" />
-              &nbsp; Change Password
-            </Button>
-          </div>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
+              <LockIcon fontSize="small" />
+              <br />
+              CHANGE PASSWORD
+            </button>
+
+            <button
+              style={{ ...squareButtonStyle, backgroundColor: "tomato" }}
+              title="Delete Account"
               onClick={() => setOpenDeleteAccount(true)}
-              style={{ minWidth: "8rem", margin: "0.5rem" }}
             >
               <DeleteIcon fontSize="small" />
-              &nbsp; Delete Account
-            </Button>
+              <br /> DELETE ACCOUNT
+            </button>
           </div>
         </div>
         <Grid container xs={12} justify="center">
-          <Button
-            variant="contained"
-            color="primary"
+          <button
+            style={{ ...wideButtonStyle, position: "relative" }}
             onClick={() => history.goBack()}
-            style={{ minWidth: "6rem", margin: "0.5rem" }}
           >
-            <ArrowBackIosIcon fontSize="small" />
+            <ArrowBackIosIcon
+              style={{
+                position: "absolute",
+                left: "20%",
+                top: "50%",
+                transform: "translateY(-50%)",
+              }}
+              fontSize="small"
+            />
             &nbsp; Back
-          </Button>
+          </button>
         </Grid>
       </div>
     </>
   );
 }
-
 export default AccountPage;

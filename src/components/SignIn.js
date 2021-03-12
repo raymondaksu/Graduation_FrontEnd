@@ -6,6 +6,15 @@ import { useHistory } from "react-router-dom";
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 
+import { signInUpFormBoxStyle } from "../styles/signInUp";
+import { iconContainerStyle } from "../styles/signInUp";
+import { inputStyle } from "../styles/signInUp";
+import { buttonStyle } from "../styles/signInUp";
+import { iconStyle } from "../styles/signInUp";
+import { errorMessageStyle } from "../styles/signInUp";
+import { yellowLinksBoxStyle } from "../styles/signInUp";
+import { yellowLinksStyle } from "../styles/signInUp";
+
 import { Context } from "../context/Context";
 import { postData } from "../utils/Utils";
 
@@ -53,54 +62,59 @@ export default function SignIn() {
 
   // ------------RETURN-------------
   return (
-    <div className="sign-in-up-form-box">
+    <div style={signInUpFormBoxStyle}>
       <form onSubmit={formik.handleSubmit}>
-        <div className="icon-container">
-          <div className="icon">
+        <div style={iconContainerStyle}>
+          <div style={iconStyle}>
             <PersonIcon fontSize="small" />
           </div>
           <input
             name="username"
+            classname="inp"
+            style={inputStyle}
             placeholder="Username"
             value={formik.values.username}
             onChange={formik.handleChange}
           />
         </div>
 
-        <div className="icon-container">
-          <div className="icon">
+        <div style={iconContainerStyle}>
+          <div style={iconStyle}>
             <LockIcon fontSize="small" />
           </div>
           <input
             name="password"
+            classname="inp"
             type="password"
+            style={inputStyle}
             placeholder="Password"
             value={formik.values.password}
             onChange={formik.handleChange}
           />
+          {signInError ? (
+            <div style={errorMessageStyle}>{signInError}</div>
+          ) : null}
         </div>
-        {signInError ? (
-          <div className="error-message">{signInError}</div>
-        ) : null}
-
-        <button className="btn" type="submit">
+        <button
+          className="btn"
+          style={{ ...buttonStyle, marginTop: "2rem" }}
+          type="submit"
+        >
           Sign In
         </button>
-        <button className="btn" onClick={refresh}>
+        <button className="btn" style={buttonStyle} onClick={refresh}>
           Cancel
         </button>
-        <p
-          style={{
-            cursor: "pointer",
-            color: "yellow",
-            fontWeight: "bold",
-          }}
-          onClick={() => {
-            history.push("/password-reset");
-          }}
-        >
-          Forgot password?
-        </p>
+        <div style={yellowLinksBoxStyle}>
+          <p
+            style={yellowLinksStyle}
+            onClick={() => {
+              history.push("/password-reset");
+            }}
+          >
+            Forgot password?
+          </p>
+        </div>
       </form>
     </div>
   );

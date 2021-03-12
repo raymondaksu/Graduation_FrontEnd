@@ -2,6 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 import "./Stats.css";
+import { modalTitle } from "../../styles/titles";
+import { modalTitleContainer } from "../../styles/titles";
+import { wideButtonStyle } from "../../styles/smallElements";
+import { statsModalContainer } from "../../styles/modals";
 import Modal from "@material-ui/core/Modal";
 
 // ------------MAIN FUNCTION--------
@@ -99,37 +103,42 @@ export default function Stats({ open, setOpen }) {
   };
 
   const body = (
-    <div className="statsContainer">
-      <h2>Post Statistics</h2>
+    <div style={statsModalContainer}>
+      <div style={modalTitleContainer}>
+        <h2 style={modalTitle}>User Statistics</h2>
+      </div>
       <table>
         <tr>
-          <td>Number of all stories</td>
+          <td>All stories</td>
           <td>{filteredList.length}</td>
         </tr>
         <tr>
-          <td>Number of published stories</td>
+          <td>Published stories</td>
           <td>{allValues.publishedCount}</td>
         </tr>
         <tr>
-          <td>Number of draft stories</td>
+          <td>Draft stories</td>
           <td>{filteredList.length - allValues.publishedCount}</td>
         </tr>
         <tr>
-          <td>Number of post views</td>
+          <td>Post views</td>
           <td>{allValues.totalViewCount}</td>
         </tr>
         <tr>
-          <td>Number of received comments</td>
+          <td>Received comments</td>
           <td>{allValues.totalCommentCount}</td>
         </tr>
         <tr>
-          <td>Number of received likes</td>
+          <td>Likes</td>
           <td>{allValues.totalLikeCount}</td>
         </tr>
       </table>
 
       <div className="btn-container">
-        <button className="btn-ok" onClick={() => setOpen(false)}>
+        <button
+          style={{ ...wideButtonStyle, marginTop: "2rem" }}
+          onClick={() => setOpen(false)}
+        >
           OK
         </button>
       </div>

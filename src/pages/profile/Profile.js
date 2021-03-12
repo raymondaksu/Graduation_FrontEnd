@@ -12,6 +12,9 @@ import TuneIcon from "@material-ui/icons/Tune";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 
 import { LoopCircleLoading } from "react-loadingg";
+import { wideButtonStyle } from "../../styles/smallElements";
+import { squareButtonsContainerStyle } from "../../styles/smallElements";
+import { squareButtonStyle } from "../../styles/smallElements";
 
 import { Context } from "../../context/Context";
 import Navbar from "../../components/navbar/Navbar";
@@ -135,34 +138,48 @@ export default function ProfilePage() {
                 className={classes.media}
               />
             </Grid>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => history.push("/account")}
-              style={{ minWidth: "8rem", margin: "0.5rem" }}
-            >
-              <TuneIcon fontSize="small" />
-              &nbsp; Account Settings
-            </Button>
             <Grid container justify="center">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setStatsOpen(true)}
-                style={{ width: "8rem", margin: "0.5rem" }}
+              <div
+                style={{ ...squareButtonsContainerStyle, maxWidth: "380px" }}
               >
-                <EqualizerIcon fontSize="small" />
-                &nbsp; Stats
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setStoriesOpen(true)}
-                style={{ width: "8rem", margin: "0.5rem" }}
-              >
-                <MenuBookIcon fontSize="small" />
-                &nbsp; Stories
-              </Button>
+                <button
+                  style={squareButtonStyle}
+                  onClick={() => setStatsOpen(true)}
+                >
+                  <EqualizerIcon fontSize="small" />
+                  <br /> STATS
+                </button>
+                <button
+                  style={{
+                    ...squareButtonStyle,
+                    marginLeft: "5px",
+                    marginRight: "5px",
+                    backgroundColor: "#7f8fa6",
+                  }}
+                  onClick={() => setStoriesOpen(true)}
+                >
+                  <MenuBookIcon fontSize="small" />
+                  <br /> STORIES
+                </button>
+                <button
+                  style={{ ...squareButtonStyle, backgroundColor: "#487eb0" }}
+                  onClick={() => setOpen(true)}
+                >
+                  <EditIcon fontSize="small" />
+                  <br /> EDIT PROFILE
+                </button>
+                <button
+                  style={{
+                    ...squareButtonStyle,
+                    marginLeft: "5px",
+                    backgroundColor: "#079992",
+                  }}
+                  onClick={() => history.push("/account")}
+                >
+                  <TuneIcon fontSize="small" />
+                  <br /> ACCOUNT SETTINGS
+                </button>
+              </div>
             </Grid>
             <Grid
               container
@@ -192,24 +209,21 @@ export default function ProfilePage() {
               <Stats open={statsOpen} setOpen={setStatsOpen} />
             </Grid>
             <Grid container xs={10} justify="center">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setOpen(true)}
-                style={{ minWidth: "8rem", margin: "0.5rem" }}
+              <button
+                style={{ ...wideButtonStyle, position: "relative" }}
+                onClick={() => history.goBack()}
               >
-                <EditIcon fontSize="small" />
-                &nbsp; Edit Profile
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => history.push("/home")}
-                style={{ width: "8rem", margin: "0.5rem" }}
-              >
-                <ArrowBackIosIcon fontSize="small" />
+                <ArrowBackIosIcon
+                  style={{
+                    position: "absolute",
+                    left: "20%",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                  }}
+                  fontSize="small"
+                />
                 &nbsp; Back
-              </Button>
+              </button>
             </Grid>
           </Grid>
           <Stats />

@@ -41,7 +41,6 @@ export default function Stats({ username }) {
 
   //-------------Filter User Posts----------------
   const filteredPosts = () => {
-
     const filteredData = postList.filter((item) => {
       return item.author_name == username;
     });
@@ -93,8 +92,12 @@ export default function Stats({ username }) {
 
   const body = (
     <div className="statsContainer">
-      <h2>Post Statistics</h2>
-      <table>
+      <h2
+        style={{ textAlign: "center", color: "#3d1f42", marginBottom: "1rem" }}
+      >
+        Post Statistics
+      </h2>
+      <table style={{ borderCollapse: "collapse" }}>
         <tr>
           <td>Number of all stories</td>
           <td>{filteredList.length}</td>
@@ -135,9 +138,5 @@ export default function Stats({ username }) {
     logicalOperations();
   }, [filteredList]);
 
-  return (
-    <div>
-        {body}
-    </div>
-  );
+  return <div>{body}</div>;
 }
