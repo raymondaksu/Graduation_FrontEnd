@@ -149,18 +149,19 @@ export default function EditComment({
             onClick={handleCommentSend}
             style={{ ...buttonStyle, width: "5rem" }}
           >
-            <p style={{ fontSize: "11px" }}>Submit</p>
+            Submit
           </button>
           <button
             className="btn-cancel"
             style={{
               ...buttonStyle,
               width: "5rem",
+              marginLeft: "1rem",
               backgroundColor: "hsl(34, 80%, 73%)",
             }}
             onClick={() => setOpen(false)}
           >
-            <p style={{ fontSize: "11px" }}>Cancel</p>
+            Cancel
           </button>
         </div>
       </div>

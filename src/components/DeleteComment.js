@@ -1,7 +1,8 @@
 import React from "react";
 import Modal from "@material-ui/core/Modal";
-import "./DeleteCommentStyle.css";
 import axios from "axios";
+import { statsModalContainer } from "../styles/modals";
+import { buttonStyle } from "../styles/signInUp";
 
 //-------------MAIN FUNC------------
 export default function DeleteComment({
@@ -41,34 +42,42 @@ export default function DeleteComment({
 
   const body = (
     <div
-      className="itemContainer"
+      style={{
+        ...statsModalContainer,
+        minHeight: "9rem",
+        height: "9rem",
+        textAlign: "center",
+      }}
     >
-      <div
+      <p
         style={{
-          backgroundColor: "#ecf0f1",
-          marginBottom: "12px",
-          padding: "1rem",
-          borderRadius: "6px",
-          display: "flex",
-          flexFlow: 'column',
-          boxShadow: "2px 2px 5px #636e72",
-          alignItems: 'center',
-          justifyContent: 'center'
+          fontSize: "0.9rem",
+          textAlign: "center",
+          color: "tomato",
+          fontWeight: "bold",
         }}
       >
-        <div>
-        <p style={{ fontSize: "0.9rem", textAlign: "center" }}>
-            Are you sure to delete the comment?
-          </p>
-        </div>
-        <div className="buttonContainer">
-          <button className="btn-submit" onClick={handleCommentDelete}>
-            <p style={{ fontSize: "10px" }}>Yes</p>
-          </button>
-          <button className="btn-cancel" onClick={() => setOpen(false)}>
-            <p style={{ fontSize: "10px" }}>No</p>
-          </button>
-        </div>
+        Are you sure to delete the comment?
+      </p>
+      <div className="buttonContainer">
+        <button
+          style={{ ...buttonStyle, width: "6rem", alignSelf: "center" }}
+          onClick={handleCommentDelete}
+        >
+          Yes
+        </button>
+        <button
+          style={{
+            ...buttonStyle,
+            width: "6rem",
+            alignSelf: "center",
+            marginLeft: "1rem",
+            backgroundColor: "hsl(34, 80%, 73%)",
+          }}
+          onClick={() => setOpen(false)}
+        >
+          <p style={{ fontSize: "10px" }}>No</p>
+        </button>
       </div>
     </div>
   );

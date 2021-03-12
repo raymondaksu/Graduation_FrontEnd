@@ -31,7 +31,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import Grid from "@material-ui/core/Grid";
 
 import EditComment from "../../components/editComment/EditComment";
-import DeleteComment from "../../components/deleteComment/DeleteComment";
+import DeleteComment from "../../components/DeleteComment";
 
 const useStyles = makeStyles({
   root: {
@@ -145,28 +145,6 @@ const Detail = () => {
       }
     }
   };
-
-  //   const handleDeleteClick = async () => {
-  //     try {
-  //       const result = await axios.delete(
-  //         `https://clarusway-blogapp.herokuapp.com/api/delete/${slug}/`,
-  //         {
-  //           headers: {
-  //             Accept: "application/json",
-  //             "Content-Type": "application/json",
-  //             Authorization: "Token " + localStorage.getItem("token"),
-  //           },
-  //         }
-  //       );
-  //       history.push(`/`);
-  //     } catch ({ response }) {
-  //       if (response) {
-  //         console.log(response?.data?.detail);
-  //       } else {
-  //         console.log("Something went wrong!");
-  //       }
-  //     }
-  //   };
 
   //---------------Publish Post----------------------
   const handlePostMakePublish = async () => {
@@ -287,30 +265,58 @@ const Detail = () => {
           />
           <CardContent>
             <Typography className={classes.title}>{title}</Typography>
-            <CardActions>
-              <Avatar
-                alt="User Avatar"
-                src={author_avatar}
-                className={classes.small}
-                onClick={() => goToUserDetailPage(author_name)}
-              />
-              <Typography
-                onClick={() => goToUserDetailPage(author_name)}
+            <div
+              style={{
+                border: "1px solid #719fb0",
+                display: "flex",
+                borderRadius: "10px",
+                justifyContent: "space-between",
+                marginBottom: "2rem",
+                padding: "8px",
+              }}
+            >
+              <CardActions
                 style={{
-                  fontSize: "18px",
-                  color: "#079992",
-                  fontWeight: "bold",
-                  pointerEvents: "stroke",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                {capitalize(author_name)}
-              </Typography>
-            </CardActions>
-            <Typography
-              style={{ textAlign: "right", fontSize: "13px", color: "#3c6382" }}
-            >
-              {moment(item.publish_date).format("MMMM Do YYYY, h:mm")}
-            </Typography>
+                <Avatar
+                  alt="User Avatar"
+                  src={author_avatar}
+                  className={classes.small}
+                  onClick={() => goToUserDetailPage(author_name)}
+                />
+                <Typography
+                  onClick={() => goToUserDetailPage(author_name)}
+                  style={{
+                    fontSize: "18px",
+                    color: "#079992",
+                    fontWeight: "bold",
+                    marginLeft: "1rem",
+                    pointerEvents: "stroke",
+                  }}
+                >
+                  {capitalize(author_name)}
+                </Typography>
+              </CardActions>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                }}
+              >
+                <Typography
+                  style={{
+                    textAlign: "right",
+                    fontSize: "13px",
+                    color: "#3c6382",
+                  }}
+                >
+                  {moment(item.publish_date).format("MMMM Do YYYY, h:mm")}
+                </Typography>
+              </div>
+            </div>
             <p className={classes.module}>{content}</p>
           </CardContent>
         </CardActionArea>
@@ -598,7 +604,10 @@ const Detail = () => {
           backgroundColor: "#99bbad",
         }}
       >
-        <IconButton onClick={scrollTop}>
+        <IconButton
+          onClick={scrollTop}
+          style={{ boxShadow: "4px 3px 5px grey" }}
+        >
           <ExpandLess
             style={{
               width: "1.6rem",
