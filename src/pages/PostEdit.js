@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
+import axios from "axios";
 import * as Yup from "yup";
-import { postData } from "../utils/Utils";
 import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Navbar from "../components/navbar/Navbar";
 
@@ -45,16 +47,64 @@ const radioStyle = {
   margin: "0.3rem",
 };
 //-------------MAIN FUNCTION-----------
-function CreatePost() {
+function PostEdit() {
   const history = useHistory();
+  const [post, setPost] = useState([]);
+  let { slug } = useParams();
 
-  const sendPost = async (values) => {
-    values.status === true
-      ? (values.status = "published")
-      : (values.status = "draft");
+  // --------fetch data------------
+  const fetchData = async () => {
     try {
-      await postData("api/post-create/", values);
-      alert("Post created successfully!");
+      const token = localStorage.getItem("token");
+      const result = await axios.get(
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/post-detail/`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: token ? "Token " + token : null,
+          },
+        }
+      );
+      setPost(result.data);
+    } catch ({ response }) {
+      if (response) {
+        console.log("No data");
+      } else {
+        console.log("Something went wrong!");
+      }
+    }
+  };
+
+  const updateData = async ({
+    new_title,
+    new_content,
+    new_image_URL,
+    new_category,
+    new_status,
+  }) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const result = await axios.put(
+        `https://fs-blog-backend.herokuapp.com/api/${slug}/edit/`,
+        {
+          title: new_title === undefined ? post.title : new_title,
+          image_URL:
+            new_image_URL === undefined ? post.image_URL : new_image_URL,
+          content: new_content === undefined ? post.content : new_content,
+          category: new_category === undefined ? post.category : new_category,
+          status: new_status ? "published" : "draft",
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: token ? "Token " + token : null,
+          },
+        }
+      );
+      alert(result.data.message);
       history.goBack();
     } catch ({ response }) {
       if (response) {
@@ -69,29 +119,32 @@ function CreatePost() {
       }
     }
   };
+
   //------------formik------------
   const formik = useFormik({
     initialValues: {
-      title: "",
-      content: "",
-      image_URL: "",
-      category: undefined,
-      status: false,
+      new_title: undefined,
+      new_content: undefined,
+      new_image_URL: undefined,
+      new_category: undefined,
+      new_status: false,
     },
     validationSchema: Yup.object({
-      title: Yup.string()
-        .max(100, "Must be 100 characters or less")
-        .required("Title is required"),
-      content: Yup.string().required("Content is required"),
-      image_URL: Yup.string().required("Image URL is required"),
-      category: Yup.string().required("Category option is required"),
+      new_title: Yup.string().max(100, "Must be 100 characters or less"),
+      new_content: Yup.string(),
+      new_image_URL: Yup.string(),
+      new_category: Yup.string().required("Category option is required"),
       status: Yup.boolean(),
     }),
     onSubmit: (values) => {
-      sendPost(values);
-      // console.log({ values });
+      updateData(values);
+      //console.log({ values });
     },
   });
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   //   -------------RETURN-----------------
   return (
     <div
@@ -102,7 +155,7 @@ function CreatePost() {
       }}
     >
       <Navbar />
-      <h2 style={pageTitle}>Create a Post</h2>
+      <h2 style={pageTitle}>Post Edit</h2>
       <form
         onSubmit={formik.handleSubmit}
         style={{
@@ -119,10 +172,10 @@ function CreatePost() {
       >
         <div style={sectionStyle}>
           <TextField
-            name="title"
+            name="new_title"
             className="inp"
             style={textFieldStyle}
-            placeholder="Title"
+            placeholder={post.title}
             value={formik.values.title}
             onChange={formik.handleChange}
           />
@@ -132,10 +185,10 @@ function CreatePost() {
         </div>
         <div style={sectionStyle}>
           <TextField
-            name="image_URL"
+            name="new_image_URL"
             className="inp"
             style={textFieldStyle}
-            placeholder="Image URL"
+            placeholder={post.image_URL}
             value={formik.values.image_URL}
             onChange={formik.handleChange}
           />
@@ -145,11 +198,11 @@ function CreatePost() {
         </div>
         <div style={sectionStyle}>
           <textarea
-            name="content"
+            name="new_content"
             className="inp"
             style={textAreaStyle}
             type="textarea"
-            placeholder="Write the content here...."
+            placeholder={post.content}
             value={formik.values.content}
             onChange={formik.handleChange}
           />
@@ -157,16 +210,10 @@ function CreatePost() {
             <div style={errorMessageStyle}>{formik.errors.content}</div>
           ) : null}
         </div>
-        {/* -------------category radio------------ */}
+        {/* -------------category radio buttons-------- */}
         <div style={radioSectionStyle}>
           <div>
-            <label
-              style={{ color: "#6e7c7c", fontSize: "14px" }}
-              htmlFor="category"
-            >
-              {" "}
-              Select a category :
-            </label>
+            <label htmlFor="category"> Edit category</label>
           </div>
           <div
             style={{
@@ -179,8 +226,8 @@ function CreatePost() {
             <label style={radioStyle}>
               <input
                 type="radio"
-                name="category"
-                checked={formik.values.category === "1"}
+                name="new_category"
+                checked={formik.values.new_category === "1"}
                 value="1"
                 onChange={formik.handleChange}
               />
@@ -189,8 +236,8 @@ function CreatePost() {
             <label style={radioStyle}>
               <input
                 type="radio"
-                name="category"
-                checked={formik.values.category === "2"}
+                name="new_category"
+                checked={formik.values.new_category === "2"}
                 value="2"
                 onChange={formik.handleChange}
               />
@@ -199,16 +246,16 @@ function CreatePost() {
             <label style={radioStyle}>
               <input
                 type="radio"
-                name="category"
-                checked={formik.values.category === "3"}
+                name="new_category"
+                checked={formik.values.new_category === "3"}
                 value="3"
                 onChange={formik.handleChange}
               />
               &nbsp;Backend
             </label>
           </div>
-          {formik.touched.category && formik.errors.category ? (
-            <div style={errorMessageStyle}>{formik.errors.category}</div>
+          {formik.touched.new_category && formik.errors.new_category ? (
+            <div style={errorMessageStyle}>{formik.errors.new_category}</div>
           ) : null}
         </div>
         {/* -------------status checkbox------------ */}
@@ -216,8 +263,8 @@ function CreatePost() {
           <label style={{ ...radioStyle, fontWeight: "bold", color: "green" }}>
             <input
               type="checkbox"
-              name="status"
-              checked={formik.values.status}
+              name="new_status"
+              checked={formik.values.new_status}
               onChange={formik.handleChange}
             />
             &nbsp;Publish
@@ -253,4 +300,4 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;
+export default PostEdit;
