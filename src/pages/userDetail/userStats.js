@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-import "./userStatsStyle.css";
+import { statsModalContainer } from "../../styles/modals";
+import { modalTitleContainer } from "../../styles/titles";
+import { modalTitle } from "../../styles/titles";
+import Modal from "@material-ui/core/Modal";
 
 // ------------MAIN FUNCTION--------
 
-export default function Stats({ username }) {
+export default function Stats({ username, open, setOpen }) {
   const [postList, setPostList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [allValues, setAllValues] = useState({
@@ -90,36 +93,40 @@ export default function Stats({ username }) {
     });
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const body = (
-    <div className="statsContainer">
-      <h2
-        style={{ textAlign: "center", color: "#3d1f42", marginBottom: "1rem" }}
-      >
-        Post Statistics
-      </h2>
+    <div
+      style={{ ...statsModalContainer, minHeight: "360px", height: "360px" }}
+    >
+      <div style={modalTitleContainer}>
+        <h2 style={modalTitle}>{username}'s Stats</h2>
+      </div>
       <table style={{ borderCollapse: "collapse" }}>
         <tr>
-          <td>Number of all stories</td>
+          <td>All stories</td>
           <td>{filteredList.length}</td>
         </tr>
         <tr>
-          <td>Number of published stories</td>
+          <td>Published stories</td>
           <td>{allValues.publishedCount}</td>
         </tr>
         <tr>
-          <td>Number of draft stories</td>
+          <td>Draft stories</td>
           <td>{filteredList.length - allValues.publishedCount}</td>
         </tr>
         <tr>
-          <td>Number of post views</td>
+          <td>Post views</td>
           <td>{allValues.totalViewCount}</td>
         </tr>
         <tr>
-          <td>Number of received comments</td>
+          <td>Received comments</td>
           <td>{allValues.totalCommentCount}</td>
         </tr>
         <tr>
-          <td>Number of received likes</td>
+          <td>Received likes</td>
           <td>{allValues.totalLikeCount}</td>
         </tr>
       </table>
@@ -138,5 +145,16 @@ export default function Stats({ username }) {
     logicalOperations();
   }, [filteredList]);
 
-  return <div>{body}</div>;
+  return (
+    <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+    </div>
+  );
 }
