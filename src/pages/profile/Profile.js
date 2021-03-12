@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+import "../HomeCreatePostButton.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
@@ -14,6 +15,8 @@ import { LoopCircleLoading } from "react-loadingg";
 import { wideButtonStyle } from "../../styles/smallElements";
 import { squareButtonsContainerStyle } from "../../styles/smallElements";
 import { squareButtonStyle } from "../../styles/smallElements";
+import { pageTitle } from "../../styles/titles";
+import ControlPointIcon from "@material-ui/icons/ControlPoint";
 
 import { Context } from "../../context/Context";
 import Navbar from "../../components/navbar/Navbar";
@@ -119,17 +122,23 @@ export default function ProfilePage() {
       }}
     >
       <Navbar />
+      <div
+        className="flyingButton"
+        style={{ top: "80px" }}
+        onClick={() => history.push("/create")}
+      >
+        <ControlPointIcon fontSize="large" />
+        <div className="createPostContainer">Create a Post</div>
+      </div>
       <Grid container className={classes.root} spacing={5} justify="center">
         <Grid item xs={12}>
           <Grid container justify="center" spacing={5}>
-            <Grid container justify="center" style={{ marginBottom: "0.8rem" }}>
-              <h2 style={{ margin: "2rem auto" }}>
-                <span style={{ textTransform: "capitalize" }}>
-                  {profile.user}
-                </span>
-                's Profile Page
-              </h2>
-            </Grid>
+            <h2 style={pageTitle}>
+              <span style={{ textTransform: "capitalize" }}>
+                {profile.user}
+              </span>
+              's Profile Page
+            </h2>
             <Grid container justify="center" style={{ marginBottom: "0.8rem" }}>
               <img
                 src={profile.image}

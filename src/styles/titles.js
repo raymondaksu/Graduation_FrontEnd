@@ -1,4 +1,10 @@
-export const pageTitle = {};
+export const pageTitle = {
+  width: "80%",
+  height: "auto",
+  margin: "30px auto",
+  textAlign: "center",
+  color: "#350b40",
+};
 
 export const modalTitleContainer = {
   width: "80%",

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import ReactPaginate from "react-paginate";
+import { useHistory } from "react-router-dom";
+
 import "./HomePagination.css";
 import "./HomeCreatePostButton.css";
 
@@ -78,6 +80,8 @@ function Home() {
     setSelectedOption,
     userId,
   } = useContext(Context);
+
+  const history = useHistory();
 
   const [postDisplayList, setPostDisplayList] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -200,7 +204,7 @@ function Home() {
     >
       <Navbar />
       {userId && (
-        <div className="flyingButton" onClick={() => null}>
+        <div className="flyingButton" onClick={() => history.push("/create")}>
           <ControlPointIcon fontSize="large" />
           <div className="createPostContainer">Create a Post</div>
         </div>
