@@ -137,14 +137,24 @@ export default function SignUp({ setShowSI }) {
           ) : null}
         </div>
         <button
-          style={{ ...buttonStyle, marginTop: "6px" }}
+          style={{
+            ...buttonStyle,
+            marginTop: "6px",
+            border: "1px solid #fff",
+            boxShadow: "0",
+          }}
           className="btn"
           type="submit"
         >
           Submit
         </button>
         <button
-          style={buttonStyle}
+          style={{
+            ...buttonStyle,
+            marginTop: "6px",
+            border: "1px solid #fff",
+            boxShadow: "0",
+          }}
           className="btn"
           onClick={() => setShowSI(true)}
         >

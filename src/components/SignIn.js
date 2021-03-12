@@ -1,4 +1,3 @@
-import "./SignInUp.css";
 import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
@@ -96,13 +95,24 @@ export default function SignIn() {
           ) : null}
         </div>
         <button
-          className="btn"
-          style={{ ...buttonStyle, marginTop: "2rem" }}
+          style={{
+            ...buttonStyle,
+            border: "1px solid #fff",
+            boxShadow: "0",
+            marginTop: "2rem",
+          }}
           type="submit"
         >
           Sign In
         </button>
-        <button className="btn" style={buttonStyle} onClick={refresh}>
+        <button
+          style={{
+            ...buttonStyle,
+            border: "1px solid #fff",
+            boxShadow: "0",
+          }}
+          onClick={refresh}
+        >
           Cancel
         </button>
         <div style={yellowLinksBoxStyle}>

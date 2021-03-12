@@ -1,27 +1,19 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
+import { extraWideButtonStyle } from "../styles/smallElements";
 
 //----------INLINE STYLES-------------
-const buttonStyle = {
-  padding: "10px",
-  outline: "none",
-  border: "0",
-  borderRadius: "20px",
-  cursor: "pointer",
-  width: "10rem",
-  fontSize: "1rem",
-  fontWeight: "bold",
-  backgroundColor: "#83acf1",
-  color: "#fff",
-};
+
 const inputStyle = {
   margin: "2rem auto",
-  width: "200px",
+  width: "240px",
+  height: "2.5rem",
   backgroundColor: "#ffda79",
-  borderRadius: "10px",
+  borderRadius: "20px",
   textAlign: "center",
   padding: "0px",
+  outline: "none",
 };
 
 //-------------MAIN FUNC------------
@@ -78,7 +70,7 @@ export default function Passwordreset() {
               style={inputStyle}
             />
             <button
-              style={buttonStyle}
+              style={extraWideButtonStyle}
               onClick={() => {
                 fetchData(inputRef?.current?.value);
               }}

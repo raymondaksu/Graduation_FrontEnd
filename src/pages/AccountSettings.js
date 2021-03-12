@@ -4,9 +4,9 @@ import axios from "axios";
 import moment from "moment";
 
 import Navbar from "../components/navbar/Navbar";
-import ChangePassword from "../components/changePassword/ChangePassword";
-import ChangeCredentials from "../components/changeCredentials/ChangeCredentials";
-import DeleteAccount from "../components/deleteAccount/DeleteAccount";
+import ChangePassword from "../components/ChangePassword";
+import ChangeCredentials from "../components/ChangeCredentials";
+import DeleteAccount from "../components/DeleteAccount";
 import { wideButtonStyle } from "../styles/smallElements";
 import { squareButtonsContainerStyle } from "../styles/smallElements";
 import { squareButtonStyle } from "../styles/smallElements";
@@ -14,14 +14,11 @@ import { squareButtonStyle } from "../styles/smallElements";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import EditIcon from "@material-ui/icons/Edit";
 import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
 import DeleteIcon from "@material-ui/icons/Delete";

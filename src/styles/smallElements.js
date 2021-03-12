@@ -14,6 +14,24 @@ export const wideButtonStyle = {
     margin: "20px",
     boxShadow: " 3px 3px 3px #837777",
   };
+
+  export const extraWideButtonStyle = {
+    width: "200px",
+    height: "30px",
+    border: "none",
+    outline: "none",
+    paddingLeft: "0",
+    boxSizing: "border-box",
+    fontSize: "13px",
+    color: "#fff",
+    borderRadius: "20px",
+    cursor: "pointer",
+    backgroundColor: "#83acf1",
+    letterSpacing: "1px",
+    fontWeight: "bold",
+    marginBottom: "10px",
+    boxShadow: " 3px 3px 3px #837777",
+  };
   
   export const squareButtonStyle = {
     cursor: "pointer",
