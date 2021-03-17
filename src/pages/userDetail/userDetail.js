@@ -68,7 +68,7 @@ function UserDetail() {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `https://fs-blog-backend.herokuapp.com/user/profile-list/`,
+        `https://fs-blogapp-django.herokuapp.com/user/profile-list/`,
         {
           headers: {
             Accept: "application/json",
@@ -90,7 +90,7 @@ function UserDetail() {
 
   // --------fetch data------------
   const fetchPostData = async (
-    postListURL = "https://fs-blog-backend.herokuapp.com/api/post-list/"
+    postListURL = "https://fs-blogapp-django.herokuapp.com/api/post-list/"
   ) => {
     try {
       const result = await axios.get(postListURL);

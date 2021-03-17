@@ -1,22 +1,18 @@
-import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useFormik } from "formik";
-import axios from "axios";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 import Navbar from "../components/navbar/Navbar";
 
-import { TextField } from "@material-ui/core";
 import { errorMessageStyle } from "../styles/signInUp";
 import { buttonStyle } from "../styles/signInUp";
 import { pageTitle } from "../styles/titles";
+
+import { putData } from "../utils/Utils";
 //-----------INLINE STYLE------------
 
-const textFieldStyle = {
-  width: "100%",
-  margin: "1rem auto",
-};
 const textAreaStyle = {
   width: "100%",
   padding: "1rem",
@@ -27,9 +23,27 @@ const textAreaStyle = {
   resize: "vertical",
 };
 
+const labelStyle = {
+  color: "#719fb0",
+  fontWeight: "bold",
+  textAlign: "left",
+  paddingLeft: "1.2rem",
+};
+const inputStyle = {
+  width: "100%",
+  backgroundColor: "#f0f0f0",
+  padding: "1rem",
+  borderRadius: "1.6rem",
+  fontFamily: '"Arial", sans-serif',
+  fontSize: "13px",
+  outline: "none",
+  marginTop: "0.6rem",
+};
+
 const sectionStyle = {
   width: "100%",
   position: "relative",
+  marginBottom: "1rem",
 };
 
 const radioSectionStyle = {
@@ -37,7 +51,8 @@ const radioSectionStyle = {
   position: "relative",
   display: "flex",
   flexDirection: "column",
-  paddingTop: "1rem",
+  paddingTop: "0.5rem",
+  paddingBottom: "1.5rem",
 };
 
 const radioStyle = {
@@ -49,61 +64,20 @@ const radioStyle = {
 //-------------MAIN FUNCTION-----------
 function PostEdit() {
   const history = useHistory();
-  const [post, setPost] = useState([]);
+  const location = useLocation();
   let { slug } = useParams();
+  const postItem = location?.state?.postedItem;
 
-  // --------fetch data------------
-  const fetchData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const result = await axios.get(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/post-detail/`,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: token ? "Token " + token : null,
-          },
-        }
-      );
-      setPost(result.data);
-    } catch ({ response }) {
-      if (response) {
-        console.log("No data");
-      } else {
-        console.log("Something went wrong!");
-      }
+  //----------update data------------
+  const updateData = async (values) => {
+    if (values.status === true) {
+      values.status = "published";
+    } else {
+      values.status = "draft";
     }
-  };
-
-  const updateData = async ({
-    new_title,
-    new_content,
-    new_image_URL,
-    new_category,
-    new_status,
-  }) => {
-    const token = localStorage.getItem("token");
 
     try {
-      const result = await axios.put(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/edit/`,
-        {
-          title: new_title === undefined ? post.title : new_title,
-          image_URL:
-            new_image_URL === undefined ? post.image_URL : new_image_URL,
-          content: new_content === undefined ? post.content : new_content,
-          category: new_category === undefined ? post.category : new_category,
-          status: new_status ? "published" : "draft",
-        },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: token ? "Token " + token : null,
-          },
-        }
-      );
+      const result = await putData(`api/${slug}/edit/`, values);
       alert(result.data.message);
       history.goBack();
     } catch ({ response }) {
@@ -123,28 +97,28 @@ function PostEdit() {
   //------------formik------------
   const formik = useFormik({
     initialValues: {
-      new_title: undefined,
-      new_content: undefined,
-      new_image_URL: undefined,
-      new_category: undefined,
-      new_status: false,
+      title: postItem.title,
+      content: postItem.content,
+      image_URL: postItem.image_URL,
+      category: postItem.category,
+      status: false,
     },
     validationSchema: Yup.object({
-      new_title: Yup.string().max(100, "Must be 100 characters or less"),
-      new_content: Yup.string(),
-      new_image_URL: Yup.string(),
-      new_category: Yup.string().required("Category option is required"),
+      title: Yup.string().max(100, "Must be 100 characters or less"),
+      content: Yup.string(),
+      image_URL: Yup.string(),
+      category: Yup.string().required("Category option is required"),
       status: Yup.boolean(),
     }),
     onSubmit: (values) => {
       updateData(values);
-      //console.log({ values });
     },
   });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   console.log(location.state);
+  // }, [location]);
+
   //   -------------RETURN-----------------
   return (
     <div
@@ -171,49 +145,56 @@ function PostEdit() {
         }}
       >
         <div style={sectionStyle}>
-          <TextField
-            name="new_title"
-            className="inp"
-            style={textFieldStyle}
-            placeholder={post.title}
+          <label style={labelStyle} htmlFor="title">
+            Title:
+          </label>
+          <input
+            name="title"
+            type="text"
+            style={inputStyle}
             value={formik.values.title}
             onChange={formik.handleChange}
           />
-          {formik.touched.new_title && formik.errors.new_title ? (
-            <div style={errorMessageStyle}>{formik.errors.new_title}</div>
+          {formik.touched.title && formik.errors.title ? (
+            <div style={errorMessageStyle}>{formik.errors.title}</div>
           ) : null}
         </div>
         <div style={sectionStyle}>
-          <TextField
-            name="new_image_URL"
-            className="inp"
-            style={textFieldStyle}
-            placeholder={post.image_URL}
+          <label style={labelStyle} htmlFor="image_URL">
+            image_URL:
+          </label>
+          <input
+            name="image_URL"
+            style={inputStyle}
             value={formik.values.image_URL}
             onChange={formik.handleChange}
           />
-          {formik.touched.new_image_URL && formik.errors.new_image_URL ? (
-            <div style={errorMessageStyle}>{formik.errors.new_image_URL}</div>
+          {formik.touched.image_URL && formik.errors.image_URL ? (
+            <div style={errorMessageStyle}>{formik.errors.image_URL}</div>
           ) : null}
         </div>
         <div style={sectionStyle}>
+          <label style={labelStyle} htmlFor="content">
+            Content:
+          </label>
           <textarea
-            name="new_content"
-            className="inp"
+            name="content"
             style={textAreaStyle}
             type="textarea"
-            placeholder={post.content}
             value={formik.values.content}
             onChange={formik.handleChange}
           />
-          {formik.touched.new_content && formik.errors.new_content ? (
-            <div style={errorMessageStyle}>{formik.errors.new_content}</div>
+          {formik.touched.content && formik.errors.content ? (
+            <div style={errorMessageStyle}>{formik.errors.content}</div>
           ) : null}
         </div>
         {/* -------------category radio buttons-------- */}
         <div style={radioSectionStyle}>
           <div>
-            <label htmlFor="category"> Edit category</label>
+            <label style={labelStyle} htmlFor="category">
+              {" "}
+              Edit category:
+            </label>
           </div>
           <div
             style={{
@@ -226,8 +207,11 @@ function PostEdit() {
             <label style={radioStyle}>
               <input
                 type="radio"
-                name="new_category"
-                checked={formik.values.new_category === "1"}
+                name="category"
+                checked={
+                  formik.values.category === "cloud" ||
+                  formik.values.category === "1"
+                }
                 value="1"
                 onChange={formik.handleChange}
               />
@@ -236,8 +220,11 @@ function PostEdit() {
             <label style={radioStyle}>
               <input
                 type="radio"
-                name="new_category"
-                checked={formik.values.new_category === "2"}
+                name="category"
+                checked={
+                  formik.values.category === "frontend" ||
+                  formik.values.category === "2"
+                }
                 value="2"
                 onChange={formik.handleChange}
               />
@@ -246,16 +233,19 @@ function PostEdit() {
             <label style={radioStyle}>
               <input
                 type="radio"
-                name="new_category"
-                checked={formik.values.new_category === "3"}
+                name="category"
+                checked={
+                  formik.values.category === "backend" ||
+                  formik.values.category === "3"
+                }
                 value="3"
                 onChange={formik.handleChange}
               />
               &nbsp;Backend
             </label>
           </div>
-          {formik.touched.new_category && formik.errors.new_category ? (
-            <div style={errorMessageStyle}>{formik.errors.new_category}</div>
+          {formik.touched.category && formik.errors.category ? (
+            <div style={errorMessageStyle}>{formik.errors.category}</div>
           ) : null}
         </div>
         {/* -------------status checkbox------------ */}
@@ -263,11 +253,11 @@ function PostEdit() {
           <label style={{ ...radioStyle, fontWeight: "bold", color: "green" }}>
             <input
               type="checkbox"
-              name="new_status"
-              checked={formik.values.new_status}
+              name="status"
+              checked={formik.values.status}
               onChange={formik.handleChange}
             />
-            &nbsp;Publish
+            &nbsp;&nbsp;Publish
           </label>
         </div>
         {/* -------------buttons------------ */}

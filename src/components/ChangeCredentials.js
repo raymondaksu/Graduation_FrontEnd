@@ -23,7 +23,7 @@ export default function ChangeCredentials({ open, setOpen, user, refresh }) {
   const formik = useFormik({
     initialValues: {
       new_username: undefined,
-      new_email: undefined,
+      new_email: user.email,
       password: undefined,
     },
     validationSchema: Yup.object({
@@ -36,12 +36,13 @@ export default function ChangeCredentials({ open, setOpen, user, refresh }) {
     },
   });
 
+  //-----------update data------------
   const updateData = async ({ new_username, new_email, password }) => {
     const token = localStorage.getItem("token");
     //console.log({ new_username, new_email, password });
     try {
       const result = await axios.put(
-        "https://fs-blog-backend.herokuapp.com/user/edit/",
+        "https://fs-blogapp-django.herokuapp.com/user/edit/",
         {
           username: new_username === undefined ? user.username : new_username,
           email: new_email,
@@ -120,11 +121,11 @@ export default function ChangeCredentials({ open, setOpen, user, refresh }) {
             style={inputStyle}
             type="email"
             placeholder={user.email}
-            value={formik.values.email}
+            value={formik.values.new_email}
             onChange={formik.handleChange}
           />
-          {formik.touched.email && formik.errors.email ? (
-            <div style={errorMessageStyle}>{formik.errors.email}</div>
+          {formik.touched.new_email && formik.errors.new_email ? (
+            <div style={errorMessageStyle}>{formik.errors.new_email}</div>
           ) : null}
         </div>
         <div style={{ ...iconContainerStyle, marginBottom: "2.5rem" }}>

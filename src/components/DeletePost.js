@@ -11,7 +11,7 @@ export default function DeletePost({ open, setOpen, slug }) {
   const handlePostDelete = async () => {
     try {
       const result = await axios.delete(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/edit/`,
+        `https://fs-blogapp-django.herokuapp.com/api/${slug}/edit/`,
         {
           headers: {
             Accept: "application/json",

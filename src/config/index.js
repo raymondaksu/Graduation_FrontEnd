@@ -1,4 +1,4 @@
-const API_PATH = 'ws://localhost:8000/ws/chat/';
+const API_PATH = 'ws://fs-blogapp-django.herokuapp.com/ws/chat/';
 
 export default {
   API_PATH

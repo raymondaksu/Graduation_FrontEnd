@@ -15,7 +15,7 @@ export default function DeleteComment({
   const handleCommentDelete = async () => {
     try {
       const result = await axios.delete(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/${commentContent.id}/comment-edit/`,
+        `https://fs-blogapp-django.herokuapp.com/api/${slug}/${commentContent.id}/comment-edit/`,
         {
           headers: {
             Accept: "application/json",

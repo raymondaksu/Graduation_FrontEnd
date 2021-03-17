@@ -52,7 +52,7 @@ export default function ChangePassword({ openPassword, setOpenPassword }) {
     try {
       console.log(oldPassword, newPassword2);
       const result = await axios.patch(
-        "https://fs-blog-backend.herokuapp.com/user/change-password/",
+        "https://fs-blogapp-django.herokuapp.com/user/change-password/",
         { old_password: oldPassword, new_password: newPassword2 },
         {
           headers: {

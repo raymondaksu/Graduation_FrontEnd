@@ -33,7 +33,7 @@ export default function Passwordreset() {
     try {
       console.log(email);
       const result = await axios.post(
-        "https://fs-blog-backend.herokuapp.com/user/reset-password/",
+        "https://fs-blogapp-django.herokuapp.com/user/reset-password/",
         { email: email }
       );
       setReturnData(result.data);

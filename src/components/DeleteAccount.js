@@ -23,7 +23,7 @@ export default function DeleteAccount({ open, setOpen }) {
       console.log(inputRef?.current?.value);
       console.log(localStorage.getItem("token"));
       const result = await axios.post(
-        `https://fs-blog-backend.herokuapp.com/user/edit/`,
+        `https://fs-blogapp-django.herokuapp.com/user/edit/`,
         { password: inputRef?.current?.value },
         {
           headers: {

@@ -72,7 +72,7 @@ function AccountPage() {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `https://fs-blog-backend.herokuapp.com/user/edit/`,
+        `https://fs-blogapp-django.herokuapp.com/user/edit/`,
         {
           headers: {
             Accept: "application/json",

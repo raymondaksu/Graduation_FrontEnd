@@ -60,10 +60,6 @@ export default function EditModal({ open, setOpen, profile, refresh }) {
       });
   };
 
-  const capitalize = (s) => {
-    if (typeof s !== "string") return "";
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  };
   //-----------BODY-----------
 
   const handleClose = () => {

@@ -34,6 +34,9 @@ export default function SignIn() {
       history.push("/home");
     } catch ({ response }) {
       if (response) {
+
+//---------------ERROR-------------------------------
+        console.log(response.data)
         setSignInError(response.data.non_field_errors[0]);
       } else {
         alert("Something went wrong!");

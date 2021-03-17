@@ -88,7 +88,7 @@ const Detail = () => {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/post-detail/`,
+        `https://fs-blogapp-django.herokuapp.com/api/${slug}/post-detail/`,
         {
           headers: {
             Accept: "application/json",
@@ -128,7 +128,7 @@ const Detail = () => {
   const handleLikeClick = async () => {
     try {
       await axios.post(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/like/`,
+        `https://fs-blogapp-django.herokuapp.com/api/${slug}/like/`,
         null,
         {
           headers: {
@@ -152,7 +152,7 @@ const Detail = () => {
   const handlePostMakePublish = async () => {
     try {
       await axios.put(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/edit/`,
+        `https://fs-blogapp-django.herokuapp.com/api/${slug}/edit/`,
         {
           status: "published",
           author_avatar: author,
@@ -188,7 +188,7 @@ const Detail = () => {
     if (key?.charCode === 13) {
       try {
         await axios.post(
-          `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
+          `https://fs-blogapp-django.herokuapp.com/api/${slug}/comment-create/`,
           { content: comment },
           {
             headers: {
@@ -213,7 +213,7 @@ const Detail = () => {
   const handleCommentSendWithClick = async () => {
     try {
       await axios.post(
-        `https://fs-blog-backend.herokuapp.com/api/${slug}/comment-create/`,
+        `https://fs-blogapp-django.herokuapp.com/api/${slug}/comment-create/`,
         { content: comment },
         {
           headers: {
@@ -577,7 +577,12 @@ const Detail = () => {
             <Box p={1}>
               <button
                 style={{ ...squareButtonStyle, backgroundColor: "#3c6382" }}
-                onClick={() => history.push(`/edit/${slug}`)}
+                onClick={() =>
+                  history.push({
+                    pathname: `/edit/${slug}`,
+                    state: { postedItem: item },
+                  })
+                }
               >
                 <Edit />
                 <br />

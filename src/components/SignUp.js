@@ -1,5 +1,3 @@
-import "./SignInUp.css";
-
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
