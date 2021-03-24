@@ -160,7 +160,7 @@ function Home() {
   // ----------useEffects--------
   useEffect(() => {
     fetchData();
-    console.log("token : ", localStorage.getItem("token"));
+    // console.log("token : ", localStorage.getItem("token"));
   }, []);
 
   useEffect(() => {

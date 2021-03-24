@@ -148,17 +148,41 @@ function UserDetail() {
                 alt="ProfilePicture"
                 className={classes.media}
               />
-              <button
+              <div
                 style={{
-                  ...squareButtonStyle,
                   width: "4rem",
-                  marginLeft: "1rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
                 }}
-                onClick={() => setStatsOpen(true)}
               >
-                <EqualizerIcon fontSize="small" />
-                <br /> STATS
-              </button>
+                <button
+                  style={{
+                    ...squareButtonStyle,
+                    width: "100%",
+                    height: "45%",
+                    marginLeft: "1rem",
+                  }}
+                  onClick={() => setStatsOpen(true)}
+                >
+                  <EqualizerIcon fontSize="small" />
+                  <br /> STATS
+                </button>
+                <button
+                  style={{
+                    ...squareButtonStyle,
+                    width: "100%",
+                    height: "45%",
+                    marginLeft: "1rem",
+                    backgroundColor: "#10ac84",
+                  }}
+                  onClick={() => setChatOpen(true)}
+                >
+                  <ForumRoundedIcon fontSize="small" />
+                  <br /> CHAT
+                </button>
+              </div>
+
               <Stats
                 username={username}
                 open={statsOpen}
@@ -184,17 +208,6 @@ function UserDetail() {
           </Grid>
           {sender === user[0].user ? null : (
             <>
-              <ForumRoundedIcon
-                onClick={() => setChatOpen(true)}
-                style={{
-                  position: "absolute",
-                  top: "30%",
-                  right: "20%",
-                  fontSize: 100,
-                  color: "grey",
-                  cursor: "pointer",
-                }}
-              />
               <Chat
                 open={chatOpen}
                 setOpen={setChatOpen}

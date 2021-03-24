@@ -116,16 +116,24 @@ export default function Chat({ open, setOpen, sender, receiver }) {
         width: "30%",
         minWidth: "300px",
         alignContent: "center",
-        height: "80vh",
-        border: "solid",
+        height: "70vh",
+        border: "1px solid #30336b",
         top: "15%",
         right: "5%",
-        backgroundColor: "aqua",
+        backgroundColor: "rgba(199, 236, 238,0.9)",
         padding: "1rem",
         borderRadius: "20px",
+        outline: "none",
       }}
     >
-      <div style={{ height: "70%", overflow: "auto" }}>
+      <div
+        style={{
+          height: "75%",
+          overflow: "auto",
+          position: "relative",
+          top: "4%",
+        }}
+      >
         {sanitizedMessageList?.length
           ? sanitizedMessageList
               .map((item) => {
@@ -134,27 +142,45 @@ export default function Chat({ open, setOpen, sender, receiver }) {
                     <div
                       style={{
                         display: "flex",
+                        padding: "0.4rem",
+                        backgroundColor: "#22a6b3",
+                        borderRadius: "0.6rem",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        paddingRight: "0.5rem",
                       }}
                     >
                       <Avatar alt="Commenter Avatar" src={null} />
-                      <div>
                         <Typography
                           style={{
-                            fontSize: "14px",
-                            color: "black",
+                            fontSize: "12px",
+                            color: "#FFF",
                             fontWeight: "bold",
+                            marginLeft: "6px",
                           }}
                         >
                           {capitalize(item?.author)}
                         </Typography>
                       </div>
-                    </div>
-                    <div>
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                          borderLeft: "1px solid #FFF",
+                          paddingLeft: "0.5rem",
+                        }}
+                      >
                       <Typography
                         style={{
                           fontSize: "12px",
-                          color: "black",
-                          fontWeight: "bold",
+                          color: "#fff",
                         }}
                       >
                         {item?.content}
@@ -163,11 +189,12 @@ export default function Chat({ open, setOpen, sender, receiver }) {
                         style={{
                           textAlign: "right",
                           fontSize: "11px",
-                          color: "#3c6382",
+                          color: "#000",
                         }}
                       >
                         {moment(item?.created_at).format("MMMM Do YYYY, h:mm")}
                       </Typography>
+                    </div>
                     </div>
                   </div>
                 );
@@ -177,9 +204,9 @@ export default function Chat({ open, setOpen, sender, receiver }) {
       </div>
       <Typography
         style={{
-          fontSize: "14px",
+          fontSize: "12px",
           position: "absolute",
-          bottom: "5%",
+          bottom: "3%",
           left: "5%",
           width: "90%",
         }}
@@ -195,10 +222,10 @@ export default function Chat({ open, setOpen, sender, receiver }) {
             backgroundColor: "#eae3c8",
             padding: "8px",
             paddingLeft: "15px",
-            width: "90%",
+            width: "100%",
             minHeight: "5rem",
             fontFamily: "Arial",
-            margin: "1rem auto",
+            margin: "1rem auto 0 auto",
             borderRadius: "10px",
             fontSize: "14px",
             outline: "none",
@@ -214,19 +241,21 @@ export default function Chat({ open, setOpen, sender, receiver }) {
           }}
           style={{
             position: "absolute",
-            bottom: "10%",
-            right: "5%",
+            bottom: "5%",
+            right: "6%",
             cursor: "pointer",
+            color: "green",
           }}
         />
         <CancelRoundedIcon
           onClick={handleClose}
           style={{
             position: "absolute",
-            top: "5%",
-            right: "2%",
+            top: "-0.4rem",
+            right: "-0.4rem",
             fill: "red",
             cursor: "pointer",
+            fontSize: "1.8rem",
           }}
         />
       </div>
