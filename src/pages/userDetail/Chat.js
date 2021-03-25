@@ -10,8 +10,14 @@ import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
 import WebSocketInstance from "../../services/WebSocket";
 
 //-------------MAIN FUNC------------
-export default function Chat({ open, setOpen, sender, receiver }) {
-
+export default function Chat({
+  open,
+  setOpen,
+  sender,
+  receiver,
+  senderObj,
+  receiverObj,
+}) {
   const [text, setText] = useState("");
   const [newMessage, setNewMessage] = useState([]);
 
@@ -26,21 +32,20 @@ export default function Chat({ open, setOpen, sender, receiver }) {
   const callback = () => {
     WebSocketInstance.initChatUser(sender);
     WebSocketInstance.addCallbacks(setMess, addMessage);
-    WebSocketInstance.fetchMessages(sender);
-  }
+    WebSocketInstance.fetchMessages(sender, receiver);
+  };
 
   function waitForSocketConnection() {
-    setTimeout(
-      function () {
-        // Check if websocket state is OPEN
-        if (WebSocketInstance.state() === 1) {
-          console.log("Connection is made")
-          callback();
-          return;
-        } else {
-          console.log("wait for connection...");
-          waitForSocketConnection();
-        }
+    setTimeout(function () {
+      // Check if websocket state is OPEN
+      if (WebSocketInstance.state() === 1) {
+        console.log("Connection is made");
+        callback();
+        return;
+      } else {
+        console.log("wait for connection...");
+        waitForSocketConnection();
+      }
     }, 100); // wait 100 milisecond for the connection...
   }
 
@@ -56,6 +61,7 @@ export default function Chat({ open, setOpen, sender, receiver }) {
   const sendMessageHandler = () => {
     const messageObject = {
       from: sender,
+      to: receiver,
       text: text,
     };
     WebSocketInstance.newChatMessage(messageObject);
@@ -64,9 +70,13 @@ export default function Chat({ open, setOpen, sender, receiver }) {
 
   //----------------Filter Message List-------------------
   const filteredMessageList = () => {
-    const newList = messages.filter((item) => item.author === sender || item.author === receiver)
+    const newList = messages.filter(
+      (item) =>
+        (item.author === sender && item.receiver === receiver) ||
+        (item.author === receiver && item.receiver === sender)
+    );
     setSanitizedMessageList(newList);
-  }
+  };
 
   //----------------Text Set Function---------------------
   const handleMessageChange = (e) => {
@@ -99,7 +109,7 @@ export default function Chat({ open, setOpen, sender, receiver }) {
   useEffect(() => {
     const main = async () => {
       await WebSocketInstance.connect();
-    }
+    };
     main();
     waitForSocketConnection();
     filteredMessageList();
@@ -135,19 +145,18 @@ export default function Chat({ open, setOpen, sender, receiver }) {
         }}
       >
         {sanitizedMessageList?.length
-          ? sanitizedMessageList
-              .map((item) => {
-                return (
-                  <div>
-                    <div
-                      style={{
-                        display: "flex",
-                        padding: "0.4rem",
-                        backgroundColor: "#22a6b3",
-                        borderRadius: "0.6rem",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
+          ? sanitizedMessageList.map((item) => {
+              return (
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      padding: "0.4rem",
+                      backgroundColor: "#22a6b3",
+                      borderRadius: "0.6rem",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
                     <div
                       style={{
                         display: "flex",
@@ -155,28 +164,35 @@ export default function Chat({ open, setOpen, sender, receiver }) {
                         paddingRight: "0.5rem",
                       }}
                     >
-                      <Avatar alt="Commenter Avatar" src={null} />
-                        <Typography
-                          style={{
-                            fontSize: "12px",
-                            color: "#FFF",
-                            fontWeight: "bold",
-                            marginLeft: "6px",
-                          }}
-                        >
-                          {capitalize(item?.author)}
-                        </Typography>
-                      </div>
-                      <div
+                      <Avatar
+                        alt="Commenter Avatar"
+                        src={
+                          item?.author === senderObj.user
+                            ? senderObj?.image
+                            : receiverObj?.image
+                        }
+                      />
+                      <Typography
                         style={{
-                          width: "100%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "space-between",
-                          borderLeft: "1px solid #FFF",
-                          paddingLeft: "0.5rem",
+                          fontSize: "12px",
+                          color: "#FFF",
+                          fontWeight: "bold",
+                          marginLeft: "6px",
                         }}
                       >
+                        {capitalize(item?.author)}
+                      </Typography>
+                    </div>
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        borderLeft: "1px solid #FFF",
+                        paddingLeft: "0.5rem",
+                      }}
+                    >
                       <Typography
                         style={{
                           fontSize: "12px",
@@ -195,10 +211,10 @@ export default function Chat({ open, setOpen, sender, receiver }) {
                         {moment(item?.created_at).format("MMMM Do YYYY, h:mm")}
                       </Typography>
                     </div>
-                    </div>
                   </div>
-                );
-              })
+                </div>
+              );
+            })
           : null}
         <div ref={messagesEndRef} />
       </div>

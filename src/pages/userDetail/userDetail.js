@@ -56,6 +56,7 @@ function UserDetail() {
   const [loading, setLoading] = useState(true);
   const [statsOpen, setStatsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [senderObj, setSenderObj] = useState([]);
 
   const history = useHistory();
   let { username } = useParams();
@@ -79,6 +80,8 @@ function UserDetail() {
       );
       const profile = result.data.filter((item) => item.user === username);
       setUser(profile);
+      const senderObj = result.data.filter((item) => item.user === sender);
+      setSenderObj(senderObj);
     } catch ({ response }) {
       if (response) {
         console.log("No data");
@@ -213,6 +216,8 @@ function UserDetail() {
                 setOpen={setChatOpen}
                 sender={sender}
                 receiver={user[0].user}
+                senderObj={senderObj[0]}
+                receiverObj={user[0]}
               />
             </>
           )}

@@ -56,14 +56,15 @@ class WebSocketService {
     this.sendMessage({ command: "init_chat", username: username });
   }
 
-  fetchMessages(username) {
-    this.sendMessage({ command: "fetch_messages", username: username });
+  fetchMessages(username, receiver) {
+    this.sendMessage({ command: "fetch_messages", username: username, receiver: receiver });
   }
 
   newChatMessage(message) {
     this.sendMessage({
       command: "new_message",
       from: message.from,
+      to: message.to,
       text: message.text,
     });
   }
@@ -101,7 +102,6 @@ class WebSocketService {
       }
     }, 1); // wait 5 milisecond for the connection...
   }
-
 }
 
 const WebSocketInstance = WebSocketService.getInstance();
