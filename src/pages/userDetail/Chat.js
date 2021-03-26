@@ -9,6 +9,14 @@ import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
 
 import WebSocketInstance from "../../services/WebSocket";
 
+const senderStyle = {
+  display: "flex",
+  padding: "0.4rem",
+  backgroundColor: "#27a31c",
+  borderRadius: "0.6rem",
+  marginBottom: "0.5rem",
+};
+
 //-------------MAIN FUNC------------
 export default function Chat({
   open,
@@ -149,13 +157,11 @@ export default function Chat({
               return (
                 <div>
                   <div
-                    style={{
-                      display: "flex",
-                      padding: "0.4rem",
-                      backgroundColor: "#22a6b3",
-                      borderRadius: "0.6rem",
-                      marginBottom: "0.5rem",
-                    }}
+                    style={
+                      item?.author === senderObj.user
+                        ? senderStyle
+                        : { ...senderStyle, backgroundColor: "#22a6b3" }
+                    }
                   >
                     <div
                       style={{
