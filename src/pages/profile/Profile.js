@@ -16,6 +16,7 @@ import { wideButtonStyle } from "../../styles/smallElements";
 import { squareButtonsContainerStyle } from "../../styles/smallElements";
 import { squareButtonStyle } from "../../styles/smallElements";
 import { pageTitle } from "../../styles/titles";
+import { wallpaper } from "../../styles/background.js";
 import ControlPointIcon from "@material-ui/icons/ControlPoint";
 
 import { Context } from "../../context/Context";
@@ -114,13 +115,7 @@ export default function ProfilePage() {
       <Stories />
     </div>
   ) : (
-    <div
-      style={{
-        backgroundColor: "#f6f5f5",
-        width: "auto",
-        overflow: "hidden",
-      }}
-    >
+    <div style={wallpaper}>
       <Navbar />
       <div
         className="flyingButton"
