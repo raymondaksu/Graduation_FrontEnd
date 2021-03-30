@@ -5,6 +5,7 @@ import { Context } from "../../context/Context";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { wideButtonStyle } from "../../styles/smallElements";
+import { wallpaper } from "../../styles/background";
 
 import PostCard from "../card/Card";
 
@@ -120,9 +121,12 @@ const Stories = () => {
     separateOperation();
   }, [filteredList]);
 
+  //------------RETURN-----------------
   return (
-    <div>
-      <h1 style={{ textAlign: "center", margin: "4rem auto" }}>Stories</h1>
+    <div style={{ ...wallpaper, paddingTop: "4rem", color: "#350b40" }}>
+      <h1 style={{ textAlign: "center", margin: "0 auto 4rem auto" }}>
+        Stories
+      </h1>
       {!postList?.length ? (
         <div>
           <LoopCircleLoading />

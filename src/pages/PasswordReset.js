@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
 import { extraWideButtonStyle } from "../styles/smallElements";
+import { wallpaper } from "../styles/background";
 
 //----------INLINE STYLES-------------
 
@@ -48,7 +49,7 @@ export default function Passwordreset() {
   };
 
   return (
-    <div style={{ backgroundColor: "#f0f0f0", height: "100vh" }}>
+    <div style={wallpaper}>
       <Navbar />
       <div
         style={{
@@ -58,8 +59,9 @@ export default function Passwordreset() {
           alignItems: "center",
         }}
       >
-        <h2 style={{ margin: "2rem auto" }}>Password Reset</h2>
-
+        <h2 style={{ margin: "2rem auto", color: "#350b40" }}>
+          Password Reset
+        </h2>
         {!returnData.success ? (
           <>
             <label>Enter your email</label>
@@ -85,7 +87,7 @@ export default function Passwordreset() {
           </>
         ) : (
           <p style={{ fontWeight: "bold", color: "#009432" }}>
-            ✅ A password reset email has been sent to your email account.
+            ✅ &nbsp;A password reset email has been sent to your email account.
           </p>
         )}
       </div>

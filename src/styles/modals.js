@@ -12,6 +12,7 @@ export const profileModalContainerStyle = {
     display: "flex",
     flexDirection: "column",
     boxShadow: "3px 3px 7px #555, -3px -3px 7px #555",
+    outline: "0",
   };
   
   export const statsModalContainer = {

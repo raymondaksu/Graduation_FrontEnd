@@ -9,6 +9,7 @@ import Navbar from "../components/navbar/Navbar";
 import { errorMessageStyle } from "../styles/signInUp";
 import { buttonStyle } from "../styles/signInUp";
 import { pageTitle } from "../styles/titles";
+import { wallpaper } from "../styles/background";
 
 import { putData } from "../utils/Utils";
 //-----------INLINE STYLE------------
@@ -115,19 +116,9 @@ function PostEdit() {
     },
   });
 
-  // useEffect(() => {
-  //   console.log(location.state);
-  // }, [location]);
-
   //   -------------RETURN-----------------
   return (
-    <div
-      style={{
-        backgroundColor: "#f6f5f5",
-        minHeight: "100vh",
-        overflow: "hidden",
-      }}
-    >
+    <div style={wallpaper}>
       <Navbar />
       <h2 style={pageTitle}>Post Edit</h2>
       <form

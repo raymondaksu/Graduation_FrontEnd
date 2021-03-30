@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import { squareButtonStyle } from "../../styles/smallElements";
 import { squareButtonsContainerStyle } from "../../styles/smallElements";
 import { wideButtonStyle } from "../../styles/smallElements";
+import { wallpaper } from "../../styles/background";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -257,7 +258,7 @@ const Detail = () => {
 
   // -------------RETURN---------------
   return (
-    <div>
+    <div style={wallpaper}>
       <Navbar />
       <Card className={classes.root}>
         <CardActionArea>
@@ -551,13 +552,7 @@ const Detail = () => {
         </CardContent>
       </Card>
       {/* buttons--------------------- */}
-      <Box
-        display="flex"
-        justifyContent="center"
-        m={1}
-        p={1}
-        bgcolor="background.paper"
-      >
+      <Box display="flex" justifyContent="center" m={1} p={1}>
         {author == userId && (
           <>
             {author == userId && status == "draft" && (

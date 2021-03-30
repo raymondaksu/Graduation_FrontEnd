@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
 import Modal from "@material-ui/core/Modal";
+import { wallpaper } from "../styles/background";
 
 const inputStyle = {
   margin: "2rem auto",
@@ -158,7 +159,7 @@ export default function PasswordResetConfirm() {
 
   //-----------------RETURN-------------
   return (
-    <div style={{ backgroundColor: "#f0f0f0", height: "100vh" }}>
+    <div style={wallpaper}>
       <Navbar />
       <div
         style={{
@@ -168,7 +169,9 @@ export default function PasswordResetConfirm() {
           alignItems: "center",
         }}
       >
-        <h2 style={{ margin: "2rem auto 4.5rem" }}>Create New Password</h2>
+        <h2 style={{ margin: "2rem auto 4.5rem", color: "#350b40" }}>
+          Create New Password
+        </h2>
         <MiniModal open={open} setOpen={setOpen} />
 
         {!returnData.success ? (

@@ -21,6 +21,8 @@ import Grid from "@material-ui/core/Grid";
 
 import { LoopCircleLoading } from "react-loadingg";
 
+import { wallpaper } from "../styles/background";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -55,7 +57,7 @@ const paginationContainerStyle = {
   alignItems: "center",
   justifyContent: "center",
   marginBottom: "60px",
-  backgroundColor: "#f6f5f5",
+  backgroundColor: "transparent",
 };
 const buttonStyle = {
   padding: "10px",
@@ -197,8 +199,7 @@ function Home() {
   ) : (
     <div
       style={{
-        backgroundColor: "#f6f5f5",
-        minHeight: "100vh",
+        ...wallpaper,
         overflow: "hidden",
       }}
     >
