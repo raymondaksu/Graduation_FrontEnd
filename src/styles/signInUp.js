@@ -79,3 +79,21 @@ export const yellowLinksStyle = {
   fontSize: "15px",
   fontWeight: "bold",
 };
+
+export const loadingContainerStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "48%",
+}
+
+export const loadingTextStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  backgroundColor: '#bfdef9',
+  margin: "5% 0 0 -7%",
+  padding: "0.5rem",
+  color: "#29292a",
+  borderRadius: "10px",
+  cursor: "progress",
+}

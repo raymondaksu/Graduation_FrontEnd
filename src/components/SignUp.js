@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
@@ -8,17 +10,26 @@ import { inputStyle } from "../styles/signInUp";
 import { buttonStyle } from "../styles/signInUp";
 import { iconStyle } from "../styles/signInUp";
 import { errorMessageStyle } from "../styles/signInUp";
+import { loadingContainerStyle } from "../styles/signInUp";
+import { loadingTextStyle } from "../styles/signInUp";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { postData } from "../utils/Utils";
 
+import Modal from "@material-ui/core/Modal";
+import { LoopCircleLoading } from "react-loadingg";
+
 // ------------MAIN FUNCTION------------------------
 export default function SignUp({ setShowSI }) {
+  const [open, setOpen] = useState(false);
+
   const fetchData = async (values) => {
-    // console.log({ values });
+    setOpen(true);
     try {
       await postData("user/register/", values);
+      setOpen(false);
+      setShowSI(true);
       alert(`${values.username}'s account created successfully!`);
     } catch ({ response }) {
       if (response) {
@@ -27,8 +38,10 @@ export default function SignUp({ setShowSI }) {
         for (const property in res) {
           err_list.push(`\n ${property}: ${res[property]}`);
         }
+        setOpen(false);
         alert(err_list);
       } else {
+        setOpen(false);
         console.log("Something went wrong!");
       }
     }
@@ -49,9 +62,9 @@ export default function SignUp({ setShowSI }) {
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
         .required("No password provided")
-        .min(6, "Should be min 6 characters")
+        .min(8, "Should be min 8 characters")
         .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/,
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
           "Must contain min one uppercase, one lowercase and one number"
         ),
       password2: Yup.string()
@@ -60,9 +73,19 @@ export default function SignUp({ setShowSI }) {
     }),
     onSubmit: (values) => {
       fetchData(values);
-      setShowSI(true);
     },
   });
+
+  const loading = (
+    <>
+      <div style={loadingContainerStyle}>
+        <LoopCircleLoading />
+      </div>
+      <div style={loadingTextStyle}>
+        <p>Creating your account...</p>
+      </div>
+    </>
+  );
 
   // ------------RETURN-------------
   return (
@@ -160,6 +183,14 @@ export default function SignUp({ setShowSI }) {
           Cancel
         </button>
       </form>
+      <Modal
+        open={open}
+        onClose={null}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {loading}
+      </Modal>
     </div>
   );
 }
