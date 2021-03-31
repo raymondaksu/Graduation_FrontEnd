@@ -108,7 +108,7 @@ export default function Navbar() {
             onClick={handleMainPage}
             noWrap
           >
-            Blog
+            Nord Blog
           </Typography>
 
           <div className={classes.grow} />
