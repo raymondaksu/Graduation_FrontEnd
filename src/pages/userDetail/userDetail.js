@@ -171,19 +171,21 @@ function UserDetail() {
                   <EqualizerIcon fontSize="small" />
                   <br /> STATS
                 </button>
-                <button
-                  style={{
-                    ...squareButtonStyle,
-                    width: "100%",
-                    height: "45%",
-                    marginLeft: "1rem",
-                    backgroundColor: "#10ac84",
-                  }}
-                  onClick={() => setChatOpen(true)}
-                >
-                  <ForumRoundedIcon fontSize="small" />
-                  <br /> CHAT
-                </button>
+                {sender === user[0].user ? null : (
+                  <button
+                    style={{
+                      ...squareButtonStyle,
+                      width: "100%",
+                      height: "45%",
+                      marginLeft: "1rem",
+                      backgroundColor: "#10ac84",
+                    }}
+                    onClick={() => setChatOpen(true)}
+                  >
+                    <ForumRoundedIcon fontSize="small" />
+                    <br /> CHAT
+                  </button>
+                )}
               </div>
 
               <Stats
