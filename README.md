@@ -5,7 +5,7 @@
     <a href="https://github.com/raymondaksu/Graduation_FrontEnd">
        Source Code
     </a> |
-    <a href="https://fs-blog-frontend.herokuapp.com/">
+    <a href="https://fs-blogapp.herokuapp.com/">
       Live on Heroku
     </a>
   </h3>
@@ -99,7 +99,7 @@ The packages/dependencies below should be installed prior to running the app.
 
 <!-- This section should list any articles or add-ons/plugins that helps you to complete the project. This is optional but it will help you in the future. For exmpale -->
 
-- Source of Backend and APIs : [Live on heroku](https://fs-blog-backend.herokuapp.com/)
+- Source of Backend and APIs : [Live on heroku](https://fs-blogapp.herokuapp.com/)
 - Source of Backend Code : [Repository](https://github.com/raymondaksu/Graduation_BackEnd)
 
 ## Contact
