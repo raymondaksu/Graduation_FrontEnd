@@ -30,6 +30,7 @@
 <img src="https://github.com/SemihDurmus/FullStack_Blog_App_FrontEnd/blob/master/src/assets/home.png" width="800">
 <img src="https://github.com/SemihDurmus/FullStack_Blog_App_FrontEnd/blob/master/src/assets/search.png" width="800">
 <img src="https://github.com/SemihDurmus/FullStack_Blog_App_FrontEnd/blob/master/src/assets/profile_page.png" width="800">
+<img src="https://github.com/raymondaksu/Graduation_FrontEnd/blob/main/src/assets/chat_sample.jpg" width="800">
 <img src="https://github.com/SemihDurmus/FullStack_Blog_App_FrontEnd/blob/master/src/assets/comment.png" width="800">
 <img src="https://github.com/SemihDurmus/FullStack_Blog_App_FrontEnd/blob/master/src/assets/forgot.png" width="800">
 
