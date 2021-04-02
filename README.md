@@ -122,5 +122,5 @@ The packages/dependencies below should be installed prior to running the app.
 
 ## Contact
 
-- GitHub [SemihDurmus](https://github.com/raymondaksu)
-- Linkedin [@Semih Durmus](https://www.linkedin.com/in/ramazanaksu/)
+- GitHub [RamazanAksu](https://github.com/raymondaksu)
+- Linkedin [@Ramazan Aksu](https://www.linkedin.com/in/ramazanaksu/)
