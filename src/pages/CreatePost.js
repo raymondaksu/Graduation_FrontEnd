@@ -9,6 +9,7 @@ import { TextField } from "@material-ui/core";
 import { errorMessageStyle } from "../styles/signInUp";
 import { buttonStyle } from "../styles/signInUp";
 import { pageTitle } from "../styles/titles";
+import { wallpaper } from "../styles/background";
 //-----------INLINE STYLE------------
 
 const textFieldStyle = {
@@ -94,13 +95,7 @@ function CreatePost() {
   });
   //   -------------RETURN-----------------
   return (
-    <div
-      style={{
-        backgroundColor: "#f6f5f5",
-        minHeight: "100vh",
-        overflow: "hidden",
-      }}
-    >
+    <div style={wallpaper}>
       <Navbar />
       <h2 style={pageTitle}>Create a Post</h2>
       <form

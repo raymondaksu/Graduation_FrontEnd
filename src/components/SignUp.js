@@ -115,7 +115,6 @@ export default function SignUp({ setShowSI }) {
             name="email"
             className="inp"
             style={inputStyle}
-            type="email"
             placeholder="Email"
             value={formik.values.email}
             onChange={formik.handleChange}

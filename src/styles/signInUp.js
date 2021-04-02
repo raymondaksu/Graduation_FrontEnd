@@ -82,18 +82,24 @@ export const yellowLinksStyle = {
 
 export const loadingContainerStyle = {
   position: "absolute",
+  width: "300px",
+  height: "200px",
   top: "50%",
-  left: "48%",
+  left: "50%",
+  transform: "translate(-50%,-50%)",
 }
 
 export const loadingTextStyle = {
   position: "absolute",
-  top: "50%",
+  top: "70%",
   left: "50%",
-  backgroundColor: '#bfdef9',
-  margin: "5% 0 0 -7%",
-  padding: "0.5rem",
-  color: "#29292a",
+  width: "300px",
+  backgroundColor: "#273c75",
+  padding: "1rem",
+  textAlign: "center",
+  transform: "translateX(-50%)",
+  color: "#fbc531",
   borderRadius: "10px",
+  border: "2px solid #fbc531",
   cursor: "progress",
 }

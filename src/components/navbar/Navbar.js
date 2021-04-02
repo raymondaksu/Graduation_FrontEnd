@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import nordLogo from "../../assets/nord-logo.png";
 
 import MenuListComposition from "./NavbarMenuList";
 import { Context } from "../../context/Context";
@@ -22,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: 20,
     },
     backgroundColor: theme.palette.secondary.main,
+  },
+  logo: {
+    height: "30px",
+    marginRight: "10px",
+    cursor: "pointer",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -102,6 +108,11 @@ export default function Navbar() {
       <AppBar position="static">
         <Toolbar style={{ backgroundColor: "#719fb0" }}>
           <MenuListComposition />
+          <img
+            src={nordLogo}
+            className={classes.logo}
+            onClick={handleMainPage}
+          />
           <Typography
             className={classes.title}
             variant="h5"

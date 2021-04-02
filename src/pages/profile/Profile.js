@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: "35vh",
     boxShadow: "3px 3px 4px #555",
-    borderRadius: "15px",
+    borderRadius: "30px",
   },
   bioContainer: {
     margin: "1rem auto",

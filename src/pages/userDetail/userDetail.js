@@ -13,6 +13,7 @@ import Box from "@material-ui/core/Box";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import { squareButtonStyle } from "../../styles/smallElements";
 import { wideButtonStyle } from "../../styles/smallElements";
+import { wallpaper } from "../../styles/background.js";
 
 import ForumRoundedIcon from "@material-ui/icons/ForumRounded";
 
@@ -32,10 +33,18 @@ const useStyles = makeStyles((theme) => ({
   control: {
     padding: theme.spacing(2),
   },
-  media: {
+  imageContainer: {
+    width: "200px",
     height: "35vh",
-    boxShadow: "3px 3px 4px #555",
+    overflow: "hidden",
     borderRadius: "15px",
+    display: "flex",
+    justifyContent: "center",
+  },
+  media: {
+    borderRadius: "15px",
+    boxShadow: "3px 3px 4px #555",
+
   },
   bioContainer: {
     margin: "1rem auto",
@@ -127,13 +136,7 @@ function UserDetail() {
       <LoopCircleLoading />
     </div>
   ) : (
-    <div
-      style={{
-        backgroundColor: "#f6f5f5",
-        width: "auto",
-        overflow: "hidden",
-      }}
-    >
+    <div style={wallpaper}>
       <Navbar />
       <Grid container className={classes.root} spacing={5} justify="center">
         <Grid item xs={12}>
@@ -146,11 +149,13 @@ function UserDetail() {
               </h2>
             </Grid>
             <Grid container justify="center" style={{ marginBottom: "0.8rem" }}>
-              <img
-                src={user[0].image}
-                alt="ProfilePicture"
-                className={classes.media}
-              />
+              <div className={classes.imageContainer}>
+                <img
+                  src={user[0].image}
+                  alt="ProfilePicture"
+                  className={classes.media}
+                />
+              </div>
               <div
                 style={{
                   width: "4rem",
@@ -163,7 +168,7 @@ function UserDetail() {
                   style={{
                     ...squareButtonStyle,
                     width: "100%",
-                    height: "45%",
+                    height: "100%",
                     marginLeft: "1rem",
                   }}
                   onClick={() => setStatsOpen(true)}
@@ -176,8 +181,9 @@ function UserDetail() {
                     style={{
                       ...squareButtonStyle,
                       width: "100%",
-                      height: "45%",
+                      height: "100%",
                       marginLeft: "1rem",
+                      marginTop: "0.5rem",
                       backgroundColor: "#10ac84",
                     }}
                     onClick={() => setChatOpen(true)}
