@@ -89,7 +89,11 @@ export default function PostCard({ item, itemStatus, id }) {
   return (
     <Card
       className={classes.root}
-      onClick={() => history.push(`/detail/${item.slug}`)}
+      onClick={() => {
+        localStorage.getItem("token")
+          ? history.push(`/detail/${item.slug}`)
+          : alert("You have to log in to view the posts");
+      }}
     >
       <CardHeader
         classes={{

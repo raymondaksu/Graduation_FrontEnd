@@ -13,19 +13,27 @@ import { iconStyle } from "../styles/signInUp";
 import { errorMessageStyle } from "../styles/signInUp";
 import { yellowLinksBoxStyle } from "../styles/signInUp";
 import { yellowLinksStyle } from "../styles/signInUp";
+import { loadingContainerStyle } from "../styles/signInUp";
+import { loadingTextStyle } from "../styles/signInUp";
 
 import { Context } from "../context/Context";
 import { postData } from "../utils/Utils";
+
+import Modal from "@material-ui/core/Modal";
+import { LoopCircleLoading } from "react-loadingg";
 
 // ------------MAIN FUNCTION------------------------
 export default function SignIn() {
   const { setToken, setUserId } = useContext(Context);
   const [signInError, setSignInError] = useState(null);
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const fetchData = async (values) => {
+    setOpen(true);
     try {
       const result = await postData("auth/login/", values);
+      setOpen(false);
       localStorage.setItem("token", result?.data?.key);
       localStorage.setItem("userId", result?.data?.user.id);
       localStorage.setItem("username", result?.data?.user.username);
@@ -34,11 +42,11 @@ export default function SignIn() {
       history.push("/home");
     } catch ({ response }) {
       if (response) {
-
-//---------------ERROR-------------------------------
+        setOpen(false);
         console.log(response.data)
         setSignInError(response.data.non_field_errors[0]);
       } else {
+        setOpen(false);
         alert("Something went wrong!");
       }
     }
@@ -61,6 +69,17 @@ export default function SignIn() {
       } else fetchData(values);
     },
   });
+
+  const loading = (
+    <>
+      <div style={loadingContainerStyle}>
+        <LoopCircleLoading color="#fbc531" size="large" />
+      </div>
+      <div style={loadingTextStyle}>
+        <p>Signing in...</p>
+      </div>
+    </>
+  );
 
   // ------------RETURN-------------
   return (
@@ -129,6 +148,14 @@ export default function SignIn() {
           </p>
         </div>
       </form>
+      <Modal
+        open={open}
+        onClose={null}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {loading}
+      </Modal>
     </div>
   );
 }
